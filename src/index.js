@@ -13,6 +13,9 @@ const { router } = require('./routes');
 // Import Middlewares
 const { globalRoutes, globalError } = require('./middlewares/error.middleware');
 
+// Import Configs
+const { swaggerRouter } = require('./configs/swagger');
+
 // Environments API
 const PROGRAM_PORT = process.env.PROGRAM_PORT;
 const PROGRAM_NAME = process.env.PROGRAM_NAME;
@@ -26,6 +29,7 @@ app.use(cors());
 app.use(helmet());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
+app.use(swaggerRouter);
 app.use('/api/vms/image', express.static(`${appRoot}/..${UPLOAD_FILE}`));
 app.use('/api/vms', router);
 
