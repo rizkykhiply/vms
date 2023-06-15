@@ -1,7 +1,13 @@
-const { authModels } = require('./auth.model');
-const { visitorModels } = require('./visitor.model');
+// Import All Models
+const { barangModels } = require('./barang.model');
+const { kendaraanModels } = require('./kendaraan.model');
+const { registrasiModels } = require('./registrasi.model');
+const { userModels } = require('./user.model');
 
+// Export All Models
 module.exports.models = {
-    authModels,
-    visitorModels,
+    barangModels,
+    kendaraanModels,
+    registrasiModels,
+    userModels,
 };
