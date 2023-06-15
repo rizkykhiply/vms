@@ -21,7 +21,7 @@ module.exports.authLoginController = async (req, res, next) => {
             });
         }
 
-        const getUser = await models.authModels.getUser(getUsername);
+        const getUser = await models.userModels.getUser(getUsername);
 
         if (!getUser) {
             return res.status(400).send({
