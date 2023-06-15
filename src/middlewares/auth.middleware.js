@@ -17,8 +17,6 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-        console.log(getToken);
-
         const getDecode = jwt.verify(getToken, JWT_SECRET_KEY);
 
         if (!getDecode) {
@@ -28,7 +26,7 @@ const authMiddleware = (req, res, next) => {
             });
         }
 
-        req.user = getDecode.id;
+        req.user = getDecode;
 
         next();
     } catch (error) {
