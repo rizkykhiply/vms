@@ -5,7 +5,7 @@ const express = require('express');
 const { authMiddleware } = require('../middlewares/auth.middleware');
 
 // Import Auth Controllers
-const { authLoginController } = require('../controllers/auth.controller');
+const { authLoginController, authLogoutController } = require('../controllers/auth.controller');
 
 // Import Master Controllers
 const { masterBarangController, masterKendaraanController } = require('../controllers/master.controller');
@@ -17,6 +17,7 @@ const { registrasiController } = require('../controllers/registrasi.controller')
 const router = express.Router();
 
 // Define Router Auth Controller
+router.get('/auth/logout', authMiddleware, authLogoutController);
 router.post('/auth/login', authLoginController);
 
 // Define Route Master Controller

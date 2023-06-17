@@ -46,6 +46,7 @@ module.exports.authLoginController = async (req, res, next) => {
             {
                 id: getId,
                 nama: getName,
+                username: getUsername,
             },
             JWT_SECRET_KEY,
             { expiresIn: 300 },
@@ -56,8 +57,25 @@ module.exports.authLoginController = async (req, res, next) => {
             message: 'Success',
             data: {
                 access_token: getAccessToken,
+                nama: getName,
             },
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Auth Logout Controller
+module.exports.authLogoutController = async (req, res, next) => {
+    try {
+        const getUser = req.user;
+
+        if (getUser) {
+            return res.status(200).send({
+                statusCode: 200,
+                message: 'Success',
+            });
+        }
     } catch (error) {
         next(error);
     }
