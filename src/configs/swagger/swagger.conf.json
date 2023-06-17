@@ -17,11 +17,11 @@
     "servers": [
         {
             "url": "http://localhost:5000/api/vms",
-            "description": "Whatsapp API for Local development"
+            "description": "VMS API for Local development"
         },
         {
             "url": "https://{domain}/api/vms",
-            "description": "Whatsapp API for Beta & Production development",
+            "description": "VMS API for Beta & Production development",
             "variables": {
                 "domain": {
                     "enum": ["beta.com", "production.com"],
