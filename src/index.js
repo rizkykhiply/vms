@@ -13,8 +13,8 @@ const { router } = require('./routes');
 // Import Middlewares
 const { globalRoutes, globalError } = require('./middlewares/error.middleware');
 
-// Import Configs
-const { swaggerRouter } = require('./configs/swagger');
+// Import Config
+const { swaggerRouter } = require('./config/swagger');
 
 // Environments API
 const PROGRAM_PORT = process.env.PROGRAM_PORT;
