@@ -30,3 +30,48 @@ module.exports.masterBarangController = async (req, res, next) => {
         next(error);
     }
 };
+
+// Define Master Kendaraan Controller
+module.exports.createMasterKendaraanController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.kendaraanModels.createKendaraan({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Create Master Barang Controller
+module.exports.createMasterBarangController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.barangModels.createBarang({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Create Master Divisi Controller
+module.exports.createMasterDivisiController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.divisiModels.createDivisi({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
