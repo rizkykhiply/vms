@@ -42,7 +42,7 @@ router.get('/master/barang', authMiddleware, masterBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.post('/master/create/kendaraan', authMiddleware, validationMiddleware(masterKendaraanPipe), createMasterKendaraanController);
 router.post('/master/create/barang', authMiddleware, validationMiddleware(masterBarangPipe), createMasterBarangController);
-router.post('/master/create/divisi', validationMiddleware(masterDivisiPipe), createMasterDivisiController);
+router.post('/master/create/divisi', authMiddleware, validationMiddleware(masterDivisiPipe), createMasterDivisiController);
 
 // Define Router Visitor Controller
 router.post('/register/visitor', authMiddleware, validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
