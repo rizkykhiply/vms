@@ -1,11 +1,11 @@
 // Import Base Query
-const { baseQuery } = require('../configs/db.conf');
+const { baseQuery } = require('../config/db.conf');
 
 // Define Query Create Registrasi
 const createRegistrasi = async (params) => {
     const getQuery = `
         INSERT INTO tblRegistrasi
-            (idUser, idKendaraan, idBarang, waktu, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, isRegis)
+            (idUser, idKendaraan, idBarang, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, tglRegistrasi, isRegis)
         VALUES
             (?,?,?,?,?,?,?,?,?,?,?,?,?)
     `;
@@ -13,7 +13,6 @@ const createRegistrasi = async (params) => {
         params.idUser,
         params.idKendaraan,
         params.idBarang,
-        params.waktu,
         params.namaLengkap,
         params.nik,
         params.namaInstansi,
@@ -22,6 +21,7 @@ const createRegistrasi = async (params) => {
         params.imageScan,
         params.imageCam,
         params.kodeQr,
+        params.tglRegistrasi,
         params.isRegis,
     ]);
 };

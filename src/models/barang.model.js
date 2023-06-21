@@ -1,5 +1,5 @@
 // Import Base Query
-const { baseQuery } = require('../configs/db.conf');
+const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Barang
 const getAllBarang = async () => {
@@ -13,5 +13,16 @@ const getAllBarang = async () => {
     return await baseQuery(getQuery, []);
 };
 
+// Define Query Create Barang
+const createBarang = async (params) => {
+    const getQuery = `
+        INSERT INTO tblBarang
+            (idTypeBarang, nama)
+        VALUES
+            (?,?)
+    `;
+    return await baseQuery(getQuery, [params.idTypeBarang, params.nama]);
+};
+
 // Export All Barang Models
-module.exports.barangModels = { getAllBarang };
+module.exports.barangModels = { getAllBarang, createBarang };
