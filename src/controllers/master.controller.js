@@ -31,6 +31,21 @@ module.exports.masterBarangController = async (req, res, next) => {
     }
 };
 
+// Define Master Divisi Controller
+module.exports.masterDivisiController = async (req, res, next) => {
+    try {
+        const getDivisi = await models.divisiModels.getAllDivisi();
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getDivisi,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Master Kendaraan Controller
 module.exports.createMasterKendaraanController = async (req, res, next) => {
     try {

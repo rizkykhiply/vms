@@ -1,6 +1,11 @@
 // Import Base Query
 const { baseQuery } = require('../config/db.conf');
 
+// Define Query Get All Divisi
+const getAllDivisi = async () => {
+    return await baseQuery('SELECT id, nama FROM tblDivisi WHERE status = 1', []);
+};
+
 // Define Query Create Divisi
 const createDivisi = async (params) => {
     const getQuery = `
@@ -13,4 +18,4 @@ const createDivisi = async (params) => {
 };
 
 // Export All Divisi Models
-module.exports.divisiModels = { createDivisi };
+module.exports.divisiModels = { getAllDivisi, createDivisi };

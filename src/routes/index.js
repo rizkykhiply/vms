@@ -17,6 +17,7 @@ const { authLoginController, authLogoutController, authRegisterController } = re
 const {
     masterBarangController,
     masterKendaraanController,
+    masterDivisiController,
     createMasterBarangController,
     createMasterKendaraanController,
     createMasterDivisiController,
@@ -40,6 +41,7 @@ router.post('/auth/login', validationMiddleware(authLoginPipe), authLoginControl
 // Define Route Master Controller
 router.get('/master/barang', authMiddleware, masterBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
+router.get('/master/divisi', authMiddleware, masterDivisiController);
 router.post('/master/create/kendaraan', authMiddleware, validationMiddleware(masterKendaraanPipe), createMasterKendaraanController);
 router.post('/master/create/barang', authMiddleware, validationMiddleware(masterBarangPipe), createMasterBarangController);
 router.post('/master/create/divisi', authMiddleware, validationMiddleware(masterDivisiPipe), createMasterDivisiController);
