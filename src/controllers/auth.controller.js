@@ -45,7 +45,6 @@ module.exports.authLoginController = async (req, res, next) => {
                 username: getUsername,
             },
             JWT_SECRET_KEY,
-            { expiresIn: 300 },
         );
 
         return res.status(201).send({
