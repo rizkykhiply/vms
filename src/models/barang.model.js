@@ -7,7 +7,8 @@ const getAllBarang = async () => {
         SELECT b.id, CONCAT(b.nama, " ", CONCAT("(", tb.nama, ")")) as barang
         FROM tblBarang as b, tblTypeBarang as tb 
         WHERE 
-            b.idTypeBarang = tb.id AND b.status = 1
+            b.idTypeBarang = tb.id AND 
+            b.status = 1
         GROUP BY b.id
     `;
     return await baseQuery(getQuery, []);

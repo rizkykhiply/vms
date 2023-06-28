@@ -7,12 +7,5 @@ const authLoginPipe = joi.object({
     password: joi.string().required(),
 });
 
-// Define Auth Register Pipe
-const authRegisterPipe = joi.object({
-    nama: joi.string().required(),
-    username: joi.string().required(),
-    password: joi.string().required(),
-});
-
 // Export All Auth Pipe
-module.exports = { authLoginPipe, authRegisterPipe };
+module.exports = { authLoginPipe };

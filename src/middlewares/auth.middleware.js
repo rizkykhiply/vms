@@ -1,8 +1,8 @@
 // Import Modules
 const jwt = require('jsonwebtoken');
 
-// Define JWT Secret Key
-const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
+// Import Config
+const { JWT_SECRET_KEY } = require('../config/constant.conf');
 
 // Define Auth Middleware
 const authMiddleware = (req, res, next) => {

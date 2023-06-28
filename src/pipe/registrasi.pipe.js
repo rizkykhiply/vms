@@ -5,7 +5,11 @@ const joi = require('joi');
 const registrasiVisitorPipe = joi.object({
     idKendaraan: joi.number().required(),
     namaLengkap: joi.string().required(),
-    nik: joi.string().length(16).required(),
+    nik: joi
+        .string()
+        .length(16)
+        .pattern(new RegExp(/[0-9]$/))
+        .required(),
     namaInstansi: joi.string().required(),
     noPolisi: joi.string().required(),
     tujuan: joi.string().required(),
@@ -21,7 +25,11 @@ const registrasiBarangPipe = joi.object({
     idKendaraan: joi.number().required(),
     idBarang: joi.number().required(),
     namaLengkap: joi.string().required(),
-    nik: joi.string().length(16).required(),
+    nik: joi
+        .string()
+        .length(16)
+        .pattern(new RegExp(/[0-9]$/))
+        .required(),
     namaInstansi: joi.string().required(),
     noPolisi: joi.string().required(),
     imageScan: joi.string().required(),

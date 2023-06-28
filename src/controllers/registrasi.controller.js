@@ -3,13 +3,10 @@ const appRoot = require('app-root-path');
 
 // Import config
 const { validateImage } = require('../config/helper.conf');
+const { UPLOAD_FILE, UPLOAD_URL } = require('../config/constant.conf');
 
 // Import Models
 const { models } = require('../models');
-
-// Define Upload File
-const UPLOAD_FILE = process.env.UPLOAD_FILE;
-const UPLOAD_URL = process.env.UPLOAD_URL;
 
 // Define Registrasi Visitor Controller
 module.exports.registrasiVisitorController = async (req, res, next) => {

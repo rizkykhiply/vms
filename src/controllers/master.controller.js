@@ -5,7 +5,6 @@ const { models } = require('../models');
 module.exports.masterKendaraanController = async (req, res, next) => {
     try {
         const getKendaraan = await models.kendaraanModels.getAllKendaraan();
-
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
@@ -20,7 +19,6 @@ module.exports.masterKendaraanController = async (req, res, next) => {
 module.exports.masterBarangController = async (req, res, next) => {
     try {
         const getBarang = await models.barangModels.getAllBarang();
-
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
@@ -35,7 +33,6 @@ module.exports.masterBarangController = async (req, res, next) => {
 module.exports.masterDivisiController = async (req, res, next) => {
     try {
         const getDivisi = await models.divisiModels.getAllDivisi();
-
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
