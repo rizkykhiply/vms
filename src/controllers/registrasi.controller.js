@@ -5,6 +5,9 @@ const appRoot = require('app-root-path');
 const { validateImage } = require('../config/helper.conf');
 const { UPLOAD_FILE, UPLOAD_URL } = require('../config/constant.conf');
 
+// Import Consumer
+const { createRegistrasiQueue } = require('../consumer/registrasi.consumer');
+
 // Import Models
 const { models } = require('../models');
 
@@ -22,6 +25,10 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
             imageScan: getImageScan,
             imageCam: getImageCam,
         });
+
+        if (getImages.length === 0) {
+            throw new Error('Process Image Failed');
+        }
 
         const [imageScan, imageCam] = getImages;
 
@@ -53,36 +60,41 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
 module.exports.registrasiBarangController = async (req, res, next) => {
     try {
         const getBody = req.body;
-        const getImageScan = getBody.imageScan;
         const getImageCam = getBody.imageCam;
 
         const getPath = `${appRoot}/..${UPLOAD_FILE}`;
         const getImages = validateImage({
             path: getPath,
-            imageScan: getImageScan,
             imageCam: getImageCam,
         });
 
-        const [imageScan, imageCam] = getImages;
+        if (getImages.length === 0) {
+            throw new Error('Process Image Failed');
+        }
 
-        await models.registrasiModels.createRegistrasi({
-            idUser: getBody.idUser,
-            idKendaraan: getBody.idKendaraan,
-            idBarang: getBody.idBarang,
-            namaLengkap: getBody.namaLengkap,
-            nik: getBody.nik,
-            namaInstansi: getBody.namaInstansi,
-            noPolisi: getBody.noPolisi,
-            imageScan: `${UPLOAD_URL}/${imageScan}`,
-            imageCam: `${UPLOAD_URL}/${imageCam}`,
-            kodeQr: getBody.kodeQr,
-            tglRegistrasi: getBody.tglRegistrasi,
-            isRegis: 2,
-        });
+        const [imageCam] = getImages;
+
+        const addQueue = await createRegistrasiQueue.add(
+            'Registrasi-Process-Queue',
+            {
+                idUser: getBody.idUser,
+                idKendaraan: getBody.idKendaraan,
+                idBarang: getBody.idBarang,
+                idKios: getBody.idKios,
+                imageCam: `${UPLOAD_URL}/${imageCam}`,
+                kodeQr: getBody.kodeQr,
+                tglRegistrasi: getBody.tglRegistrasi,
+                isRegis: 2,
+            },
+            { attempts: 0, timeout: 5000 },
+        );
+
+        const resultQueue = await addQueue.finished();
 
         return res.status(201).send({
             statusCode: 201,
             message: 'Created',
+            data: resultQueue,
         });
     } catch (error) {
         next(error);

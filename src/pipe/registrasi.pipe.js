@@ -24,15 +24,7 @@ const registrasiBarangPipe = joi.object({
     idUser: joi.number().required(),
     idKendaraan: joi.number().required(),
     idBarang: joi.number().required(),
-    namaLengkap: joi.string().required(),
-    nik: joi
-        .string()
-        .length(16)
-        .pattern(new RegExp(/[0-9]$/))
-        .required(),
-    namaInstansi: joi.string().required(),
-    noPolisi: joi.string().required(),
-    imageScan: joi.string().required(),
+    idKios: joi.number().required(),
     imageCam: joi.string().required(),
     kodeQr: joi.string().required(),
     tglRegistrasi: joi.string().required(),

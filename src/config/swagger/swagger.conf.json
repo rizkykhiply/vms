@@ -1140,19 +1140,7 @@
                 }
             },
             "RegisterBarang": {
-                "required": [
-                    "idUser",
-                    "idKendaraan",
-                    "idBarang",
-                    "namaLengkap",
-                    "nik",
-                    "namaInstansi",
-                    "noPolisi",
-                    "imageScan",
-                    "imageCam",
-                    "kodeQr",
-                    "tglRegistrasi"
-                ],
+                "required": ["idUser", "idKendaraan", "idBarang", "idKios", "imageCam", "kodeQr", "tglRegistrasi"],
                 "properties": {
                     "idUser": {
                         "type": "integer",
@@ -1166,24 +1154,9 @@
                         "type": "integer",
                         "example": 1
                     },
-                    "namaLengkap": {
-                        "type": "string",
-                        "example": "Budi Santoso"
-                    },
-                    "nik": {
-                        "type": "string",
-                        "example": "1122334455667788"
-                    },
-                    "namaInstansi": {
-                        "type": "string",
-                        "example": "PT. Sejahtera"
-                    },
-                    "noPolisi": {
-                        "type": "string",
-                        "example": "B1234ABC"
-                    },
-                    "imageScan": {
-                        "type": "string"
+                    "idKios": {
+                        "type": "integer",
+                        "example": 1
                     },
                     "imageCam": {
                         "type": "string"

@@ -62,26 +62,37 @@ const getRegistrasiBarang = async (id) => {
     return result;
 };
 
+// Define Query Get Antrian Barang
+const getAntrianBarang = async () => {
+    const getQuery = `
+        SELECT noAntrian 
+        FROM tblRegistrasi 
+        WHERE 
+            isRegis = 2 AND
+            DATE_FORMAT(tglRegistrasi, "%Y-%m-%d") = DATE_FORMAT(NOW(), "%Y-%m-%d")  
+        ORDER BY id DESC 
+        LIMIT 1 
+    `;
+    const [result] = await baseQuery(getQuery, []);
+    return result;
+};
+
 // Define Query Create Registrasi
 const createRegistrasi = async (params) => {
     const getQuery = `
         INSERT INTO tblRegistrasi
-            (idUser, idKendaraan, idBarang, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, tglRegistrasi, isRegis)
+            (idUser, idKendaraan, idBarang, idKios, imageCam, kodeQr, noAntrian, tglRegistrasi, isRegis)
         VALUES
-            (?,?,?,?,?,?,?,?,?,?,?,?,?)
+            (?,?,?,?,?,?,?,?,?)
     `;
     return await baseQuery(getQuery, [
         params.idUser,
         params.idKendaraan,
         params.idBarang,
-        params.namaLengkap,
-        params.nik,
-        params.namaInstansi,
-        params.noPolisi,
-        params.tujuan,
-        params.imageScan,
+        params.idKios,
         params.imageCam,
         params.kodeQr,
+        params.noAntrian,
         params.tglRegistrasi,
         params.isRegis,
     ]);
@@ -115,6 +126,7 @@ module.exports.registrasiModels = {
     getAllRegistrasiBarang,
     getRegistrasiVisitor,
     getRegistrasiBarang,
+    getAntrianBarang,
     createRegistrasi,
     updateRegistrasi,
 };
