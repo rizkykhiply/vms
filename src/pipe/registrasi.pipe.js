@@ -4,6 +4,7 @@ const joi = require('joi');
 // Define Registrasi Visitor Pipe
 const registrasiVisitorPipe = joi.object({
     idKendaraan: joi.number().required(),
+    idKios: joi.number().required(),
     namaLengkap: joi.string().required(),
     nik: joi
         .string()

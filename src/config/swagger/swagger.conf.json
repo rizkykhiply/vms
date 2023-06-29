@@ -1088,6 +1088,7 @@
             "RegisterVisitor": {
                 "required": [
                     "idKendaraan",
+                    "idKios",
                     "namaLengkap",
                     "nik",
                     "namaInstansi",
@@ -1100,6 +1101,10 @@
                 ],
                 "properties": {
                     "idKendaraan": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "idKios": {
                         "type": "integer",
                         "example": 1
                     },
