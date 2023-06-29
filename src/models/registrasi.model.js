@@ -4,7 +4,8 @@ const { baseQuery } = require('../config/db.conf');
 // Define Query Get All Registrasi Visitor
 const getAllRegistrasiVisitor = async () => {
     const getQuery = `
-        SELECT a.id, b.nama as petugas, c.nama as kendaraan, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.imageScan, a.imageCam, a.kodeQr, a.tglRegistrasi, 
+        SELECT a.id, b.nama as petugas, c.nama as kendaraan, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.imageScan, a.imageCam, a.kodeQr,
+        a.tglRegistrasi, 
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
@@ -21,15 +22,17 @@ const getAllRegistrasiVisitor = async () => {
 // Define Query Get All Registrasi Barang
 const getAllRegistrasiBarang = async () => {
     const getQuery = `
-        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan, a.imageCam, a.kodeQr, a.tglRegistrasi, 
+        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, e.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
+        a.imageCam, a.kodeQr, a.tglRegistrasi, 
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
-        FROM tblRegistrasi as a, tblUsers as b, tblKendaraan as c, tblBarang as d
+        FROM tblRegistrasi as a, tblUsers as b, tblKendaraan as c, tblBarang as d, tblKios as e
         WHERE 
             a.idUser = b.id AND
             a.idKendaraan = c.id AND
             a.idBarang = d.id AND
+            a.idKios = e.id AND
             a.isRegis = 2
         ORDER BY a.tglRegistrasi DESC
     `;

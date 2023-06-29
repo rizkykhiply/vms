@@ -10,6 +10,7 @@ const REDIS_HOST = process.env.REDIS_HOST;
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const UPLOAD_FILE = process.env.UPLOAD_FILE;
 const UPLOAD_URL = process.env.UPLOAD_URL;
+const IS_DEVELOPMENT = process.env.NODE_ENV === 'development';
 
 // Export All Constant
 module.exports = {
@@ -24,4 +25,5 @@ module.exports = {
     JWT_SECRET_KEY,
     UPLOAD_FILE,
     UPLOAD_URL,
+    IS_DEVELOPMENT,
 };

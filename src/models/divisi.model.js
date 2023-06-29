@@ -18,4 +18,7 @@ const createDivisi = async (params) => {
 };
 
 // Export All Divisi Models
-module.exports.divisiModels = { getAllDivisi, createDivisi };
+module.exports.divisiModels = {
+    getAllDivisi,
+    createDivisi,
+};

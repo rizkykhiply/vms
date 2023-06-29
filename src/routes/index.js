@@ -6,13 +6,20 @@ const { authMiddleware } = require('../middlewares/auth.middleware');
 const { validationMiddleware } = require('../middlewares/validation.middleware');
 
 // Import Pipes
-const { authLoginPipe } = require('../pipe/auth.pipe');
-const { masterBarangPipe, masterKendaraanPipe, masterDivisiPipe } = require('../pipe/master.pipe');
-const { registrasiVisitorPipe, registrasiBarangPipe, registrasiKaryawanPipe } = require('../pipe/registrasi.pipe');
-const { createUserPipe, editUserPipe } = require('../pipe/user.pipe');
-const { editKaryawanPipe } = require('../pipe/karyawan.pipe');
-const { editVisitorPipe } = require('../pipe/visitor.pipe');
-const { editBarangPipe } = require('../pipe/barang.pipe');
+const {
+    authLoginPipe,
+    masterKendaraanPipe,
+    masterBarangPipe,
+    masterDivisiPipe,
+    registrasiVisitorPipe,
+    registrasiBarangPipe,
+    registrasiKaryawanPipe,
+    editUserPipe,
+    createUserPipe,
+    editKaryawanPipe,
+    editVisitorPipe,
+    editBarangPipe,
+} = require('../pipe');
 
 // Import Auth Controllers
 const { authLoginController, authLogoutController, authCheckController } = require('../controllers/auth.controller');
@@ -89,4 +96,6 @@ router.get('/barang/:id', authMiddleware, getDetailBarangController);
 router.patch('/barang/:id', authMiddleware, validationMiddleware(editBarangPipe), editBarangController);
 
 // Export Router
-module.exports = { router };
+module.exports = {
+    router,
+};

@@ -13,4 +13,6 @@ const editKaryawanPipe = joi.object({
 });
 
 // Export All Karyawan Pipe
-module.exports = { editKaryawanPipe };
+module.exports = {
+    editKaryawanPipe,
+};

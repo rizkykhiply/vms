@@ -19,4 +19,6 @@ const editBarangPipe = joi.object({
 });
 
 // Export All Barang Pipe
-module.exports = { editBarangPipe };
+module.exports = {
+    editBarangPipe,
+};

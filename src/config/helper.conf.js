@@ -59,9 +59,8 @@ module.exports.validateImage = (params) => {
         const getFilename = `${getCurrDate}_${getRandChar}.jpeg`;
         const getFile = `${getPath}/${getFilename}`;
 
-        getFiles.push(getFilename);
-
         fs.writeFileSync(getFile, getImage, 'base64');
+        getFiles.push(getFilename);
     }
 
     return getFiles;

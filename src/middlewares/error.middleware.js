@@ -1,3 +1,6 @@
+// Import Config
+const { logger } = require('../config/logger');
+
 // Define Global Routes Middleware
 const globalRoutes = (req, res, next) => {
     return res.status(404).send({
@@ -8,9 +11,9 @@ const globalRoutes = (req, res, next) => {
 
 // Define Global Error Middleware
 const globalError = (error, req, res, next) => {
-    if (error) {
-        console.log(error);
-    }
+    const getRoute = req.route.path;
+    if (error) logger.error(error, { route: getRoute });
+
     return res.status(500).send({
         statusCode: 500,
         message: 'Internal Server Error',
@@ -18,4 +21,7 @@ const globalError = (error, req, res, next) => {
 };
 
 // Export All Error Middlewares
-module.exports = { globalRoutes, globalError };
+module.exports = {
+    globalRoutes,
+    globalError,
+};

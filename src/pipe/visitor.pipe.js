@@ -19,4 +19,6 @@ const editVisitorPipe = joi.object({
 });
 
 // Export All Visitor Pipe
-module.exports = { editVisitorPipe };
+module.exports = {
+    editVisitorPipe,
+};

@@ -18,4 +18,7 @@ const createKendaraan = async (params) => {
 };
 
 // Export All Kendaraan Models
-module.exports.kendaraanModels = { getAllKendaraan, createKendaraan };
+module.exports.kendaraanModels = {
+    getAllKendaraan,
+    createKendaraan,
+};

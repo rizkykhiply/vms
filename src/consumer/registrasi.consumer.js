@@ -14,9 +14,10 @@ createRegistrasiQueue.process('Registrasi-Process-Queue', async (job) => {
     const calcNoAntrian = getNoAntrian ? +getNoAntrian + 1 : 1;
 
     await models.registrasiModels.createRegistrasi({ ...job.data, noAntrian: calcNoAntrian });
+
     return {
         noAntrian: calcNoAntrian,
-        status: 'success',
+        status: 'Success',
     };
 });
 
@@ -32,7 +33,7 @@ createRegistrasiQueue.on('completed', async (job, result) => {
     job.log(`Success: ${JSON.stringify(result)}`);
 });
 
-// Export All Registrasi Queue
+// Export Registrasi Queue
 module.exports = {
     createRegistrasiQueue,
 };

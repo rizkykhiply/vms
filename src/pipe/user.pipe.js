@@ -17,4 +17,7 @@ const editUserPipe = joi.object({
 });
 
 // Export All User Pipe
-module.exports = { createUserPipe, editUserPipe };
+module.exports = {
+    createUserPipe,
+    editUserPipe,
+};

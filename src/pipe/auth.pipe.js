@@ -8,4 +8,6 @@ const authLoginPipe = joi.object({
 });
 
 // Export All Auth Pipe
-module.exports = { authLoginPipe };
+module.exports = {
+    authLoginPipe,
+};

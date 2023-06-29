@@ -41,4 +41,8 @@ const registrasiKaryawanPipe = joi.object({
 });
 
 // Export All Registrasi Pipe
-module.exports = { registrasiVisitorPipe, registrasiBarangPipe, registrasiKaryawanPipe };
+module.exports = {
+    registrasiVisitorPipe,
+    registrasiBarangPipe,
+    registrasiKaryawanPipe,
+};

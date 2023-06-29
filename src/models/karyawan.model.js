@@ -45,4 +45,9 @@ const updateKaryawan = async (params) => {
 };
 
 // Export All Karyawan Models
-module.exports.karyawanModels = { getAllKaryawan, getKaryawan, createKaryawan, updateKaryawan };
+module.exports.karyawanModels = {
+    getAllKaryawan,
+    getKaryawan,
+    createKaryawan,
+    updateKaryawan,
+};

@@ -24,5 +24,7 @@ const validationMiddleware = (schema) => {
     };
 };
 
-// Export All Validation Middleware
-module.exports = { validationMiddleware };
+// Export Validation Middleware
+module.exports = {
+    validationMiddleware,
+};

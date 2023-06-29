@@ -26,4 +26,7 @@ const createBarang = async (params) => {
 };
 
 // Export All Barang Models
-module.exports.barangModels = { getAllBarang, createBarang };
+module.exports.barangModels = {
+    getAllBarang,
+    createBarang,
+};

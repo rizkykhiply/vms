@@ -18,4 +18,8 @@ const masterDivisiPipe = joi.object({
 });
 
 // Export All Master Pipe
-module.exports = { masterKendaraanPipe, masterBarangPipe, masterDivisiPipe };
+module.exports = {
+    masterKendaraanPipe,
+    masterBarangPipe,
+    masterDivisiPipe,
+};

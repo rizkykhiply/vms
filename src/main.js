@@ -12,10 +12,12 @@ const { router } = require('./routes');
 
 // Import Middlewares
 const { globalRoutes, globalError } = require('./middlewares/error.middleware');
+const { morganMiddleware } = require('./middlewares/morgan.middleware');
 
 // Import Config
 const { swaggerRouter } = require('./config/swagger');
 const { configQueue } = require('./config/bull');
+const { loggerDev } = require('./config/logger/logger.dev');
 
 // Import Consumer
 const { createRegistrasiQueue } = require('./consumer/registrasi.consumer');
@@ -45,6 +47,9 @@ app.use('/admin/queues', getQueues.getRouter());
 // Grouping Static Image API
 app.use('/api/vms/image', express.static(`${appRoot}/..${UPLOAD_FILE}`));
 
+// Middleware Logger Http
+app.use(morganMiddleware);
+
 // Grouping API
 app.use('/api/vms', router);
 
@@ -55,4 +60,4 @@ app.use(globalRoutes);
 app.use(globalError);
 
 // Listening API
-app.listen(PROGRAM_PORT, () => console.log(`${PROGRAM_NAME} running on port ${PROGRAM_PORT}`));
+app.listen(PROGRAM_PORT, () => loggerDev.info(`${PROGRAM_NAME} running on port ${PROGRAM_PORT}`));

@@ -3,6 +3,7 @@ const mysql = require('mysql2');
 
 // Import Config
 const { DATABASE_HOST, DATABASE_PORT, DATABASE_USER, DATABASE_PASS, DATABASE_NAME } = require('./constant.conf');
+const { loggerDev } = require('./logger/logger.dev');
 
 // Define Connection Pool Database
 const connection = mysql.createPool({
@@ -18,10 +19,10 @@ const connection = mysql.createPool({
 // Define Get Connection Database
 connection.getConnection((error, connection) => {
     if (error) {
-        console.log(`database connection ${error}`);
+        loggerDev.error(`Database connection ${error}`);
     }
     if (connection) {
-        console.log(`database connected`);
+        loggerDev.info(`Database connected`);
         connection.release();
     }
 });
@@ -38,4 +39,7 @@ const baseQuery = async (query, params) => {
     });
 };
 
-module.exports = { baseQuery };
+// Export Base Query Database
+module.exports = {
+    baseQuery,
+};
