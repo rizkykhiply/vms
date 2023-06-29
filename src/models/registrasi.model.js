@@ -5,7 +5,7 @@ const { baseQuery } = require('../config/db.conf');
 const getAllRegistrasiVisitor = async () => {
     const getQuery = `
         SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.imageScan, a.imageCam, a.kodeQr,
-        a.tglRegistrasi, 
+        DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
@@ -24,7 +24,7 @@ const getAllRegistrasiVisitor = async () => {
 const getAllRegistrasiBarang = async () => {
     const getQuery = `
         SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, e.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
-        a.imageCam, a.kodeQr, a.noAntrian, a.tglRegistrasi, 
+        a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi,
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
@@ -43,7 +43,8 @@ const getAllRegistrasiBarang = async () => {
 // Define Query Get Registrasi Visitor
 const getRegistrasiVisitor = async (id) => {
     const getQuery = `
-        SELECT id, idUser, idKendaraan, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, tglRegistrasi, status 
+        SELECT id, idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, 
+        DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
             id = ? AND
@@ -56,7 +57,8 @@ const getRegistrasiVisitor = async (id) => {
 // Define Query Get Registrasi Barang
 const getRegistrasiBarang = async (id) => {
     const getQuery = `
-        SELECT id, idUser, idKendaraan, idBarang, namaLengkap, nik, namaInstansi, noPolisi, imageScan, imageCam, kodeQr, tglRegistrasi, status 
+        SELECT id, idUser, idKendaraan, idKios, idBarang, namaLengkap, nik, namaInstansi, noPolisi, imageScan, imageCam, kodeQr,
+        DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
             id = ? AND

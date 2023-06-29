@@ -4,7 +4,7 @@ const { baseQuery } = require('../config/db.conf');
 // Define Query Get All Karyawan
 const getAllKaryawan = async () => {
     const getQuery = `
-        SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.tglRegistrasi, 
+        SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE 
                 WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
@@ -19,7 +19,7 @@ const getAllKaryawan = async () => {
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
     const [result] = await baseQuery(
-        'SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, tglRegistrasi, status FROM tblKaryawan WHERE id = ?',
+        'SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status FROM tblKaryawan WHERE id = ?',
         [id],
     );
     return result;
