@@ -1,14 +1,16 @@
 // Import Modules
 const mysql = require('mysql2');
 
+// Import Config
+const { DATABASE_HOST, DATABASE_PORT, DATABASE_USER, DATABASE_PASS, DATABASE_NAME } = require('./constant.conf');
+
 // Define Connection Pool Database
 const connection = mysql.createPool({
-    host: process.env.DATABASE_HOST,
-    port: process.env.DATABASE_PORT,
-    user: process.env.DATABASE_USER,
-    password: process.env.DATABASE_PASS,
-    database: process.env.DATABASE_NAME,
-    connectionLimit: 10,
+    host: DATABASE_HOST,
+    port: DATABASE_PORT,
+    user: DATABASE_USER,
+    password: DATABASE_PASS,
+    database: DATABASE_NAME,
     enableKeepAlive: true,
     waitForConnections: true,
 });
