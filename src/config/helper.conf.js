@@ -37,8 +37,8 @@ module.exports.validateRandomChar = (request, type) => {
 // Define Validate Image
 module.exports.validateImage = (params) => {
     const getPath = params.path;
-    const getImageScan = params.imageScan;
-    const getImageCam = params.imageCam;
+    const getImageScan = params?.imageScan;
+    const getImageCam = params?.imageCam;
 
     if (!fs.existsSync(getPath)) {
         fs.mkdirSync(getPath, { recursive: true });
@@ -49,6 +49,10 @@ module.exports.validateImage = (params) => {
 
     for (let i = 0; i < getImages.length; i++) {
         const getImage = getImages[i];
+
+        if (!getImage) {
+            continue;
+        }
 
         const getCurrDate = new Date().getTime();
         const getRandChar = this.validateRandomChar(8, 'alphanumeric');
