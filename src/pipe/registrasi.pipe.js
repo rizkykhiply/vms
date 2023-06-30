@@ -38,6 +38,7 @@ const registrasiKaryawanPipe = joi.object({
     noInduk: joi.string().required(),
     noPolisi: joi.string().required(),
     noKartu: joi.string().required(),
+    image: joi.string().required(),
     tglRegistrasi: joi.string().required(),
 });
 

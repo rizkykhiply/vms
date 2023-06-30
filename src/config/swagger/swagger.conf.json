@@ -1177,7 +1177,7 @@
                 }
             },
             "RegisterKaryawan": {
-                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "tglRegistrasi"],
+                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi"],
                 "properties": {
                     "idDivisi": {
                         "type": "integer",
@@ -1198,6 +1198,9 @@
                     "noKartu": {
                         "type": "string",
                         "example": "123123001"
+                    },
+                    "image": {
+                        "type": "string"
                     },
                     "tglRegistrasi": {
                         "type": "string",

@@ -29,11 +29,19 @@ const getKaryawan = async (id) => {
 const createKaryawan = async (params) => {
     const getQuery = `
         INSERT INTO tblKaryawan
-            (idDivisi, nama, noInduk, noPolisi, noKartu, tglRegistrasi)
+            (idDivisi, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
         VALUES
-            (?,?,?,?,?,?)
+            (?,?,?,?,?,?,?)
     `;
-    return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.tglRegistrasi]);
+    return await baseQuery(getQuery, [
+        params.idDivisi,
+        params.nama,
+        params.noInduk,
+        params.noPolisi,
+        params.noKartu,
+        params.image,
+        params.tglRegistrasi,
+    ]);
 };
 
 // Define Query Update Karyawan

@@ -1,8 +1,9 @@
 // Import Modules
 const appRoot = require('app-root-path');
+const fs = require('fs');
 
 // Import config
-const { validateImage } = require('../config/helper.conf');
+const { validateImage, validateRandomChar } = require('../config/helper.conf');
 const { UPLOAD_FILE, UPLOAD_URL } = require('../config/constant.conf');
 
 // Import Consumer
@@ -112,7 +113,17 @@ module.exports.registrasiBarangController = async (req, res, next) => {
 module.exports.registrasiKaryawanController = async (req, res, next) => {
     try {
         const getBody = req.body;
-        await models.karyawanModels.createKaryawan({ ...getBody });
+        const getImage = getBody.image;
+
+        const getPath = `${appRoot}/..${UPLOAD_FILE}`;
+        const getCurrDate = new Date().getTime();
+        const getRandChar = validateRandomChar(8, 'alphanumeric');
+        const getFilename = `${getCurrDate}_${getRandChar}.jpeg`;
+        const getFile = `${getPath}/${getFilename}`;
+
+        fs.writeFileSync(getFile, getImage, 'base64');
+
+        await models.karyawanModels.createKaryawan({ ...getBody, image: getFilename });
 
         return res.status(201).send({
             statusCode: 201,
