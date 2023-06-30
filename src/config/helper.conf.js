@@ -1,6 +1,10 @@
 // Import Modules
 const bcrypt = require('bcrypt');
+const appRoot = require('app-root-path');
 const fs = require('fs');
+
+// Import Config
+const { UPLOAD_FILE, UPLOAD_URL } = require('./constant.conf');
 
 // Define Validate Password
 module.exports.validateHashPassword = async (request) => {
@@ -36,32 +40,19 @@ module.exports.validateRandomChar = (request, type) => {
 
 // Define Validate Image
 module.exports.validateImage = (params) => {
-    const getPath = params.path;
-    const getImageScan = params?.imageScan;
-    const getImageCam = params?.imageCam;
+    const getImage = params.image;
+    const getPath = `${appRoot}/..${UPLOAD_FILE}`;
 
     if (!fs.existsSync(getPath)) {
         fs.mkdirSync(getPath, { recursive: true });
     }
 
-    const getImages = [getImageScan, getImageCam];
-    const getFiles = [];
+    const getCurrDate = new Date().getTime();
+    const getRandChar = this.validateRandomChar(8, 'alphanumeric');
+    const getFilename = `${getCurrDate}_${getRandChar}.jpeg`;
+    const getFile = `${getPath}/${getFilename}`;
 
-    for (let i = 0; i < getImages.length; i++) {
-        const getImage = getImages[i];
+    fs.writeFileSync(getFile, getImage, 'base64');
 
-        if (!getImage) {
-            continue;
-        }
-
-        const getCurrDate = new Date().getTime();
-        const getRandChar = this.validateRandomChar(8, 'alphanumeric');
-        const getFilename = `${getCurrDate}_${getRandChar}.jpeg`;
-        const getFile = `${getPath}/${getFilename}`;
-
-        fs.writeFileSync(getFile, getImage, 'base64');
-        getFiles.push(getFilename);
-    }
-
-    return getFiles;
+    return `${UPLOAD_URL}/${getFilename}`;
 };

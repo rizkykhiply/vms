@@ -1,10 +1,5 @@
-// Import Modules
-const appRoot = require('app-root-path');
-const fs = require('fs');
-
 // Import config
-const { validateImage, validateRandomChar } = require('../config/helper.conf');
-const { UPLOAD_FILE, UPLOAD_URL } = require('../config/constant.conf');
+const { validateImage } = require('../config/helper.conf');
 
 // Import Consumer
 const { createRegistrasiQueue } = require('../consumer/registrasi.consumer');
@@ -19,22 +14,22 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
         const getUser = req.user;
         const getImageScan = getBody.imageScan;
         const getImageCam = getBody.imageCam;
+        const getImages = [getImageScan, getImageCam];
 
-        const getPath = `${appRoot}/..${UPLOAD_FILE}`;
-        const getImages = validateImage({
-            path: getPath,
-            imageScan: getImageScan,
-            imageCam: getImageCam,
-        });
+        const getFiles = [];
 
-        if (getImages.length === 0) {
-            throw new Error('Process Image Failed');
+        for (let i = 0; i < getImages.length; i++) {
+            const getImage = getImages[i];
+            const getFile = validateImage({
+                image: getImage,
+            });
+
+            getFiles.push(getFile);
         }
 
-        const [imageScan, imageCam] = getImages;
-
+        const [imageScan, imageCam] = getFiles;
         await models.registrasiModels.createRegistrasi({
-            idUser: getUser.id,
+            idUser: getUser?.id,
             idKendaraan: getBody.idKendaraan,
             idKios: getBody.idKios,
             namaLengkap: getBody.namaLengkap,
@@ -42,8 +37,8 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
             namaInstansi: getBody.namaInstansi,
             noPolisi: getBody.noPolisi,
             tujuan: getBody.tujuan,
-            imageScan: `${UPLOAD_URL}/${imageScan}`,
-            imageCam: `${UPLOAD_URL}/${imageCam}`,
+            imageScan: imageScan,
+            imageCam: imageCam,
             kodeQr: getBody.kodeQr,
             tglRegistrasi: getBody.tglRegistrasi,
             isRegis: 1,
@@ -64,17 +59,9 @@ module.exports.registrasiBarangController = async (req, res, next) => {
         const getBody = req.body;
         const getImageCam = getBody.imageCam;
 
-        const getPath = `${appRoot}/..${UPLOAD_FILE}`;
-        const getImages = validateImage({
-            path: getPath,
-            imageCam: getImageCam,
+        const imageCam = validateImage({
+            image: getImageCam,
         });
-
-        if (getImages.length === 0) {
-            throw new Error('Process Image Failed');
-        }
-
-        const [imageCam] = getImages;
 
         const addQueue = await createRegistrasiQueue.add(
             'Registrasi-Process-Queue',
@@ -89,7 +76,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
                 noPolisi: null,
                 tujuan: null,
                 imageScan: null,
-                imageCam: `${UPLOAD_URL}/${imageCam}`,
+                imageCam: imageCam,
                 kodeQr: getBody.kodeQr,
                 tglRegistrasi: getBody.tglRegistrasi,
                 isRegis: 2,
@@ -115,15 +102,11 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
         const getBody = req.body;
         const getImage = getBody.image;
 
-        const getPath = `${appRoot}/..${UPLOAD_FILE}`;
-        const getCurrDate = new Date().getTime();
-        const getRandChar = validateRandomChar(8, 'alphanumeric');
-        const getFilename = `${getCurrDate}_${getRandChar}.jpeg`;
-        const getFile = `${getPath}/${getFilename}`;
+        const image = validateImage({
+            image: getImage,
+        });
 
-        fs.writeFileSync(getFile, getImage, 'base64');
-
-        await models.karyawanModels.createKaryawan({ ...getBody, image: getFilename });
+        await models.karyawanModels.createKaryawan({ ...getBody, image });
 
         return res.status(201).send({
             statusCode: 201,
