@@ -4,6 +4,7 @@ const { divisiModels } = require('./divisi.model');
 const { karyawanModels } = require('./karyawan.model');
 const { kendaraanModels } = require('./kendaraan.model');
 const { registrasiModels } = require('./registrasi.model');
+const { typeBarangModels } = require('./type-barang.model');
 const { userModels } = require('./user.model');
 
 // Export All Models
@@ -13,5 +14,6 @@ module.exports.models = {
     karyawanModels,
     kendaraanModels,
     registrasiModels,
+    typeBarangModels,
     userModels,
 };

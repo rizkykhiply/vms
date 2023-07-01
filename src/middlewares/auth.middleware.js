@@ -30,7 +30,6 @@ const authMiddleware = (req, res, next) => {
 
         next();
     } catch (error) {
-        console.log(error);
         return res.status(401).send({
             statusCode: 401,
             message: 'Unauthorized',

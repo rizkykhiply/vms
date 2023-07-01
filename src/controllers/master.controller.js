@@ -29,6 +29,20 @@ module.exports.masterBarangController = async (req, res, next) => {
     }
 };
 
+// Define Master Type Barang Controller
+module.exports.masterTypeBarangController = async (req, res, next) => {
+    try {
+        const getTypeBarang = await models.typeBarangModels.getAllTypeBarang();
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getTypeBarang,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Master Divisi Controller
 module.exports.masterDivisiController = async (req, res, next) => {
     try {
@@ -63,6 +77,21 @@ module.exports.createMasterBarangController = async (req, res, next) => {
     try {
         const getBody = req.body;
         await models.barangModels.createBarang({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Create Master Type Barang Controller
+module.exports.createMasterTypeBarangController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.typeBarangModels.createTypeBarang({ ...getBody });
 
         return res.status(201).send({
             statusCode: 201,

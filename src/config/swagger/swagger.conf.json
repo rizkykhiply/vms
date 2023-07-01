@@ -169,6 +169,33 @@
                 }
             }
         },
+        "/master/type/barang": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/master/kendaraan": {
             "get": {
                 "tags": ["Master"],
@@ -262,6 +289,37 @@
                 "produces": ["application/json"],
                 "requestBody": {
                     "$ref": "#/components/request/Master/Create/Barang"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/create/type/barang": {
+            "post": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Create/TypeBarang"
                 },
                 "responses": {
                     "200": {
@@ -875,6 +933,16 @@
                             }
                         }
                     },
+                    "TypeBarang": {
+                        "description": "Example Request Create Type Barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateTypeBarang"
+                                }
+                            }
+                        }
+                    },
                     "Divisi": {
                         "description": "Example Request Create Divisi",
                         "content": {
@@ -1073,6 +1141,15 @@
                     "nama": {
                         "type": "string",
                         "example": "Rubber"
+                    }
+                }
+            },
+            "CreateTypeBarang": {
+                "required": ["nama"],
+                "properties": {
+                    "nama": {
+                        "type": "string",
+                        "example": "Stone"
                     }
                 }
             },

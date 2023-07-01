@@ -12,6 +12,11 @@ const masterBarangPipe = joi.object({
     nama: joi.string().required(),
 });
 
+// Define Master Type Barang Pipe
+const masterTypeBarangPipe = joi.object({
+    nama: joi.string().required(),
+});
+
 // Define Master Divisi Pipe
 const masterDivisiPipe = joi.object({
     nama: joi.string().required(),
@@ -21,5 +26,6 @@ const masterDivisiPipe = joi.object({
 module.exports = {
     masterKendaraanPipe,
     masterBarangPipe,
+    masterTypeBarangPipe,
     masterDivisiPipe,
 };

@@ -4,14 +4,28 @@ const { baseQuery } = require('../config/db.conf');
 // Define Query Get All Barang
 const getAllBarang = async () => {
     const getQuery = `
-        SELECT b.id, CONCAT(b.nama, " ", CONCAT("(", tb.nama, ")")) as barang
-        FROM tblBarang as b, tblTypeBarang as tb 
+        SELECT a.id, CONCAT(a.nama, " ", CONCAT("(", b.nama, ")")) as barang
+        FROM tblBarang as a, tblTypeBarang as b 
         WHERE 
-            b.idTypeBarang = tb.id AND 
-            b.status = 1
+            a.idTypeBarang = b.id AND 
+            a.status = 1
         GROUP BY b.id
     `;
     return await baseQuery(getQuery, []);
+};
+
+const getBarang = async (id) => {
+    const getQuery = `
+        SELECT a.nama as barang, b.nama as typeBarang
+        FROM tblBarang as a, tblTypeBarang as b 
+        WHERE 
+            a.idTypeBarang = b.id AND 
+            a.id = ? AND
+            a.status = 1
+        GROUP BY b.id
+    `;
+    const [result] = await baseQuery(getQuery, [id]);
+    return result;
 };
 
 // Define Query Create Barang
@@ -28,5 +42,6 @@ const createBarang = async (params) => {
 // Export All Barang Models
 module.exports.barangModels = {
     getAllBarang,
+    getBarang,
     createBarang,
 };

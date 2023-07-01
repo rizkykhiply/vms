@@ -10,6 +10,7 @@ const {
     authLoginPipe,
     masterKendaraanPipe,
     masterBarangPipe,
+    masterTypeBarangPipe,
     masterDivisiPipe,
     registrasiVisitorPipe,
     registrasiBarangPipe,
@@ -27,11 +28,13 @@ const { authLoginController, authLogoutController, authCheckController } = requi
 // Import Master Controllers
 const {
     masterBarangController,
+    masterTypeBarangController,
     masterKendaraanController,
     masterDivisiController,
     createMasterBarangController,
     createMasterKendaraanController,
     createMasterDivisiController,
+    createMasterTypeBarangController,
 } = require('../controllers/master.controller');
 
 // Import Registrasi Controllers
@@ -63,10 +66,12 @@ router.post('/auth/login', validationMiddleware(authLoginPipe), authLoginControl
 
 // Define Route Master Controller
 router.get('/master/barang', authMiddleware, masterBarangController);
+router.get('/master/type/barang', authMiddleware, masterTypeBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.get('/master/divisi', authMiddleware, masterDivisiController);
 router.post('/master/create/kendaraan', authMiddleware, validationMiddleware(masterKendaraanPipe), createMasterKendaraanController);
 router.post('/master/create/barang', authMiddleware, validationMiddleware(masterBarangPipe), createMasterBarangController);
+router.post('/master/create/type/barang', authMiddleware, validationMiddleware(masterTypeBarangPipe), createMasterTypeBarangController);
 router.post('/master/create/divisi', authMiddleware, validationMiddleware(masterDivisiPipe), createMasterDivisiController);
 
 // Define Route Registrasi Controller
