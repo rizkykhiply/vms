@@ -69,17 +69,19 @@ const getRegistrasiBarang = async (id) => {
 };
 
 // Define Query Get Antrian Barang
-const getAntrianBarang = async () => {
+const getAntrianBarang = async (id) => {
     const getQuery = `
-        SELECT noAntrian 
-        FROM tblRegistrasi 
+        SELECT a.noAntrian 
+        FROM tblRegistrasi a, tblBarang b
         WHERE 
-            isRegis = 2 AND
-            DATE_FORMAT(tglRegistrasi, "%Y-%m-%d") = DATE_FORMAT(NOW(), "%Y-%m-%d")  
-        ORDER BY id DESC 
+            a.idBarang = b.id AND
+            b.id = ? AND
+            a.isRegis = 2 AND
+            DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d") = DATE_FORMAT(NOW(), "%Y-%m-%d")  
+        ORDER BY a.id DESC 
         LIMIT 1 
     `;
-    const [result] = await baseQuery(getQuery, []);
+    const [result] = await baseQuery(getQuery, [id]);
     return result;
 };
 

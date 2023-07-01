@@ -57,7 +57,17 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
 module.exports.registrasiBarangController = async (req, res, next) => {
     try {
         const getBody = req.body;
+        const getIdBarang = getBody.idBarang;
         const getImageCam = getBody.imageCam;
+
+        const getBarang = await models.barangModels.getBarang(getIdBarang);
+
+        if (!getBarang) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Not Found',
+            });
+        }
 
         const imageCam = validateImage({
             image: getImageCam,
@@ -86,10 +96,15 @@ module.exports.registrasiBarangController = async (req, res, next) => {
 
         const resultQueue = await addQueue.finished();
 
+        const responseData = {
+            ...getBarang,
+            ...resultQueue,
+        };
+
         return res.status(201).send({
             statusCode: 201,
             message: 'Created',
-            data: resultQueue,
+            data: responseData,
         });
     } catch (error) {
         next(error);
