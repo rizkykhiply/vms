@@ -71,6 +71,11 @@ const updateUser = async (params) => {
     return await baseQuery(getQuery, getParams);
 };
 
+// Define Query Delete User
+const deleteUser = async (id) => {
+    return await baseQuery('DELETE FROM tblUsers WHERE id = ?', [id]);
+};
+
 // Export All Auth Models
 module.exports.userModels = {
     getUserLogin,
@@ -81,4 +86,5 @@ module.exports.userModels = {
     getAllUsers,
     createUser,
     updateUser,
+    deleteUser,
 };

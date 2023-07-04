@@ -68,8 +68,8 @@ const getRegistrasiBarang = async (id) => {
     return result;
 };
 
-// Define Query Get Antrian Barang
-const getAntrianBarang = async (id) => {
+// Define Query Get No Antrian Barang
+const getNoAntrianBarang = async (id) => {
     const getQuery = `
         SELECT a.noAntrian 
         FROM tblRegistrasi a, tblBarang b
@@ -134,13 +134,19 @@ const updateRegistrasi = async (params) => {
     ]);
 };
 
+// Define Query Delete Registrasi
+const deleteRegistrasi = async (id) => {
+    return await baseQuery('DELETE FROM tblRegistrasi WHERE id = ?', [id]);
+};
+
 // Export All Registrasi Models
 module.exports.registrasiModels = {
     getAllRegistrasiVisitor,
     getAllRegistrasiBarang,
     getRegistrasiVisitor,
     getRegistrasiBarang,
-    getAntrianBarang,
+    getNoAntrianBarang,
     createRegistrasi,
     updateRegistrasi,
+    deleteRegistrasi,
 };

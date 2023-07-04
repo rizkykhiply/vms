@@ -18,10 +18,13 @@ const getAllKaryawan = async () => {
 
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
-    const [result] = await baseQuery(
-        'SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status FROM tblKaryawan WHERE id = ?',
-        [id],
-    );
+    const getQuery = `
+        SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        FROM tblKaryawan 
+        WHERE 
+            id = ?
+    `;
+    const [result] = await baseQuery(getQuery, [id]);
     return result;
 };
 
@@ -33,15 +36,7 @@ const createKaryawan = async (params) => {
         VALUES
             (?,?,?,?,?,?,?)
     `;
-    return await baseQuery(getQuery, [
-        params.idDivisi,
-        params.nama,
-        params.noInduk,
-        params.noPolisi,
-        params.noKartu,
-        params.image,
-        params.tglRegistrasi,
-    ]);
+    return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.image, params.tglRegistrasi]);
 };
 
 // Define Query Update Karyawan
@@ -52,10 +47,16 @@ const updateKaryawan = async (params) => {
     );
 };
 
+// Define Query Delete Karyawan
+const deleteKaryawan = async (id) => {
+    return await baseQuery('DELETE FROM tblKaryawan WHERE id = ?', [id]);
+};
+
 // Export All Karyawan Models
 module.exports.karyawanModels = {
     getAllKaryawan,
     getKaryawan,
     createKaryawan,
     updateKaryawan,
+    deleteKaryawan,
 };
