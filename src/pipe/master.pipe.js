@@ -1,31 +1,60 @@
 // Import Modules
 const joi = require('joi');
 
-// Define Master Kendaraan Pipe
-const masterKendaraanPipe = joi.object({
-    nama: joi.string().required(),
-});
-
-// Define Master Barang Pipe
-const masterBarangPipe = joi.object({
+// Define Create  Master Barang Pipe
+const createMasterBarangPipe = joi.object({
     idTypeBarang: joi.number().required(),
     nama: joi.string().required(),
 });
 
-// Define Master Type Barang Pipe
-const masterTypeBarangPipe = joi.object({
+// Define Create Master Type Barang Pipe
+const createMasterTypeBarangPipe = joi.object({
     nama: joi.string().required(),
 });
 
-// Define Master Divisi Pipe
-const masterDivisiPipe = joi.object({
+// Define Create Master Kendaraan Pipe
+const createMasterKendaraanPipe = joi.object({
     nama: joi.string().required(),
+});
+
+// Define Create Master Divisi Pipe
+const createMasterDivisiPipe = joi.object({
+    nama: joi.string().required(),
+});
+
+// Define Update Master Barang Pipe
+const updateMasterBarangPipe = joi.object({
+    idTypeBarang: joi.number().required(),
+    nama: joi.string().required(),
+    status: joi.number(),
+});
+
+// Define Update Master Type Barang Pipe
+const updateMasterTypeBarangPipe = joi.object({
+    nama: joi.string().required(),
+    status: joi.number(),
+});
+
+// Define Update Master Kendaraan Pipe
+const updateMasterKendaraanPipe = joi.object({
+    nama: joi.string().required(),
+    status: joi.number(),
+});
+
+// Define Update Master Divisi Pipe
+const updateMasterDivisiPipe = joi.object({
+    nama: joi.string().required(),
+    status: joi.number(),
 });
 
 // Export All Master Pipe
 module.exports = {
-    masterKendaraanPipe,
-    masterBarangPipe,
-    masterTypeBarangPipe,
-    masterDivisiPipe,
+    createMasterBarangPipe,
+    createMasterTypeBarangPipe,
+    createMasterKendaraanPipe,
+    createMasterDivisiPipe,
+    updateMasterBarangPipe,
+    updateMasterTypeBarangPipe,
+    updateMasterKendaraanPipe,
+    updateMasterDivisiPipe,
 };

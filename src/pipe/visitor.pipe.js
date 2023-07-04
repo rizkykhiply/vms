@@ -3,7 +3,6 @@ const joi = require('joi');
 
 // Define Edit Visitor Pipe
 const editVisitorPipe = joi.object({
-    idUser: joi.number().required(),
     idKendaraan: joi.number().required(),
     namaLengkap: joi.string().required(),
     nik: joi

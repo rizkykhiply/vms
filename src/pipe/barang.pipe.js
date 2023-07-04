@@ -3,7 +3,6 @@ const joi = require('joi');
 
 // Define Edit Barang Pipe
 const editBarangPipe = joi.object({
-    idUser: joi.number().required(),
     idKendaraan: joi.number().required(),
     idBarang: joi.number().required(),
     namaLengkap: joi.string().required(),

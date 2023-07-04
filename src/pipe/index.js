@@ -2,7 +2,16 @@
 const { authLoginPipe } = require('./auth.pipe');
 const { editBarangPipe } = require('./barang.pipe');
 const { editKaryawanPipe } = require('./karyawan.pipe');
-const { masterBarangPipe, masterTypeBarangPipe, masterDivisiPipe, masterKendaraanPipe } = require('./master.pipe');
+const {
+    createMasterBarangPipe,
+    createMasterTypeBarangPipe,
+    createMasterDivisiPipe,
+    createMasterKendaraanPipe,
+    updateMasterKendaraanPipe,
+    updateMasterBarangPipe,
+    updateMasterTypeBarangPipe,
+    updateMasterDivisiPipe,
+} = require('./master.pipe');
 const { registrasiVisitorPipe, registrasiBarangPipe, registrasiKaryawanPipe } = require('./registrasi.pipe');
 const { createUserPipe, editUserPipe } = require('./user.pipe');
 const { editVisitorPipe } = require('./visitor.pipe');
@@ -10,16 +19,20 @@ const { editVisitorPipe } = require('./visitor.pipe');
 // Export All Pipes
 module.exports = {
     authLoginPipe,
-    editBarangPipe,
-    editKaryawanPipe,
-    masterBarangPipe,
-    masterTypeBarangPipe,
-    masterDivisiPipe,
-    masterKendaraanPipe,
+    createUserPipe,
+    createMasterBarangPipe,
+    createMasterTypeBarangPipe,
+    createMasterDivisiPipe,
+    createMasterKendaraanPipe,
     registrasiVisitorPipe,
     registrasiBarangPipe,
     registrasiKaryawanPipe,
-    createUserPipe,
     editUserPipe,
     editVisitorPipe,
+    editKaryawanPipe,
+    editBarangPipe,
+    updateMasterBarangPipe,
+    updateMasterTypeBarangPipe,
+    updateMasterDivisiPipe,
+    updateMasterKendaraanPipe,
 };
