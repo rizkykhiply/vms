@@ -29,7 +29,7 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
 
         const [imageScan, imageCam] = getFiles;
         await models.registrasiModels.createRegistrasi({
-            idUser: getUser?.id,
+            idUser: getUser.id,
             idKendaraan: getBody.idKendaraan,
             idKios: getBody.idKios,
             namaLengkap: getBody.namaLengkap,
@@ -60,9 +60,9 @@ module.exports.registrasiBarangController = async (req, res, next) => {
         const getIdBarang = getBody.idBarang;
         const getImageCam = getBody.imageCam;
 
-        const getBarang = await models.barangModels.getBarang(getIdBarang);
+        const getAntrianBarang = await models.barangModels.getAntrianBarang(getIdBarang);
 
-        if (!getBarang) {
+        if (!getAntrianBarang) {
             return res.status(404).send({
                 statusCode: 404,
                 message: 'Not Found',
@@ -97,7 +97,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
         const resultQueue = await addQueue.finished();
 
         const responseData = {
-            ...getBarang,
+            ...getAntrianBarang,
             ...resultQueue,
         };
 

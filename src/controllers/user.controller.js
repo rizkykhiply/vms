@@ -122,3 +122,27 @@ module.exports.editUserController = async (req, res, next) => {
         next(error);
     }
 };
+
+// Define Delete User Controller
+module.exports.deleteUserController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getUser = await models.userModels.getUserById(getId);
+
+        if (!getUser) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Not Found',
+            });
+        }
+
+        await models.userModels.deleteUser(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Deleted',
+        });
+    } catch (error) {
+        next(error);
+    }
+};

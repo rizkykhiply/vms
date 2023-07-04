@@ -72,3 +72,27 @@ module.exports.editKaryawanController = async (req, res, next) => {
         next(error);
     }
 };
+
+// Define Delete Karyawan Controller
+module.exports.deleteKaryawanController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getKaryawan = await models.karyawanModels.getKaryawan(getId);
+
+        if (!getKaryawan) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Not Found',
+            });
+        }
+
+        await models.karyawanModels.deleteKaryawan(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Deleted',
+        });
+    } catch (error) {
+        next(error);
+    }
+};

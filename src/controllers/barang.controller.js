@@ -42,6 +42,7 @@ module.exports.getDetailBarangController = async (req, res, next) => {
 module.exports.editBarangController = async (req, res, next) => {
     try {
         const getId = req.params.id;
+        const getUser = req.user;
         const getBody = req.body;
 
         const getBarang = await models.registrasiModels.getRegistrasiBarang(getId);
@@ -55,7 +56,7 @@ module.exports.editBarangController = async (req, res, next) => {
 
         await models.registrasiModels.updateRegistrasi({
             id: getId,
-            idUser: getBody.idUser,
+            idUser: getUser.id,
             idKendaraan: getBody.idKendaraan,
             idBarang: getBody.idBarang,
             namaLengkap: getBody.namaLengkap,
@@ -69,6 +70,30 @@ module.exports.editBarangController = async (req, res, next) => {
         return res.status(201).send({
             statusCode: 201,
             message: 'Updated',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Delete Barang Controller
+module.exports.deleteBarangController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getBarang = await models.registrasiModels.getRegistrasiBarang(getId);
+
+        if (!getBarang) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Not Found',
+            });
+        }
+
+        await models.registrasiModels.deleteRegistrasi(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Deleted',
         });
     } catch (error) {
         next(error);

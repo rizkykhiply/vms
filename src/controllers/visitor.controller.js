@@ -42,6 +42,7 @@ module.exports.getVisitorController = async (req, res, next) => {
 module.exports.editVisitorController = async (req, res, next) => {
     try {
         const getId = req.params.id;
+        const getUser = req.user;
         const getBody = req.body;
 
         const getVisitor = await models.registrasiModels.getRegistrasiVisitor(getId);
@@ -55,7 +56,7 @@ module.exports.editVisitorController = async (req, res, next) => {
 
         await models.registrasiModels.updateRegistrasi({
             id: getId,
-            idUser: getBody.idUser,
+            idUser: getUser.id,
             idKendaraan: getBody.idKendaraan,
             namaLengkap: getBody.namaLengkap,
             nik: getBody.nik,
@@ -69,6 +70,30 @@ module.exports.editVisitorController = async (req, res, next) => {
         return res.status(201).send({
             statusCode: 201,
             message: 'Updated',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Delete Visitor Controller
+module.exports.deleteVisitorController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getVisitor = await models.registrasiModels.getRegistrasiVisitor(getId);
+
+        if (!getVisitor) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Not Found',
+            });
+        }
+
+        await models.registrasiModels.deleteRegistrasi(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Deleted',
         });
     } catch (error) {
         next(error);
