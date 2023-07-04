@@ -10,7 +10,7 @@ const createRegistrasiQueue = createQueue('Registrasi-Queue');
 // Define Registrasi Process Queue
 createRegistrasiQueue.process('Registrasi-Process-Queue', async (job) => {
     const getIdBarang = job.data.idBarang;
-    const getAntrian = await models.registrasiModels.getAntrianBarang(getIdBarang);
+    const getAntrian = await models.registrasiModels.getNoAntrianBarang(getIdBarang);
     const getNoAntrian = getAntrian?.noAntrian;
     const calcNoAntrian = getNoAntrian ? +getNoAntrian + 1 : 1;
 
