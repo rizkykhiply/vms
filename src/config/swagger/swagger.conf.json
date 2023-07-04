@@ -250,15 +250,124 @@
                 }
             }
         },
-        "/master/create/kendaraan": {
-            "post": {
+        "/master/barang/{id}": {
+            "get": {
                 "tags": ["Master"],
                 "security": [{ "bearerAuth": [] }],
-                "consumes": ["application/json"],
                 "produces": ["application/json"],
-                "requestBody": {
-                    "$ref": "#/components/request/Master/Create/Kendaraan"
-                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/type/barang/{id}": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/kendaraan/{id}": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/divisi/{id}": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -343,6 +452,37 @@
                 }
             }
         },
+        "/master/create/kendaraan": {
+            "post": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Create/Kendaraan"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/master/create/divisi": {
             "post": {
                 "tags": ["Master"],
@@ -352,6 +492,298 @@
                 "requestBody": {
                     "$ref": "#/components/request/Master/Create/Divisi"
                 },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/update/barang/{id}": {
+            "patch": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Update/Barang"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/update/type/barang/{id}": {
+            "patch": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Update/TypeBarang"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/update/kendaraan/{id}": {
+            "patch": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Update/Kendaraan"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/update/divisi/{id}": {
+            "patch": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "requestBody": {
+                    "$ref": "#/components/request/Master/Update/Divisi"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/delete/barang/{id}": {
+            "delete": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/delete/type/barang/{id}": {
+            "delete": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/delete/kendaraan/{id}": {
+            "delete": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/delete/divisi/{id}": {
+            "delete": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -493,6 +925,37 @@
                 }
             }
         },
+        "/user/create": {
+            "post": {
+                "tags": ["User"],
+                "security": [{ "bearerAuth": [] }],
+                "consumes": ["application/json"],
+                "produces": ["application/json"],
+                "requestBody": {
+                    "$ref": "#/components/request/User/Create"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/user/{id}": {
             "get": {
                 "tags": ["User"],
@@ -562,17 +1025,19 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
-            }
-        },
-        "/user/create": {
-            "post": {
+            },
+            "delete": {
                 "tags": ["User"],
                 "security": [{ "bearerAuth": [] }],
-                "consumes": ["application/json"],
                 "produces": ["application/json"],
-                "requestBody": {
-                    "$ref": "#/components/request/User/Create"
-                },
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -691,6 +1156,39 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            },
+            "delete": {
+                "tags": ["Karyawan"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         },
         "/visitor": {
@@ -769,6 +1267,39 @@
                 "requestBody": {
                     "$ref": "#/components/request/Visitor/Update"
                 },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Visitor"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -887,6 +1418,39 @@
                         "$ref": "#/components/responses/InternalServerError"
                     }
                 }
+            },
+            "delete": {
+                "tags": ["Barang"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "type": "integer"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
             }
         }
     },
@@ -913,42 +1477,84 @@
             },
             "Master": {
                 "Create": {
-                    "Kendaraan": {
-                        "description": "Example Request Create Kendaraan",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/CreateKendaraan"
-                                }
-                            }
-                        }
-                    },
                     "Barang": {
-                        "description": "Example Request Create Barang",
+                        "description": "Example Request Create Master Barang",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CreateBarang"
+                                    "$ref": "#/components/schemas/CreateMasterBarang"
                                 }
                             }
                         }
                     },
                     "TypeBarang": {
-                        "description": "Example Request Create Type Barang",
+                        "description": "Example Request Create Master Type Barang",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CreateTypeBarang"
+                                    "$ref": "#/components/schemas/CreateMasterTypeBarang"
+                                }
+                            }
+                        }
+                    },
+                    "Kendaraan": {
+                        "description": "Example Request Create Master Kendaraan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/CreateMasterKendaraan"
                                 }
                             }
                         }
                     },
                     "Divisi": {
-                        "description": "Example Request Create Divisi",
+                        "description": "Example Request Create Master Divisi",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/CreateDivisi"
+                                    "$ref": "#/components/schemas/CreateMasterDivisi"
+                                }
+                            }
+                        }
+                    }
+                },
+                "Update": {
+                    "Barang": {
+                        "description": "Example Request Update Master Barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateMasterBarang"
+                                }
+                            }
+                        }
+                    },
+                    "TypeBarang": {
+                        "description": "Example Request Update Master Type Barang",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateMasterTypeBarang"
+                                }
+                            }
+                        }
+                    },
+                    "Kendaraan": {
+                        "description": "Example Request Update Master Kendaraan",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateMasterKendaraan"
+                                }
+                            }
+                        }
+                    },
+                    "Divisi": {
+                        "description": "Example Request Update Master Divisi",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UpdateMasterDivisi"
                                 }
                             }
                         }
@@ -1122,16 +1728,7 @@
                     }
                 }
             },
-            "CreateKendaraan": {
-                "required": ["nama"],
-                "properties": {
-                    "nama": {
-                        "type": "string",
-                        "example": "Mobil"
-                    }
-                }
-            },
-            "CreateBarang": {
+            "CreateMasterBarang": {
                 "required": ["idTypeBarang", "nama"],
                 "properties": {
                     "idTypeBarang": {
@@ -1144,7 +1741,7 @@
                     }
                 }
             },
-            "CreateTypeBarang": {
+            "CreateMasterTypeBarang": {
                 "required": ["nama"],
                 "properties": {
                     "nama": {
@@ -1153,12 +1750,38 @@
                     }
                 }
             },
-            "CreateDivisi": {
+            "CreateMasterKendaraan": {
+                "required": ["nama"],
+                "properties": {
+                    "nama": {
+                        "type": "string",
+                        "example": "Mobil"
+                    }
+                }
+            },
+            "CreateMasterDivisi": {
                 "required": ["nama"],
                 "properties": {
                     "nama": {
                         "type": "string",
                         "example": "IT"
+                    }
+                }
+            },
+            "CreateUser": {
+                "required": ["nama", "username", "password"],
+                "properties": {
+                    "nama": {
+                        "type": "string",
+                        "example": "Budi Santoso"
+                    },
+                    "username": {
+                        "type": "string",
+                        "example": "admin"
+                    },
+                    "password": {
+                        "type": "string",
+                        "example": "admin"
                     }
                 }
             },
@@ -1285,25 +1908,64 @@
                     }
                 }
             },
-            "CreateUser": {
-                "required": ["nama", "username", "password"],
+            "UpdateMasterBarang": {
+                "required": ["idTypeBarang", "nama", "status"],
+                "properties": {
+                    "idTypeBarang": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nama": {
+                        "type": "string",
+                        "example": "Coal"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "UpdateMasterTypeBarang": {
+                "required": ["nama", "status"],
                 "properties": {
                     "nama": {
                         "type": "string",
-                        "example": "Budi Santoso"
+                        "example": "Stone"
                     },
-                    "username": {
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "UpdateMasterKendaraan": {
+                "required": ["nama", "status"],
+                "properties": {
+                    "nama": {
                         "type": "string",
-                        "example": "admin"
+                        "example": "Mobil"
                     },
-                    "password": {
+                    "status": {
+                        "type": "integer",
+                        "example": 1
+                    }
+                }
+            },
+            "UpdateMasterDivisi": {
+                "required": ["nama", "status"],
+                "properties": {
+                    "nama": {
                         "type": "string",
-                        "example": "admin"
+                        "example": "IT"
+                    },
+                    "status": {
+                        "type": "integer",
+                        "example": 1
                     }
                 }
             },
             "UpdateUser": {
-                "required": ["nama, username, status"],
+                "required": ["nama", "username", "status"],
                 "properties": {
                     "nama": {
                         "type": "string",
@@ -1357,22 +2019,8 @@
                 }
             },
             "UpdateVisitor": {
-                "required": [
-                    "idUser",
-                    "idKendaraan",
-                    "namaLengkap",
-                    "nik",
-                    "namaInstansi",
-                    "noPolisi",
-                    "tujuan",
-                    "tglRegistrasi",
-                    "status"
-                ],
+                "required": ["idKendaraan", "namaLengkap", "nik", "namaInstansi", "noPolisi", "tujuan", "tglRegistrasi", "status"],
                 "properties": {
-                    "idUser": {
-                        "type": "integer",
-                        "example": 1
-                    },
                     "idKendaraan": {
                         "type": "integer",
                         "example": 1
@@ -1408,22 +2056,8 @@
                 }
             },
             "UpdateBarang": {
-                "required": [
-                    "idUser",
-                    "idKendaraan",
-                    "idBarang",
-                    "namaLengkap",
-                    "nik",
-                    "namaInstansi",
-                    "noPolisi",
-                    "tglRegistrasi",
-                    "status"
-                ],
+                "required": ["idKendaraan", "idBarang", "namaLengkap", "nik", "namaInstansi", "noPolisi", "tglRegistrasi", "status"],
                 "properties": {
-                    "idUser": {
-                        "type": "integer",
-                        "example": 1
-                    },
                     "idKendaraan": {
                         "type": "integer",
                         "example": 1
