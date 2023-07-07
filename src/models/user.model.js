@@ -35,7 +35,7 @@ const getAllUsers = async () => {
     const getQuery = `
         SELECT id, nama, username,
             CASE 
-                WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
+                WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
         FROM tblUsers
     `;
