@@ -1,13 +1,20 @@
+// Import Config
+const { validatePagination } = require('../config/helper.conf');
+
 // Import Models
 const { models } = require('../models');
 
 // Define Get All Visitor Controller
 module.exports.getVisitorsController = async (req, res, next) => {
     try {
-        const getVisitor = await models.registrasiModels.getAllRegistrasiVisitor();
+        const getCount = await models.registrasiModels.getCountRegistrasiVisitor();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getVisitor = await models.registrasiModels.getAllRegistrasiVisitor(getPagination);
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
             data: getVisitor,
         });
     } catch (error) {
