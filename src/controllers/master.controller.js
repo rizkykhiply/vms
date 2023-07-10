@@ -4,11 +4,27 @@ const { models } = require('../models');
 // Define Master Barang Controller
 module.exports.masterBarangController = async (req, res, next) => {
     try {
-        const getBarang = await models.barangModels.getAllBarang();
+        const [getBarang, getTypeBarang] = await Promise.all([
+            models.barangModels.getAllBarang(),
+            models.typeBarangModels.getAllTypeBarang(),
+        ]);
+
+        let getListBarang = {};
+
+        for (let i = 0; i < getTypeBarang.length; i++) {
+            getListBarang[getTypeBarang[i].nama] = [];
+        }
+        for (let j = 0; j < getBarang.length; j++) {
+            const idBarang = getBarang[j].id;
+            const typeBarang = getBarang[j].typeBarang;
+            const namaBarang = getBarang[j].barang;
+            getListBarang[typeBarang].push({ id: idBarang, barang: namaBarang });
+        }
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
-            data: getBarang,
+            data: getListBarang,
         });
     } catch (error) {
         next(error);
