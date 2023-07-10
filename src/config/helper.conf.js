@@ -1,10 +1,56 @@
 // Import Modules
+const dayjs = require('dayjs');
 const bcrypt = require('bcrypt');
 const appRoot = require('app-root-path');
 const fs = require('fs');
 
 // Import Config
 const { UPLOAD_FILE, UPLOAD_URL } = require('./constant.conf');
+
+module.exports.validateTime = (params) => {
+    const getRequest = params?.request;
+    const getType = params?.type;
+    const getValue = params?.value;
+    const getUnit = params?.unit;
+
+    if (!dayjs(getRequest).isValid()) return '';
+
+    switch (getType) {
+        case 'date':
+            return dayjs(getRequest).format('YYYY-MM-DD');
+
+        case 'date-time-1':
+            return dayjs(getRequest).format('YYYY-MM-DD HH:mm:ss');
+
+        case 'date-time-2':
+            return dayjs(getRequest).format('YYYYMMDDHHmmss');
+
+        case 'date-time-3':
+            return dayjs(getRequest).format('YYYYMMDD');
+
+        case 'date-time-4':
+            return dayjs(getRequest).format('DD MMMM YYYY');
+
+        case 'date-start':
+            return dayjs(getRequest).startOf('month').format('YYYY-MM-DD');
+
+        case 'date-add':
+            if (getValue || getUnit) return '';
+            return dayjs(getRequest).add(getValue, getUnit).format('YYYY-MM-DD');
+
+        case 'date-time-add':
+            if (getValue || getUnit) return '';
+            return dayjs(getRequest).add(getValue, getUnit).format('YYYY-MM-DD HH:mm:ss');
+
+        case 'date-subs':
+            if (getValue || getUnit) return '';
+            return dayjs(getRequest).subtract(getValue, getUnit).format('YYYY-MM-DD');
+
+        case 'date-time-subs':
+            if (getValue || getUnit) return '';
+            return dayjs(getRequest).subtract(getValue, getUnit).format('YYYY-MM-DD HH:mm:ss');
+    }
+};
 
 // Define Validate Password
 module.exports.validateHashPassword = async (request) => {
@@ -55,4 +101,40 @@ module.exports.validateImage = (params) => {
     fs.writeFileSync(getFile, getImage, 'base64');
 
     return `${UPLOAD_URL}/${getFilename}`;
+};
+
+// Define Validate Pagination
+module.exports.validatePagination = (params) => {
+    const getCurrentPage = +params.currentPage || 1;
+    const getLimit = +params.limit || 10;
+    const getSkip = (getCurrentPage - 1) * getLimit;
+    const getSort = params?.sort?.toLowerCase() === 'asc' ? 'ASC' : 'DESC';
+    const getSearch = params?.search?.toLowerCase() || '';
+    const getStartDate = this.validateTime({ request: params?.startDate || '', type: 'date' });
+    const getEndDate = this.validateTime({ request: params?.endDate || '', type: 'date' });
+    const getCount = +params.count || 0;
+    const getCountPage = Math.ceil(getCount / getLimit);
+
+    return {
+        pagination: `LIMIT ${getLimit} OFFSET ${getSkip}`,
+        currentPage: getCurrentPage,
+        totalPage: getCountPage,
+        sort: getSort,
+        search: getSearch,
+        startDate: getStartDate,
+        endDate: getEndDate,
+    };
+};
+
+// Define Validate Pagination Filter
+module.exports.validatePaginationFilter = (params) => {
+    const getStartDate = params.startDate;
+    const getEndDate = params.endDate;
+    const getColumn = params.column;
+
+    if (getStartDate && getEndDate) {
+        return `AND ${getColumn} BETWEEN '${getStartDate}' AND '${getEndDate}'`;
+    }
+
+    return '';
 };
