@@ -8,8 +8,8 @@ const getAllBarang = async () => {
         FROM tblBarang as a 
         JOIN tblTypeBarang as b ON a.idTypeBarang = b.id
         WHERE 
-            a.status = 1
-        ORDER BY b.id ASC
+            a.status = 1 
+        ORDER BY b.id, a.id ASC
     `;
     return await baseQuery(getQuery, []);
 };
