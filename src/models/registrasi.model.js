@@ -1,8 +1,19 @@
+// Import Config
+const { validatePaginationFilter } = require('../config/helper.conf');
+
 // Import Base Query
 const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Registrasi Visitor
-const getAllRegistrasiVisitor = async () => {
+const getAllRegistrasiVisitor = async (params) => {
+    const { pagination, sort, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
+    });
+
     const getQuery = `
         SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.imageScan, a.imageCam, a.kodeQr,
         DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
@@ -14,14 +25,23 @@ const getAllRegistrasiVisitor = async () => {
             a.idUser = b.id AND
             a.idKendaraan = c.id AND
             a.idKios = d.id AND
-            a.isRegis = 1
-        ORDER BY a.tglRegistrasi DESC
+            a.isRegis = 1 ${getFilter}
+        ORDER BY a.tglRegistrasi ${sort}
+        ${pagination}
     `;
     return await baseQuery(getQuery, []);
 };
 
 // Define Query Get All Registrasi Barang
-const getAllRegistrasiBarang = async () => {
+const getAllRegistrasiBarang = async (params) => {
+    const { pagination, sort, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
+    });
+
     const getQuery = `
         SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, e.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
         a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi,
@@ -34,8 +54,9 @@ const getAllRegistrasiBarang = async () => {
             a.idKendaraan = c.id AND
             a.idBarang = d.id AND
             a.idKios = e.id AND
-            a.isRegis = 2
-        ORDER BY a.tglRegistrasi DESC
+            a.isRegis = 2 ${getFilter}
+        ORDER BY a.tglRegistrasi ${sort}
+        ${pagination}
     `;
     return await baseQuery(getQuery, []);
 };
@@ -66,6 +87,18 @@ const getRegistrasiBarang = async (id) => {
     `;
     const [result] = await baseQuery(getQuery, [id]);
     return result;
+};
+
+// Define Query Get Count Registrasi Visitor
+const getCountRegistrasiVisitor = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 1');
+    return +result.count;
+};
+
+// Define Query Get Count Registrasi Barang
+const getCountRegistrasiBarang = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 2');
+    return +result.count;
 };
 
 // Define Query Get No Antrian Barang
@@ -145,6 +178,8 @@ module.exports.registrasiModels = {
     getAllRegistrasiBarang,
     getRegistrasiVisitor,
     getRegistrasiBarang,
+    getCountRegistrasiVisitor,
+    getCountRegistrasiBarang,
     getNoAntrianBarang,
     createRegistrasi,
     updateRegistrasi,
