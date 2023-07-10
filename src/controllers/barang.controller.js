@@ -1,13 +1,21 @@
+// Import Config
+const { validatePagination } = require('../config/helper.conf');
+
 // Import Models
 const { models } = require('../models');
 
 // Define Get All Barang Controller
 module.exports.getBarangController = async (req, res, next) => {
     try {
-        const getBarang = await models.registrasiModels.getAllRegistrasiBarang();
+        const getCount = await models.registrasiModels.getCountRegistrasiBarang();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getBarang = await models.registrasiModels.getAllRegistrasiBarang(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
             data: getBarang,
         });
     } catch (error) {
