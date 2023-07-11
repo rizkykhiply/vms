@@ -14,6 +14,23 @@ const getAllBarang = async () => {
     return await baseQuery(getQuery, []);
 };
 
+// Define Query Get All Admin Barang
+const getAllAdminBarang = async (params) => {
+    const { pagination, sort } = params;
+
+    const getQuery = `
+        SELECT a.id, b.nama as typeBarang, a.nama as barang,
+        CASE 
+            WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
+        FROM tblBarang as a 
+        JOIN tblTypeBarang as b ON a.idTypeBarang = b.id
+        ORDER BY a.createdAt ${sort}
+        ${pagination}
+    `;
+    return await baseQuery(getQuery, []);
+};
+
 // Define Query Get Barang
 const getBarang = async (id) => {
     const getQuery = `
@@ -24,6 +41,12 @@ const getBarang = async (id) => {
     `;
     const [result] = await baseQuery(getQuery, [id]);
     return result;
+};
+
+// Define Query Get Count Barang
+const getCountBarang = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblBarang');
+    return +result.count;
 };
 
 // Define Query Get Antrian Barang
@@ -70,7 +93,9 @@ const deleteBarang = async (id) => {
 // Export All Barang Models
 module.exports.barangModels = {
     getAllBarang,
+    getAllAdminBarang,
     getBarang,
+    getCountBarang,
     getAntrianBarang,
     createBarang,
     updateBarang,

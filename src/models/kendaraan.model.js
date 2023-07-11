@@ -6,10 +6,32 @@ const getAllKendaraan = async () => {
     return await baseQuery('SELECT id, nama FROM tblKendaraan WHERE status = 1', []);
 };
 
+// Define Query Get All Admin Kendaraan
+const getAllAdminKendaraan = async (params) => {
+    const { pagination, sort } = params;
+
+    const getQuery = `
+        SELECT id, nama,
+        CASE 
+            WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
+        FROM tblKendaraan 
+        ORDER BY createdAt ${sort}
+        ${pagination}
+    `;
+    return await baseQuery(getQuery, []);
+};
+
 // Define Query Get Kendaraan
 const getKendaraan = async (id) => {
     const [result] = await baseQuery('SELECT id, nama, status FROM tblKendaraan WHERE id = ?', [id]);
     return result;
+};
+
+// Define Query Get Count Kendaraan
+const getCountKendaraan = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblKendaraan');
+    return +result.count;
 };
 
 // Define Query Create Kendaraan
@@ -36,7 +58,9 @@ const deleteKendaraan = async (id) => {
 // Export All Kendaraan Models
 module.exports.kendaraanModels = {
     getAllKendaraan,
+    getAllAdminKendaraan,
     getKendaraan,
+    getCountKendaraan,
     createKendaraan,
     updateKendaraan,
     deleteKendaraan,

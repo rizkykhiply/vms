@@ -6,10 +6,32 @@ const getAllTypeBarang = async () => {
     return await baseQuery('SELECT id, nama FROM tblTypeBarang WHERE status = 1', []);
 };
 
+// Define Query Get All Admin Type Barang
+const getAllAdminTypeBarang = async (params) => {
+    const { pagination, sort } = params;
+
+    const getQuery = `
+        SELECT id, nama,
+        CASE 
+            WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
+        FROM tblTypeBarang
+        ORDER BY createdAt ${sort}
+        ${pagination}
+    `;
+    return await baseQuery(getQuery, []);
+};
+
 // Define Query Get Type Barang
 const getTypeBarang = async (id) => {
     const [result] = await baseQuery('SELECT id, nama, status FROM tblTypeBarang WHERE id = ?', [id]);
     return result;
+};
+
+// Define Query Get Count Type Barang
+const getCountTypeBarang = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblTypeBarang');
+    return +result.count;
 };
 
 // Define Query Create Type Barang
@@ -36,7 +58,9 @@ const deleteTypeBarang = async (id) => {
 // Export All Type Barang Models
 module.exports.typeBarangModels = {
     getAllTypeBarang,
+    getAllAdminTypeBarang,
     getTypeBarang,
+    getCountTypeBarang,
     createTypeBarang,
     updateTypeBarang,
     deleteTypeBarang,

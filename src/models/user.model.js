@@ -31,16 +31,26 @@ const getUserById = async (id) => {
 };
 
 // Define Query Get All User
-const getAllUsers = async () => {
+const getAllUsers = async (params) => {
+    const { pagination, sort } = params;
+
     const getQuery = `
         SELECT id, nama, username,
             CASE 
                 WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
         FROM tblUsers
+        ORDER BY createdAt ${sort}
+        ${pagination}
     `;
 
     return await baseQuery(getQuery, []);
+};
+
+// Define Query Get Count User
+const getCountUser = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblUsers');
+    return +result.count;
 };
 
 // Define Query Create User
@@ -84,6 +94,7 @@ module.exports.userModels = {
     getUserByUsername,
     getUserById,
     getAllUsers,
+    getCountUser,
     createUser,
     updateUser,
     deleteUser,

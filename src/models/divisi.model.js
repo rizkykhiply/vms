@@ -6,10 +6,33 @@ const getAllDivisi = async () => {
     return await baseQuery('SELECT id, nama FROM tblDivisi WHERE status = 1', []);
 };
 
+// Define Query Get All Admin Divisi
+const getAllAdminDivisi = async (params) => {
+    const { pagination, sort } = params;
+
+    const getQuery = `
+        SELECT id, nama,
+        CASE 
+            WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
+        FROM tblDivisi
+        ORDER BY createdAt ${sort}
+        ${pagination}
+    `;
+
+    return await baseQuery(getQuery, []);
+};
+
 // Define Query Get Divisi
 const getDivisi = async (id) => {
     const [result] = await baseQuery('SELECT id, nama, status FROM tblDivisi WHERE id = ?', [id]);
     return result;
+};
+
+// Define Query Get Count Divisi
+const getCountDivisi = async () => {
+    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblDivisi');
+    return +result.count;
 };
 
 // Define Query Create Divisi
@@ -36,7 +59,9 @@ const deleteDivisi = async (id) => {
 // Export All Divisi Models
 module.exports.divisiModels = {
     getAllDivisi,
+    getAllAdminDivisi,
     getDivisi,
+    getCountDivisi,
     createDivisi,
     updateDivisi,
     deleteDivisi,
