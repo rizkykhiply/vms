@@ -250,6 +250,178 @@
                 }
             }
         },
+        "/master/admin/barang": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/admin/type/barang": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/admin/kendaraan": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/master/admin/divisi": {
+            "get": {
+                "tags": ["Master"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/master/barang/{id}": {
             "get": {
                 "tags": ["Master"],
@@ -903,6 +1075,22 @@
                 "tags": ["User"],
                 "security": [{ "bearerAuth": [] }],
                 "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
