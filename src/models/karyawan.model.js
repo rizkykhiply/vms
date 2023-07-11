@@ -1,8 +1,19 @@
+// Import Config
+const { validatePaginationFilter } = require('../config/helper.conf');
+
 // Import Base Query
 const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Karyawan
-const getAllKaryawan = async () => {
+const getAllKaryawan = async (params) => {
+    const { pagination, sort, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
+    });
+
     const getQuery = `
         SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE 
@@ -10,8 +21,9 @@ const getAllKaryawan = async () => {
             END as status
         FROM tblKaryawan as a, tblDivisi as b
         WHERE
-            a.idDivisi = b.id
-        ORDER BY a.tglRegistrasi DESC
+            a.idDivisi = b.id ${getFilter}
+        ORDER BY a.tglRegistrasi ${sort}
+        ${pagination}
     `;
     return await baseQuery(getQuery, []);
 };
@@ -26,6 +38,26 @@ const getKaryawan = async (id) => {
     `;
     const [result] = await baseQuery(getQuery, [id]);
     return result;
+};
+
+// Define Query Get Count Karyawan
+const getCountKaryawan = async (params) => {
+    const { startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(tglRegistrasi, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblKaryawan
+        WHERE 
+            1 = 1
+            ${getFilter}
+    `;
+    const [result] = await baseQuery(getQuery, []);
+    return +result.count;
 };
 
 // Define Query Create Karyawan
@@ -56,6 +88,7 @@ const deleteKaryawan = async (id) => {
 module.exports.karyawanModels = {
     getAllKaryawan,
     getKaryawan,
+    getCountKaryawan,
     createKaryawan,
     updateKaryawan,
     deleteKaryawan,

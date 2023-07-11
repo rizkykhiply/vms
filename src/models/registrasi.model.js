@@ -90,14 +90,30 @@ const getRegistrasiBarang = async (id) => {
 };
 
 // Define Query Get Count Registrasi Visitor
-const getCountRegistrasiVisitor = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 1');
+const getCountRegistrasiVisitor = async (params) => {
+    const { startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(tglRegistrasi, "%Y-%m-%d")',
+    });
+
+    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 1 ${getFilter}`);
     return +result.count;
 };
 
 // Define Query Get Count Registrasi Barang
-const getCountRegistrasiBarang = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 2');
+const getCountRegistrasiBarang = async (params) => {
+    const { startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(tglRegistrasi, "%Y-%m-%d")',
+    });
+
+    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 2 ${getFilter}`);
     return +result.count;
 };
 
