@@ -1,5 +1,5 @@
 // Import Config
-const { validateHashPassword } = require('../config/helper.conf');
+const { validateHashPassword, validatePagination } = require('../config/helper.conf');
 
 // Import Models
 const { models } = require('../models');
@@ -7,10 +7,14 @@ const { models } = require('../models');
 // Define Get All User Controller
 module.exports.getUsersController = async (req, res, next) => {
     try {
-        const getUsers = await models.userModels.getAllUsers();
+        const getCount = await models.userModels.getCountUser();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getUsers = await models.userModels.getAllUsers(getPagination);
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
             data: getUsers,
         });
     } catch (error) {

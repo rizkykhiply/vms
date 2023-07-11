@@ -1,13 +1,13 @@
+// Import Config
+const { validatePagination } = require('../config/helper.conf');
+
 // Import Models
 const { models } = require('../models');
 
 // Define Master Barang Controller
 module.exports.masterBarangController = async (req, res, next) => {
     try {
-        const [getBarang, getTypeBarang] = await Promise.all([
-            models.barangModels.getAllBarang(),
-            models.typeBarangModels.getAllTypeBarang(),
-        ]);
+        const [getBarang, getTypeBarang] = await Promise.all([models.barangModels.getAllBarang(), models.typeBarangModels.getAllTypeBarang()]);
 
         let getListBarang = {};
 
@@ -66,6 +66,79 @@ module.exports.masterDivisiController = async (req, res, next) => {
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
+            data: getDivisi,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Barang Controller
+module.exports.masterAdminBarangController = async (req, res, next) => {
+    try {
+        const getCount = await models.barangModels.getCountBarang();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getBarang = await models.barangModels.getAllAdminBarang(getPagination);
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
+            data: getBarang,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Type Barang Controller
+module.exports.masterAdminTypeBarangController = async (req, res, next) => {
+    try {
+        const getCount = await models.typeBarangModels.getCountTypeBarang();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getTypeBarang = await models.typeBarangModels.getAllAdminTypeBarang(getPagination);
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
+            data: getTypeBarang,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Kendaraan Controller
+module.exports.masterAdminKendaraanController = async (req, res, next) => {
+    try {
+        const getCount = await models.kendaraanModels.getCountKendaraan();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getKendaraan = await models.kendaraanModels.getAllAdminKendaraan(getPagination);
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
+            data: getKendaraan,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Divisi Controller
+module.exports.masterAdminDivisiController = async (req, res, next) => {
+    try {
+        const getCount = await models.divisiModels.getCountDivisi();
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getDivisi = await models.divisiModels.getAllAdminDivisi(getPagination);
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
             data: getDivisi,
         });
     } catch (error) {
