@@ -1065,6 +1065,36 @@
                 "tags": ["Karyawan"],
                 "security": [{ "bearerAuth": [] }],
                 "produces": ["application/json"],
+                "parameters": [
+                    {
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "example": "2023-07-01"
+                    },
+                    {
+                        "name": "endDate",
+                        "in": "query",
+                        "required": true,
+                        "type": "string",
+                        "example": "2023-07-11"
+                    }
+                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
