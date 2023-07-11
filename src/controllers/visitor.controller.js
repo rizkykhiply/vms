@@ -7,7 +7,7 @@ const { models } = require('../models');
 // Define Get All Visitor Controller
 module.exports.getVisitorsController = async (req, res, next) => {
     try {
-        const getCount = await models.registrasiModels.getCountRegistrasiVisitor();
+        const getCount = await models.registrasiModels.getCountRegistrasiVisitor(req.query);
         const getPagination = validatePagination({ ...req.query, count: getCount });
         const getVisitor = await models.registrasiModels.getAllRegistrasiVisitor(getPagination);
         return res.status(200).send({

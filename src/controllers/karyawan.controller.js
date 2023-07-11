@@ -1,13 +1,21 @@
+// Import Config
+const { validatePagination } = require('../config/helper.conf');
+
 // Import Models
 const { models } = require('../models');
 
 // Define Get All Karyawan Controller
 module.exports.getKaryawanController = async (req, res, next) => {
     try {
-        const getKaryawan = await models.karyawanModels.getAllKaryawan();
+        const getCount = await models.karyawanModels.getCountKaryawan(req.query);
+        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getKaryawan = await models.karyawanModels.getAllKaryawan(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Succes',
+            currentPage: getPagination.currentPage,
+            totalPage: getPagination.totalPage,
             data: getKaryawan,
         });
     } catch (error) {

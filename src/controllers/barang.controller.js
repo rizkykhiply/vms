@@ -7,7 +7,7 @@ const { models } = require('../models');
 // Define Get All Barang Controller
 module.exports.getBarangController = async (req, res, next) => {
     try {
-        const getCount = await models.registrasiModels.getCountRegistrasiBarang();
+        const getCount = await models.registrasiModels.getCountRegistrasiBarang(req.query);
         const getPagination = validatePagination({ ...req.query, count: getCount });
         const getBarang = await models.registrasiModels.getAllRegistrasiBarang(getPagination);
 
