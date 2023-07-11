@@ -35,6 +35,10 @@ const {
     masterTypeBarangController,
     masterKendaraanController,
     masterDivisiController,
+    masterAdminBarangController,
+    masterAdminTypeBarangController,
+    masterAdminKendaraanController,
+    masterAdminDivisiController,
     masterDetailBarangController,
     masterDetailTypeBarangController,
     masterDetailKendaraanController,
@@ -81,6 +85,10 @@ router.get('/master/barang', authMiddleware, masterBarangController);
 router.get('/master/type/barang', authMiddleware, masterTypeBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.get('/master/divisi', authMiddleware, masterDivisiController);
+router.get('/master/admin/barang', authMiddleware, masterAdminBarangController);
+router.get('/master/admin/type/barang', authMiddleware, masterAdminTypeBarangController);
+router.get('/master/admin/kendaraan', authMiddleware, masterAdminKendaraanController);
+router.get('/master/admin/divisi', authMiddleware, masterAdminDivisiController);
 router.get('/master/barang/:id', authMiddleware, masterDetailBarangController);
 router.get('/master/type/barang/:id', authMiddleware, masterDetailTypeBarangController);
 router.get('/master/kendaraan/:id', authMiddleware, masterDetailKendaraanController);
