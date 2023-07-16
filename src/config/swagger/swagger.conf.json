@@ -1269,16 +1269,23 @@
                         "example": 10
                     },
                     {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": ""
+                    },
+                    {
                         "name": "startDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-01"
                     },
                     {
                         "name": "endDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-11"
                     }
@@ -1430,16 +1437,23 @@
                         "example": 10
                     },
                     {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": ""
+                    },
+                    {
                         "name": "startDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-01"
                     },
                     {
                         "name": "endDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-11"
                     }
@@ -1591,16 +1605,23 @@
                         "example": 10
                     },
                     {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": ""
+                    },
+                    {
                         "name": "startDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-01"
                     },
                     {
                         "name": "endDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-11"
                     }
