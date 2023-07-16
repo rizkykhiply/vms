@@ -15,17 +15,13 @@ const { globalRoutes, globalError } = require('./middlewares/error.middleware');
 const { morganMiddleware } = require('./middlewares/morgan.middleware');
 
 // Import Config
+const { UPLOAD_FILE, PROGRAM_PORT, PROGRAM_NAME } = require('./config/constant.conf');
 const { swaggerRouter } = require('./config/swagger');
 const { configQueue } = require('./config/bull');
 const { loggerDev } = require('./config/logger/logger.dev');
 
 // Import Consumer
 const { createRegistrasiQueue } = require('./consumer/registrasi.consumer');
-
-// Environments API
-const PROGRAM_PORT = process.env.PROGRAM_PORT;
-const PROGRAM_NAME = process.env.PROGRAM_NAME;
-const UPLOAD_FILE = process.env.UPLOAD_FILE;
 
 // Init Express
 const app = express();
