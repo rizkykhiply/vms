@@ -6,7 +6,7 @@ const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Registrasi Visitor
 const getAllRegistrasiVisitor = async (params) => {
-    const { pagination, sort, startDate, endDate } = params;
+    const { pagination, sort, search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -25,7 +25,9 @@ const getAllRegistrasiVisitor = async (params) => {
             a.idUser = b.id AND
             a.idKendaraan = c.id AND
             a.idKios = d.id AND
-            a.isRegis = 1 ${getFilter}
+            a.isRegis = 1 AND
+            (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
+            ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
     `;
@@ -34,7 +36,7 @@ const getAllRegistrasiVisitor = async (params) => {
 
 // Define Query Get All Registrasi Barang
 const getAllRegistrasiBarang = async (params) => {
-    const { pagination, sort, startDate, endDate } = params;
+    const { pagination, sort, search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -54,7 +56,9 @@ const getAllRegistrasiBarang = async (params) => {
             a.idKendaraan = c.id AND
             a.idBarang = d.id AND
             a.idKios = e.id AND
-            a.isRegis = 2 ${getFilter}
+            a.isRegis = 2 AND 
+            (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
+            ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
     `;
@@ -91,7 +95,7 @@ const getRegistrasiBarang = async (id) => {
 
 // Define Query Get Count Registrasi Visitor
 const getCountRegistrasiVisitor = async (params) => {
-    const { startDate, endDate } = params;
+    const { search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -99,13 +103,21 @@ const getCountRegistrasiVisitor = async (params) => {
         column: 'DATE_FORMAT(tglRegistrasi, "%Y-%m-%d")',
     });
 
-    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 1 ${getFilter}`);
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblRegistrasi 
+        WHERE 
+            isRegis = 1 AND 
+            (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}") 
+            ${getFilter}
+    `;
+
+    const [result] = await baseQuery(getQuery, []);
     return +result.count;
 };
 
 // Define Query Get Count Registrasi Barang
 const getCountRegistrasiBarang = async (params) => {
-    const { startDate, endDate } = params;
+    const { search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -113,7 +125,15 @@ const getCountRegistrasiBarang = async (params) => {
         column: 'DATE_FORMAT(tglRegistrasi, "%Y-%m-%d")',
     });
 
-    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblRegistrasi WHERE isRegis = 2 ${getFilter}`);
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblRegistrasi 
+        WHERE 
+            isRegis = 2 AND 
+            (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}")
+            ${getFilter}
+    `;
+
+    const [result] = await baseQuery(getQuery);
     return +result.count;
 };
 

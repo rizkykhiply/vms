@@ -6,7 +6,7 @@ const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Karyawan
 const getAllKaryawan = async (params) => {
-    const { pagination, sort, startDate, endDate } = params;
+    const { pagination, sort, search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -15,13 +15,15 @@ const getAllKaryawan = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
+        SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.image, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE 
                 WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
         FROM tblKaryawan as a, tblDivisi as b
         WHERE
-            a.idDivisi = b.id ${getFilter}
+            a.idDivisi = b.id AND
+            a.nama LIKE "%${search}%" 
+            ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
     `;
@@ -31,7 +33,7 @@ const getAllKaryawan = async (params) => {
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
     const getQuery = `
-        SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblKaryawan 
         WHERE 
             id = ?
@@ -42,7 +44,7 @@ const getKaryawan = async (id) => {
 
 // Define Query Get Count Karyawan
 const getCountKaryawan = async (params) => {
-    const { startDate, endDate } = params;
+    const { search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -53,7 +55,8 @@ const getCountKaryawan = async (params) => {
     const getQuery = `
         SELECT COUNT(1) count FROM tblKaryawan
         WHERE 
-            1 = 1
+            1 = 1 AND
+            nama LIKE "%${search}%" 
             ${getFilter}
     `;
     const [result] = await baseQuery(getQuery, []);
