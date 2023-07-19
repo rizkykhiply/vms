@@ -4,6 +4,7 @@ const express = require('express');
 // Import Middlewares
 const { authMiddleware } = require('../middlewares/auth.middleware');
 const { validationMiddleware } = require('../middlewares/validation.middleware');
+const { uploadMiddleware } = require('../middlewares/upload.middleware');
 
 // Import Pipes
 const {
@@ -58,13 +59,24 @@ const {
 } = require('../controllers/master.controller');
 
 // Import Registrasi Controllers
-const { registrasiVisitorController, registrasiBarangController, registrasiKaryawanController } = require('../controllers/registrasi.controller');
+const {
+    registrasiVisitorController,
+    registrasiBarangController,
+    registrasiKaryawanController,
+    registrasiImportKaryawanController,
+} = require('../controllers/registrasi.controller');
 
 // Import User Controllers
 const { getUsersController, getUserController, editUserController, createUserController, deleteUserController } = require('../controllers/user.controller');
 
 // Import Karyawan Controller
-const { getKaryawanController, getDetailKaryawanController, editKaryawanController, deleteKaryawanController } = require('../controllers/karyawan.controller');
+const {
+    getKaryawanController,
+    getDetailKaryawanController,
+    getDownloadKaryawanController,
+    editKaryawanController,
+    deleteKaryawanController,
+} = require('../controllers/karyawan.controller');
 
 // Import Visitor Controller
 const { getVisitorsController, getVisitorController, editVisitorController, deleteVisitorController } = require('../controllers/visitor.controller');
@@ -110,6 +122,7 @@ router.delete('/master/delete/divisi/:id', authMiddleware, deleteMasterDivisiCon
 router.post('/register/visitor', authMiddleware, validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
 router.post('/register/barang', validationMiddleware(registrasiBarangPipe), registrasiBarangController);
 router.post('/register/karyawan', authMiddleware, validationMiddleware(registrasiKaryawanPipe), registrasiKaryawanController);
+router.post('/register/import/karyawan', authMiddleware, uploadMiddleware('file'), registrasiImportKaryawanController);
 
 // Define Route User Controller
 router.get('/user', authMiddleware, getUsersController);
@@ -120,6 +133,7 @@ router.delete('/user/:id', authMiddleware, deleteUserController);
 
 // Define Route Karyawan Controller
 router.get('/karyawan', authMiddleware, getKaryawanController);
+router.get('/karyawan/download', authMiddleware, getDownloadKaryawanController);
 router.get('/karyawan/:id', authMiddleware, getDetailKaryawanController);
 router.patch('/karyawan/:id', authMiddleware, validationMiddleware(editKaryawanPipe), editKaryawanController);
 router.delete('/karyawan/:id', authMiddleware, deleteKaryawanController);

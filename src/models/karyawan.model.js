@@ -74,6 +74,17 @@ const createKaryawan = async (params) => {
     return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.image, params.tglRegistrasi]);
 };
 
+// Define Query Create Import Karyawan
+const createImportKaryawan = async (params) => {
+    const getQuery = `
+        INSERT INTO tblKaryawan
+            (idDivisi, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
+        VALUES
+            (?,?,?,?,?,"",NOW())
+    `;
+    return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu]);
+};
+
 // Define Query Update Karyawan
 const updateKaryawan = async (params) => {
     return await baseQuery(
@@ -93,6 +104,7 @@ module.exports.karyawanModels = {
     getKaryawan,
     getCountKaryawan,
     createKaryawan,
+    createImportKaryawan,
     updateKaryawan,
     deleteKaryawan,
 };

@@ -1,3 +1,7 @@
+// Import Modules
+const csv = require('fast-csv');
+const fs = require('fs');
+
 // Import config
 const { validateImage } = require('../config/helper.conf');
 
@@ -122,6 +126,39 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
         });
 
         await models.karyawanModels.createKaryawan({ ...getBody, image });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Registrasi Import Karyawan Controller
+module.exports.registrasiImportKaryawanController = async (req, res, next) => {
+    try {
+        const getPath = req?.file?.path;
+        const getRows = [];
+
+        fs.createReadStream(getPath)
+            .pipe(csv.parse({ headers: true, trim: true }))
+            .on('error', (error) => {
+                throw new Error(error);
+            })
+            .on('data', async (rows) => {
+                getRows.push(rows);
+                if (getRows.length === 1) {
+                    for (let index = 0; index < getRows.length; index++) {
+                        await models.karyawanModels.createImportKaryawan({ ...getRows[index] });
+                    }
+                    getRows.splice(0, getRows.length);
+                }
+            })
+            .on('end', () => {
+                fs.unlinkSync(getPath);
+            });
 
         return res.status(201).send({
             statusCode: 201,

@@ -1,3 +1,6 @@
+// Import Modules
+const csv = require('fast-csv');
+
 // Import Config
 const { validatePagination } = require('../config/helper.conf');
 
@@ -41,6 +44,34 @@ module.exports.getDetailKaryawanController = async (req, res, next) => {
             message: 'Success',
             data: getKaryawan,
         });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Get Download Karyawan Controller
+module.exports.getDownloadKaryawanController = async (req, res, next) => {
+    try {
+        const getDivisi = await models.divisiModels.getAllDivisi();
+        const getFormatDivisi = Object.values(...getDivisi);
+
+        const getData = [
+            ['idDivisi', 'nama', 'noInduk', 'noPolisi', 'noKartu'],
+            ['1', 'Budi Santoso', '123127780', 'B1234ABC', '123123001'],
+            ['\r'],
+            ['\r'],
+            ['\r'],
+            ['\r'],
+            ['\r'],
+            ['List Divisi'],
+            ['id', 'divisi'],
+            getFormatDivisi,
+        ];
+
+        res.setHeader('Content-Type', 'text/csv');
+        res.setHeader('Content-Disposition', 'attachment;filename=sample-import-karyawan.csv');
+
+        csv.writeToStream(res, getData, { headers: true, quoteColumns: true });
     } catch (error) {
         next(error);
     }
