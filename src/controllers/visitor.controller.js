@@ -7,14 +7,16 @@ const { models } = require('../models');
 // Define Get All Visitor Controller
 module.exports.getVisitorsController = async (req, res, next) => {
     try {
-        const getCount = await models.registrasiModels.getCountRegistrasiVisitor(req.query);
-        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getPagination = validatePagination({ ...req.query });
+        const getCount = await models.registrasiModels.getCountRegistrasiVisitor(getPagination);
         const getVisitor = await models.registrasiModels.getAllRegistrasiVisitor(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getVisitor,
         });
     } catch (error) {

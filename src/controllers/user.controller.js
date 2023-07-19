@@ -10,6 +10,7 @@ module.exports.getUsersController = async (req, res, next) => {
         const getCount = await models.userModels.getCountUser();
         const getPagination = validatePagination({ ...req.query, count: getCount });
         const getUsers = await models.userModels.getAllUsers(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',

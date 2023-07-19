@@ -112,13 +112,11 @@ module.exports.validatePagination = (params) => {
     const getSearch = params?.search?.toLowerCase() || '';
     const getStartDate = this.validateTime({ request: params?.startDate || '', type: 'date' });
     const getEndDate = this.validateTime({ request: params?.endDate || '', type: 'date' });
-    const getCount = +params.count || 0;
-    const getCountPage = Math.ceil(getCount / getLimit);
 
     return {
         pagination: `LIMIT ${getLimit} OFFSET ${getSkip}`,
         currentPage: getCurrentPage,
-        totalPage: getCountPage,
+        limit: getLimit,
         sort: getSort,
         search: getSearch,
         startDate: getStartDate,

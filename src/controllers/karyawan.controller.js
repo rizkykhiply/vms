@@ -10,15 +10,16 @@ const { models } = require('../models');
 // Define Get All Karyawan Controller
 module.exports.getKaryawanController = async (req, res, next) => {
     try {
-        const getCount = await models.karyawanModels.getCountKaryawan(req.query);
-        const getPagination = validatePagination({ ...req.query, count: getCount });
+        const getPagination = validatePagination({ ...req.query });
+        const getCount = await models.karyawanModels.getCountKaryawan(getPagination);
         const getKaryawan = await models.karyawanModels.getAllKaryawan(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
         return res.status(200).send({
             statusCode: 200,
             message: 'Succes',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getKaryawan,
         });
     } catch (error) {
