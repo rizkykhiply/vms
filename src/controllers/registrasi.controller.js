@@ -151,7 +151,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
                 getRows.push(rows);
                 if (getRows.length === 1) {
                     await models.karyawanModels
-                        .createImportKaryawan({ ...getRows[9] })
+                        .createImportKaryawan({ ...getRows[0] })
                         .then((value) => value)
                         .catch((error) => console.log(error));
                     getRows.splice(0, getRows.length);
