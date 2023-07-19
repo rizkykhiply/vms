@@ -7,15 +7,16 @@ const { models } = require('../models');
 // Define Get All User Controller
 module.exports.getUsersController = async (req, res, next) => {
     try {
+        const getPagination = validatePagination({ ...req.query });
         const getCount = await models.userModels.getCountUser();
-        const getPagination = validatePagination({ ...req.query, count: getCount });
         const getUsers = await models.userModels.getAllUsers(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getUsers,
         });
     } catch (error) {

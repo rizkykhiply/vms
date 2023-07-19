@@ -76,15 +76,16 @@ module.exports.masterDivisiController = async (req, res, next) => {
 // Define Master Admin Barang Controller
 module.exports.masterAdminBarangController = async (req, res, next) => {
     try {
+        const getPagination = validatePagination({ ...req.query });
         const getCount = await models.barangModels.getCountBarang();
-        const getPagination = validatePagination({ ...req.query, count: getCount });
         const getBarang = await models.barangModels.getAllAdminBarang(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getBarang,
         });
     } catch (error) {
@@ -95,14 +96,16 @@ module.exports.masterAdminBarangController = async (req, res, next) => {
 // Define Master Admin Type Barang Controller
 module.exports.masterAdminTypeBarangController = async (req, res, next) => {
     try {
+        const getPagination = validatePagination({ ...req.query });
         const getCount = await models.typeBarangModels.getCountTypeBarang();
-        const getPagination = validatePagination({ ...req.query, count: getCount });
         const getTypeBarang = await models.typeBarangModels.getAllAdminTypeBarang(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getTypeBarang,
         });
     } catch (error) {
@@ -113,14 +116,16 @@ module.exports.masterAdminTypeBarangController = async (req, res, next) => {
 // Define Master Admin Kendaraan Controller
 module.exports.masterAdminKendaraanController = async (req, res, next) => {
     try {
+        const getPagination = validatePagination({ ...req.query });
         const getCount = await models.kendaraanModels.getCountKendaraan();
-        const getPagination = validatePagination({ ...req.query, count: getCount });
         const getKendaraan = await models.kendaraanModels.getAllAdminKendaraan(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getKendaraan,
         });
     } catch (error) {
@@ -131,14 +136,16 @@ module.exports.masterAdminKendaraanController = async (req, res, next) => {
 // Define Master Admin Divisi Controller
 module.exports.masterAdminDivisiController = async (req, res, next) => {
     try {
+        const getPagination = validatePagination({ ...req.query });
         const getCount = await models.divisiModels.getCountDivisi();
-        const getPagination = validatePagination({ ...req.query, count: getCount });
         const getDivisi = await models.divisiModels.getAllAdminDivisi(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
             currentPage: getPagination.currentPage,
-            totalPage: getPagination.totalPage,
+            totalPage: getTotalPage,
             data: getDivisi,
         });
     } catch (error) {
