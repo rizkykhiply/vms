@@ -150,10 +150,12 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
             .on('data', async (rows) => {
                 getRows.push(rows);
                 if (getRows.length === 1) {
-                    await models.karyawanModels
-                        .createImportKaryawan({ ...getRows[0] })
-                        .then((value) => value)
-                        .catch((error) => console.log(error));
+                    for (let index = 0; index < getRows.length; index++) {
+                        await models.karyawanModels
+                            .createImportKaryawan({ ...getRows[0] })
+                            .then((value) => value)
+                            .catch((error) => console.log(error));
+                    }
                     getRows.splice(0, getRows.length);
                 }
             })
