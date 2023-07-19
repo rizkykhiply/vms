@@ -143,7 +143,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
         const getRows = [];
 
         fs.createReadStream(getPath)
-            .pipe(csv.parse({ headers: true, trim: true }))
+            .pipe(csv.parse({ headers: true, delimiter: ',', trim: true }))
             .on('error', (error) => {
                 console.log(error);
             })
