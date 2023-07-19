@@ -1070,6 +1070,37 @@
                 }
             }
         },
+        "/register/import/karyawan": {
+            "post": {
+                "tags": ["Register"],
+                "security": [{ "bearerAuth": [] }],
+                "consumes": ["multipart/form-data"],
+                "produces": ["application/json"],
+                "requestBody": {
+                    "$ref": "#/components/request/Register/ImportKaryawan"
+                },
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
         "/user": {
             "get": {
                 "tags": ["User"],
@@ -1290,6 +1321,33 @@
                         "example": "2023-07-11"
                     }
                 ],
+                "responses": {
+                    "200": {
+                        "$ref": "#/components/responses/Success"
+                    },
+                    "201": {
+                        "$ref": "#/components/responses/Created"
+                    },
+                    "400": {
+                        "$ref": "#/components/responses/BadRequest"
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "404": {
+                        "$ref": "#/components/responses/NotFound"
+                    },
+                    "500": {
+                        "$ref": "#/components/responses/InternalServerError"
+                    }
+                }
+            }
+        },
+        "/karyawan/download": {
+            "get": {
+                "tags": ["Karyawan"],
+                "security": [{ "bearerAuth": [] }],
+                "produces": ["application/json"],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -1890,6 +1948,16 @@
                             }
                         }
                     }
+                },
+                "ImportKaryawan": {
+                    "description": "Example Request Register Import Karyawan",
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "$ref": "#/components/schemas/RegisterImportKaryawan"
+                            }
+                        }
+                    }
                 }
             },
             "User": {
@@ -2204,6 +2272,16 @@
                     "tglRegistrasi": {
                         "type": "string",
                         "example": "2023-06-01 00:00:00"
+                    }
+                }
+            },
+            "RegisterImportKaryawan": {
+                "required": ["file"],
+                "type": "object",
+                "properties": {
+                    "file": {
+                        "type": "string",
+                        "format": "binary"
                     }
                 }
             },
