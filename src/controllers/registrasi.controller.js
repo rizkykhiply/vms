@@ -145,14 +145,15 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
         fs.createReadStream(getPath)
             .pipe(csv.parse({ headers: true, trim: true }))
             .on('error', (error) => {
-                throw new Error(error);
+                console.log(error);
             })
             .on('data', async (rows) => {
                 getRows.push(rows);
                 if (getRows.length === 1) {
-                    for (let index = 0; index < getRows.length; index++) {
-                        await models.karyawanModels.createImportKaryawan({ ...getRows[index] });
-                    }
+                    await models.karyawanModels
+                        .createImportKaryawan({ ...getRows[9] })
+                        .then((value) => value)
+                        .catch((error) => console.log(error));
                     getRows.splice(0, getRows.length);
                 }
             })
