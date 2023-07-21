@@ -63,6 +63,18 @@ const getCountKaryawan = async (params) => {
     return +result.count;
 };
 
+// Define Query Get Count Karyawan Per Day
+const getCountKaryawanPerDay = async () => {
+    const getQuery = `
+        SELECT COUNT(1) totalKaryawan FROM tblKaryawan
+        WHERE
+            DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() AND
+            status = 1
+    `;
+    const [result] = await baseQuery(getQuery, []);
+    return result;
+};
+
 // Define Query Create Karyawan
 const createKaryawan = async (params) => {
     const getQuery = `
@@ -103,6 +115,7 @@ module.exports.karyawanModels = {
     getAllKaryawan,
     getKaryawan,
     getCountKaryawan,
+    getCountKaryawanPerDay,
     createKaryawan,
     createImportKaryawan,
     updateKaryawan,

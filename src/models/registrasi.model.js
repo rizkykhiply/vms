@@ -109,6 +109,7 @@ const getCountRegistrasiVisitor = async (params) => {
         SELECT COUNT(1) count FROM tblRegistrasi 
         WHERE 
             isRegis = 1 AND 
+            status = 1 AND
             (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}") 
             ${getFilter}
     `;
@@ -131,12 +132,45 @@ const getCountRegistrasiBarang = async (params) => {
         SELECT COUNT(1) count FROM tblRegistrasi 
         WHERE 
             isRegis = 2 AND 
+            status = 1 AND
             (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}")
             ${getFilter}
     `;
 
     const [result] = await baseQuery(getQuery);
     return +result.count;
+};
+
+// Define Query Get Count Registrasi Per Day
+const getCountRegistrasiPerDay = async () => {
+    const getQuery = `
+        SELECT 
+            CAST(x.totalVisitor as INTEGER) as totalVisitor,
+            CAST(x.totalBarang as INTEGER) as totalBarang
+        FROM (
+            SELECT 
+            SUM
+            (
+                CASE 
+                    WHEN isRegis = 1 THEN 1
+                    ELSE 0
+                END 
+            ) totalVisitor,
+            SUM 
+            (
+                CASE 
+                    WHEN isRegis = 2 THEN 1
+                    ELSE 0
+                END 
+            ) totalBarang
+            FROM tblRegistrasi
+            WHERE 
+                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() AND
+                status = 1
+        ) as x
+    `;
+    const [result] = await baseQuery(getQuery);
+    return result;
 };
 
 // Define Query Get No Antrian Barang
@@ -218,6 +252,7 @@ module.exports.registrasiModels = {
     getRegistrasiBarang,
     getCountRegistrasiVisitor,
     getCountRegistrasiBarang,
+    getCountRegistrasiPerDay,
     getNoAntrianBarang,
     createRegistrasi,
     updateRegistrasi,
