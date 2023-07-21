@@ -26,6 +26,7 @@ const getAllRegistrasiVisitor = async (params) => {
             a.idKendaraan = c.id AND
             a.idKios = d.id AND
             a.isRegis = 1 AND
+            a.status = 1 AND
             (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
             ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
@@ -57,6 +58,7 @@ const getAllRegistrasiBarang = async (params) => {
             a.idBarang = d.id AND
             a.idKios = e.id AND
             a.isRegis = 2 AND 
+            a.status = 1 AND
             (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
             ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
