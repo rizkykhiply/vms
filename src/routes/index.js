@@ -84,6 +84,9 @@ const { getVisitorsController, getVisitorController, editVisitorController, dele
 // Import Barang Controller
 const { getBarangController, getDetailBarangController, editBarangController, deleteBarangController } = require('../controllers/barang.controller');
 
+// Import Report Controller
+const { reportCountDayController } = require('../controllers/report.controller');
+
 // Define Router
 const router = express.Router();
 
@@ -119,7 +122,7 @@ router.delete('/master/delete/kendaraan/:id', authMiddleware, deleteMasterKendar
 router.delete('/master/delete/divisi/:id', authMiddleware, deleteMasterDivisiController);
 
 // Define Route Registrasi Controller
-router.post('/register/visitor', authMiddleware, validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
+router.post('/register/visitor', validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
 router.post('/register/barang', validationMiddleware(registrasiBarangPipe), registrasiBarangController);
 router.post('/register/karyawan', authMiddleware, validationMiddleware(registrasiKaryawanPipe), registrasiKaryawanController);
 router.post('/register/import/karyawan', authMiddleware, uploadMiddleware('file'), registrasiImportKaryawanController);
@@ -149,6 +152,9 @@ router.get('/barang', authMiddleware, getBarangController);
 router.get('/barang/:id', authMiddleware, getDetailBarangController);
 router.patch('/barang/:id', authMiddleware, validationMiddleware(editBarangPipe), editBarangController);
 router.delete('/barang/:id', authMiddleware, deleteBarangController);
+
+// Define Route Report Controller
+router.get('/report/count/day', authMiddleware, reportCountDayController);
 
 // Export Router
 module.exports = {
