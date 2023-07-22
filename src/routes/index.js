@@ -122,7 +122,7 @@ router.delete('/master/delete/kendaraan/:id', authMiddleware, deleteMasterKendar
 router.delete('/master/delete/divisi/:id', authMiddleware, deleteMasterDivisiController);
 
 // Define Route Registrasi Controller
-router.post('/register/visitor', validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
+router.post('/register/visitor', authMiddleware, validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);
 router.post('/register/barang', validationMiddleware(registrasiBarangPipe), registrasiBarangController);
 router.post('/register/karyawan', authMiddleware, validationMiddleware(registrasiKaryawanPipe), registrasiKaryawanController);
 router.post('/register/import/karyawan', authMiddleware, uploadMiddleware('file'), registrasiImportKaryawanController);
