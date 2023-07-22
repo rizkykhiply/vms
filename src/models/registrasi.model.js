@@ -27,7 +27,7 @@ const getAllRegistrasiVisitor = async (params) => {
             a.idKios = d.id AND
             a.isRegis = 1 AND
             a.status = 1 AND
-            (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
+            (a.namaLengkap LIKE "%${search}%" OR a.kodeQr LIKE "%${search}%")
             ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
@@ -59,7 +59,7 @@ const getAllRegistrasiBarang = async (params) => {
             a.idKios = e.id AND
             a.isRegis = 2 AND 
             a.status = 1 AND
-            (a.namaLengkap LIKE "%${search}%" OR a.kodeQr = "${search}")
+            a.kodeQr LIKE "%${search}%"   
             ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
@@ -110,7 +110,7 @@ const getCountRegistrasiVisitor = async (params) => {
         WHERE 
             isRegis = 1 AND 
             status = 1 AND
-            (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}") 
+            kodeQr LIKE "%${search}%" 
             ${getFilter}
     `;
 
@@ -133,7 +133,7 @@ const getCountRegistrasiBarang = async (params) => {
         WHERE 
             isRegis = 2 AND 
             status = 1 AND
-            (namaLengkap LIKE "%${search}%" OR kodeQr = "${search}")
+            (namaLengkap LIKE "%${search}%" OR kodeQr LIKE "%${search}%")
             ${getFilter}
     `;
 
