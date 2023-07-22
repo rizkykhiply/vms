@@ -100,8 +100,8 @@ const createImportKaryawan = async (params) => {
 // Define Query Update Karyawan
 const updateKaryawan = async (params) => {
     return await baseQuery(
-        'UPDATE tblKaryawan SET idDivisi = ?, nama = ?, noInduk = ?, noPolisi = ?, noKartu = ?, tglRegistrasi = ?, status = ? WHERE id = ?',
-        [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.tglRegistrasi, params.status, params.id],
+        'UPDATE tblKaryawan SET idDivisi = ?, nama = ?, noInduk = ?, noPolisi = ?, noKartu = ?, image = ?, tglRegistrasi = ?, status = ? WHERE id = ?',
+        [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.image, params.tglRegistrasi, params.status, params.id],
     );
 };
 

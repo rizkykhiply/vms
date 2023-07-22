@@ -2,7 +2,7 @@
 const csv = require('fast-csv');
 
 // Import Config
-const { validatePagination } = require('../config/helper.conf');
+const { validatePagination, validateImage } = require('../config/helper.conf');
 
 // Import Models
 const { models } = require('../models');
@@ -83,6 +83,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
     try {
         const getId = req.params.id;
         const getBody = req.body;
+        const getImage = getBody?.image;
 
         const getKaryawan = await models.karyawanModels.getKaryawan(getId);
 
@@ -93,6 +94,10 @@ module.exports.editKaryawanController = async (req, res, next) => {
             });
         }
 
+        const image = validateImage({
+            image: getImage,
+        });
+
         await models.karyawanModels.updateKaryawan({
             id: getId,
             idDivisi: getBody.idDivisi,
@@ -100,6 +105,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
             noInduk: getBody.noInduk,
             noPolisi: getBody.noPolisi,
             noKartu: getBody.noKartu,
+            image: image,
             tglRegistrasi: getBody.tglRegistrasi,
             status: getBody.status,
         });

@@ -2393,7 +2393,7 @@
                 }
             },
             "UpdateKaryawan": {
-                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "tglRegistrasi", "status"],
+                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi", "status"],
                 "properties": {
                     "idDivisi": {
                         "type": "integer",
@@ -2414,6 +2414,9 @@
                     "noKartu": {
                         "type": "string",
                         "example": "123123001"
+                    },
+                    "image": {
+                        "type": "string"
                     },
                     "tglRegistrasi": {
                         "type": "string",

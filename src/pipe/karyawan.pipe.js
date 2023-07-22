@@ -8,6 +8,7 @@ const editKaryawanPipe = joi.object({
     noInduk: joi.string().required(),
     noPolisi: joi.string().required(),
     noKartu: joi.string().required(),
+    image: joi.string().require(),
     tglRegistrasi: joi.string().required(),
     status: joi.number().required(),
 });
