@@ -110,7 +110,7 @@ const getCountRegistrasiVisitor = async (params) => {
         WHERE 
             isRegis = 1 AND 
             status = 1 AND
-            kodeQr LIKE "%${search}%" 
+            (namaLengkap LIKE "%${search}%" OR kodeQr LIKE "%${search}%")
             ${getFilter}
     `;
 
@@ -133,7 +133,7 @@ const getCountRegistrasiBarang = async (params) => {
         WHERE 
             isRegis = 2 AND 
             status = 1 AND
-            (namaLengkap LIKE "%${search}%" OR kodeQr LIKE "%${search}%")
+            kodeQr LIKE "%${search}%" 
             ${getFilter}
     `;
 
