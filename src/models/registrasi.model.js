@@ -164,6 +164,19 @@ const getCountRegistrasiPerDay = async () => {
     return result;
 };
 
+// Define Query Get Count Registrasi Barang Per Day
+const getCountRegistrasiBarangPerDay = async () => {
+    const getQuery = `
+        SELECT b.nama AS barang, COUNT(1) AS total FROM tblRegistrasi a
+        JOIN tblBarang b ON a.idBarang = b.id
+        WHERE
+            DATE_FORMAT(a.tglRegistrasi, '%Y-%m-%d') = CURDATE() AND
+            a.isRegis = 2 AND a.status = 1
+        GROUP BY b.id
+    `;
+    return await baseQuery(getQuery);
+};
+
 // Define Query Get No Antrian Barang
 const getNoAntrianBarang = async (id) => {
     const getQuery = `
@@ -244,6 +257,7 @@ module.exports.registrasiModels = {
     getCountRegistrasiVisitor,
     getCountRegistrasiBarang,
     getCountRegistrasiPerDay,
+    getCountRegistrasiBarangPerDay,
     getNoAntrianBarang,
     createRegistrasi,
     updateRegistrasi,

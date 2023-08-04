@@ -23,3 +23,18 @@ module.exports.reportCountDayController = async (req, res, next) => {
         next(error);
     }
 };
+
+// Define Report Count Barang Day Controller
+module.exports.reportCountBarangDayController = async (req, res, next) => {
+    try {
+        const getBarang = await models.registrasiModels.getCountRegistrasiBarangPerDay();
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getBarang,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
