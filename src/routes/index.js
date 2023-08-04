@@ -155,7 +155,7 @@ router.delete('/barang/:id', authMiddleware, deleteBarangController);
 
 // Define Route Report Controller
 router.get('/report/count/day', authMiddleware, reportCountDayController);
-router.get('/report/barang/day', reportCountBarangDayController);
+router.get('/report/barang/day', authMiddleware, reportCountBarangDayController);
 
 // Export Router
 module.exports = {
