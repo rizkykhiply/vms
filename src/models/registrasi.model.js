@@ -165,13 +165,21 @@ const getCountRegistrasiPerDay = async () => {
 };
 
 // Define Query Get Count Registrasi Barang Per Day
-const getCountRegistrasiBarangPerDay = async () => {
+const getCountRegistrasiBarangPerDay = async (params) => {
+    const { startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
+    });
+
     const getQuery = `
         SELECT b.nama AS barang, COUNT(1) AS total FROM tblRegistrasi a
         JOIN tblBarang b ON a.idBarang = b.id
         WHERE
-            DATE_FORMAT(a.tglRegistrasi, '%Y-%m-%d') = CURDATE() AND
             a.isRegis = 2 AND a.status = 1
+            ${getFilter}
         GROUP BY b.id
     `;
     return await baseQuery(getQuery);

@@ -27,7 +27,7 @@ module.exports.reportCountDayController = async (req, res, next) => {
 // Define Report Count Barang Day Controller
 module.exports.reportCountBarangDayController = async (req, res, next) => {
     try {
-        const getBarang = await models.registrasiModels.getCountRegistrasiBarangPerDay();
+        const getBarang = await models.registrasiModels.getCountRegistrasiBarangPerDay(req.query);
 
         return res.status(200).send({
             statusCode: 200,
