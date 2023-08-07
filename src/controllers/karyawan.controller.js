@@ -64,7 +64,8 @@ module.exports.getDownloadKaryawanController = async (req, res, next) => {
             ['\r'],
             ['\r'],
             ['\r'],
-            ['List Divisi'],
+            ['============= PLEASE DELETE BEFORE IMPORT ============='],
+            ['LIST MASTER DIVISI'],
             ['id', 'divisi'],
             getFormatDivisi,
         ];
