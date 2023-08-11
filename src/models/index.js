@@ -7,6 +7,7 @@ const { registrasiModels } = require('./registrasi.model');
 const { transaksiModels } = require('./transaksi.model');
 const { typeBarangModels } = require('./type-barang.model');
 const { userModels } = require('./user.model');
+const { reportModels } = require('./report.model');
 
 // Export All Models
 module.exports.models = {
@@ -18,4 +19,5 @@ module.exports.models = {
     transaksiModels,
     typeBarangModels,
     userModels,
+    reportModels,
 };
