@@ -95,9 +95,13 @@ module.exports.editKaryawanController = async (req, res, next) => {
             });
         }
 
-        const image = validateImage({
-            image: getImage,
-        });
+        let image = null;
+
+        if (getImage) {
+            image = validateImage({
+                image: getImage,
+            });
+        }
 
         await models.karyawanModels.updateKaryawan({
             id: getId,
