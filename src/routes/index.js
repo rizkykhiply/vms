@@ -85,7 +85,13 @@ const { getVisitorsController, getVisitorController, editVisitorController, dele
 const { getBarangController, getDetailBarangController, editBarangController, deleteBarangController } = require('../controllers/barang.controller');
 
 // Import Report Controller
-const { reportCountDayController, reportCountBarangDayController, reportTransaksiKaryawanController, reportTrxVisitorController, reportTransaksiVisController} = require('../controllers/report.controller');
+const {
+    reportCountDayController,
+    reportCountBarangDayController,
+    reportVisitorController,
+    reportTransaksiKaryawanController,
+    reportTransaksiVisitorController,
+} = require('../controllers/report.controller');
 
 // Define Router
 const router = express.Router();
@@ -156,9 +162,9 @@ router.delete('/barang/:id', authMiddleware, deleteBarangController);
 // Define Route Report Controller
 router.get('/report/count/day', authMiddleware, reportCountDayController);
 router.get('/report/barang/day', authMiddleware, reportCountBarangDayController);
-router.get('/report/visitor/day', authMiddleware, reportTransaksiVisController);
+router.get('/report/visitor/day', authMiddleware, reportVisitorController);
 router.get('/report/trx/karyawan/day', authMiddleware, reportTransaksiKaryawanController);
-router.get('/report/trx/visitor/day', authMiddleware, reportTrxVisitorController);
+router.get('/report/trx/visitor/day', authMiddleware, reportTransaksiVisitorController);
 
 // Export Router
 module.exports = {

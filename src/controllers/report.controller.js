@@ -41,14 +41,15 @@ module.exports.reportCountBarangDayController = async (req, res, next) => {
 };
 
 // Define Report Transaksi Visitor Controller
-module.exports.reportTransaksiVisController = async (req, res, next) => {
+module.exports.reportVisitorController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getReportVis = await models.reportModels.getReportVis(getPagination);
+        const getVisitor = await models.reportModels.getReportVisitor(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
-            data: getReportVis,
+            data: getVisitor,
         });
     } catch (error) {
         next(error);
@@ -59,11 +60,12 @@ module.exports.reportTransaksiVisController = async (req, res, next) => {
 module.exports.reportTransaksiKaryawanController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getReportTrxKry = await models.reportModels.getReportTrxKaryawan(getPagination);
+        const getTrxKaryawan = await models.reportModels.getReportTrxKaryawan(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
-            data: getReportTrxKry,
+            data: getTrxKaryawan,
         });
     } catch (error) {
         next(error);
@@ -71,14 +73,15 @@ module.exports.reportTransaksiKaryawanController = async (req, res, next) => {
 };
 
 // Define Report Transaksi Visitor Controller
-module.exports.reportTrxVisitorController = async (req, res, next) => {
+module.exports.reportTransaksiVisitorController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getReportTrxKry = await models.reportModels.getReportTrxVis(getPagination);
+        const getTrxVisitor = await models.reportModels.getReportTrxVisitor(getPagination);
+
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
-            data: getReportTrxKry,
+            data: getTrxVisitor,
         });
     } catch (error) {
         next(error);
