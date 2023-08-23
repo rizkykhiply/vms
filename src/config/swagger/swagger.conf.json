@@ -2638,7 +2638,7 @@
                 }
             },
             "UpdateBarang": {
-                "required": ["idKendaraan", "idBarang", "namaLengkap", "nik", "namaInstansi", "noPolisi", "tglRegistrasi", "status"],
+                "required": ["idKendaraan", "idBarang", "namaLengkap", "nik", "namaInstansi", "noPolisi", "notes", "tglRegistrasi", "status"],
                 "properties": {
                     "idKendaraan": {
                         "type": "integer",
@@ -2663,6 +2663,10 @@
                     "noPolisi": {
                         "type": "string",
                         "example": "B1234ABC"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": ""
                     },
                     "tglRegistrasi": {
                         "type": "string",

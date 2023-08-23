@@ -13,6 +13,7 @@ const editBarangPipe = joi.object({
         .required(),
     namaInstansi: joi.string().required(),
     noPolisi: joi.string().required(),
+    notes: joi.string().optional().allow(''),
     tglRegistrasi: joi.string().required(),
     status: joi.number().required(),
 });

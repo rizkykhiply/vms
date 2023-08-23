@@ -72,6 +72,7 @@ module.exports.editBarangController = async (req, res, next) => {
             nik: getBody.nik,
             namaInstansi: getBody.namaInstansi,
             noPolisi: getBody.noPolisi,
+            notes: getBody.notes,
             tglRegistrasi: getBody.tglRegistrasi,
             status: getBody.status,
         });

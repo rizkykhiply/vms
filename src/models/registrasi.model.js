@@ -232,7 +232,7 @@ const createRegistrasi = async (params) => {
 // Define Query Update Registrasi
 const updateRegistrasi = async (params) => {
     const getQuery = `
-        UPDATE tblRegistrasi SET idUser = ?, idKendaraan = ?, idBarang = ?, namaLengkap = ?, nik = ?, namaInstansi = ?, noPolisi = ?, tujuan = ?, tglRegistrasi = ?, status = ?
+        UPDATE tblRegistrasi SET idUser = ?, idKendaraan = ?, idBarang = ?, namaLengkap = ?, nik = ?, namaInstansi = ?, noPolisi = ?, tujuan = ?, notes = ?, tglRegistrasi = ?, status = ?
         WHERE
             id = ?
     `;
@@ -245,6 +245,7 @@ const updateRegistrasi = async (params) => {
         params.namaInstansi,
         params.noPolisi,
         params.tujuan,
+        params.notes,
         params.tglRegistrasi,
         params.status,
         params.id,
