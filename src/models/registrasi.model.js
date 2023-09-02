@@ -15,7 +15,7 @@ const getAllRegistrasiVisitor = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.imageScan, a.imageCam, a.kodeQr,
+        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.notes, a.imageScan, a.imageCam, a.kodeQr,
         DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
@@ -46,17 +46,15 @@ const getAllRegistrasiBarang = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, e.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
+        SELECT a.id, b.nama as barang, c.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
         a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi,
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
-        FROM tblRegistrasi as a, tblUsers as b, tblKendaraan as c, tblBarang as d, tblKios as e
+        FROM tblRegistrasi as a, tblBarang as b, tblKios as c
         WHERE 
-            a.idUser = b.id AND
-            a.idKendaraan = c.id AND
-            a.idBarang = d.id AND
-            a.idKios = e.id AND
+            a.idBarang = b.id AND
+            a.idKios = c.id AND
             a.isRegis = 2 AND 
             a.status = 1 AND
             a.kodeQr LIKE "%${search}%"   
@@ -70,7 +68,7 @@ const getAllRegistrasiBarang = async (params) => {
 // Define Query Get Registrasi Visitor
 const getRegistrasiVisitor = async (id) => {
     const getQuery = `
-        SELECT id, idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, imageScan, imageCam, kodeQr, 
+        SELECT id, idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, notes, imageScan, imageCam, kodeQr, 
         DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
@@ -84,7 +82,7 @@ const getRegistrasiVisitor = async (id) => {
 // Define Query Get Registrasi Barang
 const getRegistrasiBarang = async (id) => {
     const getQuery = `
-        SELECT id, idUser, idKendaraan, idKios, idBarang, namaLengkap, nik, namaInstansi, noPolisi, imageScan, imageCam, kodeQr,
+        SELECT id, idUser, idKendaraan, idKios, idBarang, namaLengkap, nik, namaInstansi, noPolisi, notes, imageScan, imageCam, kodeQr,
         DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 

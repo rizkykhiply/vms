@@ -45,7 +45,8 @@ const getReportTrxKaryawan = async (params) => {
     });
 
     const getQuery = ` 
-        SELECT a.nota as nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, a.lprNopol as nopol, a.kodePos as pos, a.imgIn as imgIn, a.imgOut as imgOut, b.nama as nama
+        SELECT a.nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, b.noPolisi as nopol, 
+        a.kodePosIn, a.kodePosOut, a.imgIn, a.imgOut, b.nama
         FROM tblTransaksi a
         INNER JOIN tblKaryawan b ON a.idKaryawan = b.id 
         WHERE 
@@ -67,7 +68,8 @@ const getReportTrxVisitor = async (params) => {
     });
 
     const getQuery = ` 
-        SELECT a.nota as nota,  DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, a.lprNopol as nopol, a.kodePos as pos, a.imgIn as imgIn, a.imgOut as imgOut, b.namaLengkap as nama
+        SELECT a.nota,  DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, b.noPolisi as nopol, 
+        a.kodePosIn, a.kodePosOut, a.imgIn, a.imgOut, b.namaLengkap as nama
         FROM tblTransaksi a
         INNER JOIN tblRegistrasi b ON a.idVisitor = b.id
         INNER JOIN tblKendaraan c ON b.idKendaraan = c.id 

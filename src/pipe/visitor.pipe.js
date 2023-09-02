@@ -7,12 +7,12 @@ const editVisitorPipe = joi.object({
     namaLengkap: joi.string().required(),
     nik: joi
         .string()
-        .length(16)
         .pattern(new RegExp(/[0-9]$/))
         .required(),
     namaInstansi: joi.string().required(),
     noPolisi: joi.string().required(),
     tujuan: joi.string().required(),
+    notes: joi.string().optional().allow(''),
     tglRegistrasi: joi.string().required(),
     status: joi.number().required(),
 });

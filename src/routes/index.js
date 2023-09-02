@@ -102,7 +102,7 @@ router.get('/auth/check', authMiddleware, authCheckController);
 router.post('/auth/login', validationMiddleware(authLoginPipe), authLoginController);
 
 // Define Route Master Controller
-router.get('/master/barang', authMiddleware, masterBarangController);
+router.get('/master/barang', masterBarangController);
 router.get('/master/type/barang', authMiddleware, masterTypeBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.get('/master/divisi', authMiddleware, masterDivisiController);

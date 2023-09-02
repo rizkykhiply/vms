@@ -22,7 +22,7 @@ const getAllKaryawan = async (params) => {
         FROM tblKaryawan as a, tblDivisi as b
         WHERE
             a.idDivisi = b.id AND
-            a.nama LIKE "%${search}%" 
+            (a.nama LIKE "%${search}%" OR a.noKartu LIKE "%${search}%" OR a.noPolisi LIKE "%${search}%" OR a.noInduk LIKE "%${search}%")
             ${getFilter}
         ORDER BY a.tglRegistrasi ${sort}
         ${pagination}
@@ -39,6 +39,12 @@ const getKaryawan = async (id) => {
             id = ?
     `;
     const [result] = await baseQuery(getQuery, [id]);
+    return result;
+};
+
+// Define Query Get No Kartu Karyawan
+const getNoKartuKaryawan = async (noKartu) => {
+    const [result] = await baseQuery('SELECT id FROM tblKaryawan WHERE noKartu = ?', [noKartu]);
     return result;
 };
 
@@ -114,6 +120,7 @@ const deleteKaryawan = async (id) => {
 module.exports.karyawanModels = {
     getAllKaryawan,
     getKaryawan,
+    getNoKartuKaryawan,
     getCountKaryawan,
     getCountKaryawanPerDay,
     createKaryawan,

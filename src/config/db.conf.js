@@ -14,6 +14,7 @@ const connection = mysql.createPool({
     database: DATABASE_NAME,
     enableKeepAlive: true,
     waitForConnections: true,
+    connectionLimit: 100,
 });
 
 // Define Get Connection Database

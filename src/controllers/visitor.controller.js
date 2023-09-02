@@ -72,6 +72,7 @@ module.exports.editVisitorController = async (req, res, next) => {
             namaInstansi: getBody.namaInstansi,
             noPolisi: getBody.noPolisi,
             tujuan: getBody.tujuan,
+            notes: getBody.notes,
             tglRegistrasi: getBody.tglRegistrasi,
             status: getBody.status,
         });

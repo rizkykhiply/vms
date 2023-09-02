@@ -8,7 +8,6 @@ const editBarangPipe = joi.object({
     namaLengkap: joi.string().required(),
     nik: joi
         .string()
-        .length(16)
         .pattern(new RegExp(/[0-9]$/))
         .required(),
     namaInstansi: joi.string().required(),

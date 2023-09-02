@@ -9,16 +9,22 @@ module.exports.masterBarangController = async (req, res, next) => {
     try {
         const [getBarang, getTypeBarang] = await Promise.all([models.barangModels.getAllBarang(), models.typeBarangModels.getAllTypeBarang()]);
 
-        let getListBarang = {};
+        let getListBarang = [];
 
         for (let i = 0; i < getTypeBarang.length; i++) {
-            getListBarang[getTypeBarang[i].nama] = [];
-        }
-        for (let j = 0; j < getBarang.length; j++) {
-            const idBarang = getBarang[j].id;
-            const typeBarang = getBarang[j].typeBarang;
-            const namaBarang = getBarang[j].barang;
-            getListBarang[typeBarang].push({ id: idBarang, barang: namaBarang });
+            getListBarang.push({
+                id: getTypeBarang[i].id,
+                typeBarang: getTypeBarang[i].nama,
+                data: [],
+            });
+            for (let j = 0; j < getBarang.length; j++) {
+                const idBarang = getBarang[j].id;
+                const typeBarang = getBarang[j].typeBarang;
+                const namaBarang = getBarang[j].barang;
+                if (getListBarang[i].typeBarang === typeBarang) {
+                    getListBarang[i].data.push({ id: idBarang, barang: namaBarang });
+                }
+            }
         }
 
         return res.status(200).send({

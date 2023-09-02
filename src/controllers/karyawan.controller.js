@@ -95,13 +95,23 @@ module.exports.editKaryawanController = async (req, res, next) => {
             });
         }
 
-        let image = null;
+        const getNoKartu = await models.karyawanModels.getNoKartuKaryawan(getBody.noKartu);
 
-        if (getImage) {
+        if (getNoKartu) {
+            if (+getId !== +getNoKartu.id) {
+                return res.status(400).send({
+                    statusCode: 400,
+                    message: 'No kartu sudah terdaftar',
+                });
+            }
+        }
+
+        let image = getKaryawan.image;
+
+        if ((!image && getImage) || getImage !== image)
             image = validateImage({
                 image: getImage,
             });
-        }
 
         await models.karyawanModels.updateKaryawan({
             id: getId,

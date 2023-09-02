@@ -8,7 +8,6 @@ const registrasiVisitorPipe = joi.object({
     namaLengkap: joi.string().required(),
     nik: joi
         .string()
-        .length(16)
         .pattern(new RegExp(/[0-9]$/))
         .required(),
     namaInstansi: joi.string().required(),
@@ -22,11 +21,8 @@ const registrasiVisitorPipe = joi.object({
 
 // Define Registrasi Barang Pipe
 const registrasiBarangPipe = joi.object({
-    idUser: joi.number().required(),
-    idKendaraan: joi.number().required(),
     idBarang: joi.number().required(),
     idKios: joi.number().required(),
-    imageCam: joi.string().required(),
     kodeQr: joi.string().required(),
     tglRegistrasi: joi.string().required(),
 });
@@ -38,8 +34,15 @@ const registrasiKaryawanPipe = joi.object({
     noInduk: joi.string().required(),
     noPolisi: joi.string().required(),
     noKartu: joi.string().required(),
-    image: joi.string().required(),
+    image: joi.string().optional().allow(''),
     tglRegistrasi: joi.string().required(),
+});
+
+// Define Registrasi Karyawan Activity Pipe
+const registrasiKaryawanActivityPipe = joi.object({
+    idKaryawan: joi.number().required(),
+    activityIn: joi.string().optional().allow(''),
+    activityOut: joi.string().optional().allow(''),
 });
 
 // Export All Registrasi Pipe

@@ -62,7 +62,6 @@ module.exports.registrasiBarangController = async (req, res, next) => {
     try {
         const getBody = req.body;
         const getIdBarang = getBody.idBarang;
-        const getImageCam = getBody.imageCam;
 
         const getAntrianBarang = await models.barangModels.getAntrianBarang(getIdBarang);
 
@@ -73,15 +72,11 @@ module.exports.registrasiBarangController = async (req, res, next) => {
             });
         }
 
-        const imageCam = validateImage({
-            image: getImageCam,
-        });
-
         const addQueue = await createRegistrasiQueue.add(
             'Registrasi-Process-Queue',
             {
-                idUser: getBody.idUser,
-                idKendaraan: getBody.idKendaraan,
+                idUser: null,
+                idKendaraan: null,
                 idBarang: getBody.idBarang,
                 idKios: getBody.idKios,
                 namaLengkap: null,
@@ -90,7 +85,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
                 noPolisi: null,
                 tujuan: null,
                 imageScan: null,
-                imageCam: imageCam,
+                imageCam: null,
                 kodeQr: getBody.kodeQr,
                 tglRegistrasi: getBody.tglRegistrasi,
                 isRegis: 2,
@@ -121,11 +116,39 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
         const getBody = req.body;
         const getImage = getBody.image;
 
+        const getNoKartu = await models.karyawanModels.getNoKartuKaryawan(getBody.noKartu);
+
+        if (getNoKartu) {
+            return res.status(400).send({
+                statusCode: 400,
+                message: 'No kartu sudah terdaftar',
+            });
+        }
+
         const image = validateImage({
             image: getImage,
         });
 
         await models.karyawanModels.createKaryawan({ ...getBody, image });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Created',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Registrasi Karyawan Activity Controller
+module.exports.registrasiKaryawanActivityController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.logActivityModels.addActivity({
+            idKaryawan: getBody.idKaryawan,
+            activityIn: getBody.activityIn ? getBody.activityIn : '',
+            activityOut: getBody.activityOut ? getBody.activityOut : '',
+        });
 
         return res.status(201).send({
             statusCode: 201,
