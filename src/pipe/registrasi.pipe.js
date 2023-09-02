@@ -38,13 +38,6 @@ const registrasiKaryawanPipe = joi.object({
     tglRegistrasi: joi.string().required(),
 });
 
-// Define Registrasi Karyawan Activity Pipe
-const registrasiKaryawanActivityPipe = joi.object({
-    idKaryawan: joi.number().required(),
-    activityIn: joi.string().optional().allow(''),
-    activityOut: joi.string().optional().allow(''),
-});
-
 // Export All Registrasi Pipe
 module.exports = {
     registrasiVisitorPipe,

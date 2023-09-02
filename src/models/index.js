@@ -3,7 +3,6 @@ const { barangModels } = require('./barang.model');
 const { divisiModels } = require('./divisi.model');
 const { karyawanModels } = require('./karyawan.model');
 const { kendaraanModels } = require('./kendaraan.model');
-const { logActivityModels } = require('./log-activity.model');
 const { registrasiModels } = require('./registrasi.model');
 const { transaksiModels } = require('./transaksi.model');
 const { typeBarangModels } = require('./type-barang.model');
@@ -16,7 +15,6 @@ module.exports.models = {
     divisiModels,
     karyawanModels,
     kendaraanModels,
-    logActivityModels,
     registrasiModels,
     transaksiModels,
     typeBarangModels,

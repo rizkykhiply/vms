@@ -140,25 +140,6 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
     }
 };
 
-// Define Registrasi Karyawan Activity Controller
-module.exports.registrasiKaryawanActivityController = async (req, res, next) => {
-    try {
-        const getBody = req.body;
-        await models.logActivityModels.addActivity({
-            idKaryawan: getBody.idKaryawan,
-            activityIn: getBody.activityIn ? getBody.activityIn : '',
-            activityOut: getBody.activityOut ? getBody.activityOut : '',
-        });
-
-        return res.status(201).send({
-            statusCode: 201,
-            message: 'Created',
-        });
-    } catch (error) {
-        next(error);
-    }
-};
-
 // Define Registrasi Import Karyawan Controller
 module.exports.registrasiImportKaryawanController = async (req, res, next) => {
     try {
