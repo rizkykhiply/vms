@@ -129,7 +129,7 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
             image: getImage,
         });
 
-        await models.karyawanModels.createKaryawan({ ...getBody, image });
+        await models.karyawanModels.createKaryawan({ ...getBody, idContractor: +getBody.idContractor ? getBody.idContractor : null, image });
 
         return res.status(201).send({
             statusCode: 201,
