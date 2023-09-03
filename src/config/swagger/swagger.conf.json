@@ -2601,7 +2601,7 @@
                 }
             },
             "UpdateVisitor": {
-                "required": ["idKendaraan", "namaLengkap", "nik", "namaInstansi", "noPolisi", "tujuan", "tglRegistrasi", "status"],
+                "required": ["idKendaraan", "namaLengkap", "nik", "namaInstansi", "noPolisi", "tujuan", "notes", "tglRegistrasi", "status"],
                 "properties": {
                     "idKendaraan": {
                         "type": "integer",
@@ -2626,6 +2626,10 @@
                     "tujuan": {
                         "type": "string",
                         "example": "Bekasi"
+                    },
+                    "notes": {
+                        "type": "string",
+                        "example": ""
                     },
                     "tglRegistrasi": {
                         "type": "string",

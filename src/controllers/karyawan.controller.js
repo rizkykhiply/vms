@@ -84,7 +84,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
     try {
         const getId = req.params.id;
         const getBody = req.body;
-        const getImage = getBody?.image;
+        const getNoKartu = getBody.noKartu;
 
         const getKaryawan = await models.karyawanModels.getKaryawan(getId);
 
@@ -95,10 +95,11 @@ module.exports.editKaryawanController = async (req, res, next) => {
             });
         }
 
-        const getNoKartu = await models.karyawanModels.getNoKartuKaryawan(getBody.noKartu);
+        const checkNoKartu = await models.karyawanModels.getNoKartuKaryawan(getNoKartu);
 
-        if (getNoKartu) {
-            if (+getId !== +getNoKartu.id) {
+        if (checkNoKartu) {
+            const getNoKartuId = getNoKartu.id;
+            if (+getId !== +getNoKartuId) {
                 return res.status(400).send({
                     statusCode: 400,
                     message: 'No kartu sudah terdaftar',
@@ -106,11 +107,14 @@ module.exports.editKaryawanController = async (req, res, next) => {
             }
         }
 
-        let image = getKaryawan.image;
+        let saveImage = '';
+        const getImage = getBody?.image;
+        const getImageKaryawan = getKaryawan?.image;
+        const checkImage = getImage && getImage.length > 100 ? getImage : null;
 
-        if ((!image && getImage) || getImage !== image)
-            image = validateImage({
-                image: getImage,
+        if (checkImage)
+            saveImage = validateImage({
+                image: checkImage,
             });
 
         await models.karyawanModels.updateKaryawan({
@@ -120,7 +124,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
             noInduk: getBody.noInduk,
             noPolisi: getBody.noPolisi,
             noKartu: getBody.noKartu,
-            image: image,
+            image: saveImage ? saveImage : getImageKaryawan,
             tglRegistrasi: getBody.tglRegistrasi,
             status: getBody.status,
         });
