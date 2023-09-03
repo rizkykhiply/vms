@@ -33,7 +33,7 @@ module.exports.getVisitorController = async (req, res, next) => {
         if (!getVisitor) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -59,7 +59,7 @@ module.exports.editVisitorController = async (req, res, next) => {
         if (!getVisitor) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -79,7 +79,7 @@ module.exports.editVisitorController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -95,7 +95,7 @@ module.exports.deleteVisitorController = async (req, res, next) => {
         if (!getVisitor) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -103,7 +103,7 @@ module.exports.deleteVisitorController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);

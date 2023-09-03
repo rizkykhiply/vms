@@ -33,7 +33,7 @@ module.exports.getDetailBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -59,7 +59,7 @@ module.exports.editBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -79,7 +79,7 @@ module.exports.editBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -95,7 +95,7 @@ module.exports.deleteBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -103,7 +103,7 @@ module.exports.deleteBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);

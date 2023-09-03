@@ -68,7 +68,7 @@ module.exports.authLogoutController = async (req, res, next) => {
         if (!getUser) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -90,7 +90,7 @@ module.exports.authCheckController = async (req, res, next) => {
         if (!getUser) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 

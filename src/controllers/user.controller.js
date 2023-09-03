@@ -33,7 +33,7 @@ module.exports.getUserController = async (req, res, next) => {
         if (!getUser) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -60,7 +60,7 @@ module.exports.createUserController = async (req, res, next) => {
         if (getUser) {
             return res.status(400).send({
                 statusCode: 400,
-                message: 'Username already exists',
+                message: 'Username sudah terdaftar',
             });
         }
 
@@ -74,7 +74,7 @@ module.exports.createUserController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -94,7 +94,7 @@ module.exports.editUserController = async (req, res, next) => {
         if (!getUser) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -105,7 +105,7 @@ module.exports.editUserController = async (req, res, next) => {
                 if (getExists) {
                     return res.status(400).send({
                         statusCode: 400,
-                        message: 'Username already exists',
+                        message: 'Username sudah terdaftar',
                     });
                 }
             }
@@ -122,7 +122,7 @@ module.exports.editUserController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -138,7 +138,7 @@ module.exports.deleteUserController = async (req, res, next) => {
         if (!getUser) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -146,7 +146,7 @@ module.exports.deleteUserController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);

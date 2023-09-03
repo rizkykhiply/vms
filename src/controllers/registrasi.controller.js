@@ -50,7 +50,7 @@ module.exports.registrasiVisitorController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -68,7 +68,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
         if (!getAntrianBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -102,7 +102,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
             data: responseData,
         });
     } catch (error) {
@@ -133,7 +133,7 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -152,7 +152,7 @@ module.exports.registrasiKaryawanActivityController = async (req, res, next) => 
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -175,7 +175,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
                 if (getRows.length === 1) {
                     for (let index = 0; index < getRows.length; index++) {
                         await models.karyawanModels
-                            .createImportKaryawan({ ...getRows[0] })
+                            .createImportKaryawan({ ...getRows[index] })
                             .then((value) => value)
                             .catch((error) => console.log(error));
                     }
@@ -188,7 +188,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);

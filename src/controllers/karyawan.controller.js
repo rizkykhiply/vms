@@ -36,7 +36,7 @@ module.exports.getDetailKaryawanController = async (req, res, next) => {
         if (!getKaryawan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -91,7 +91,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
         if (!getKaryawan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -127,7 +127,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -143,7 +143,7 @@ module.exports.deleteKaryawanController = async (req, res, next) => {
         if (!getKaryawan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -151,7 +151,7 @@ module.exports.deleteKaryawanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);

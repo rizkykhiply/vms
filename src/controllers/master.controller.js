@@ -168,7 +168,7 @@ module.exports.masterDetailBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -191,7 +191,7 @@ module.exports.masterDetailTypeBarangController = async (req, res, next) => {
         if (!getTypeBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -214,7 +214,7 @@ module.exports.masterDetailKendaraanController = async (req, res, next) => {
         if (!getKendaraan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -237,7 +237,7 @@ module.exports.masterDetailDivisiController = async (req, res, next) => {
         if (!getDivisi) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -259,7 +259,7 @@ module.exports.createMasterBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -274,7 +274,7 @@ module.exports.createMasterTypeBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -289,7 +289,7 @@ module.exports.createMasterKendaraanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -304,7 +304,7 @@ module.exports.createMasterDivisiController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Created',
+            message: 'Data berhasil dibuat',
         });
     } catch (error) {
         next(error);
@@ -321,7 +321,7 @@ module.exports.updateMasterBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -334,7 +334,7 @@ module.exports.updateMasterBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -351,7 +351,7 @@ module.exports.updateMasterTypeBarangController = async (req, res, next) => {
         if (!getTypeBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -363,7 +363,7 @@ module.exports.updateMasterTypeBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -380,7 +380,7 @@ module.exports.updateMasterKendaraanController = async (req, res, next) => {
         if (!getKendaraan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -392,7 +392,7 @@ module.exports.updateMasterKendaraanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -409,7 +409,7 @@ module.exports.updateMasterDivisiController = async (req, res, next) => {
         if (!getDivisi) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -421,7 +421,7 @@ module.exports.updateMasterDivisiController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Updated',
+            message: 'Data berhasil di update',
         });
     } catch (error) {
         next(error);
@@ -437,7 +437,7 @@ module.exports.deleteMasterBarangController = async (req, res, next) => {
         if (!getBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -445,7 +445,7 @@ module.exports.deleteMasterBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);
@@ -461,7 +461,7 @@ module.exports.deleteMasterTypeBarangController = async (req, res, next) => {
         if (!getTypeBarang) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -469,7 +469,7 @@ module.exports.deleteMasterTypeBarangController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);
@@ -485,7 +485,7 @@ module.exports.deleteMasterKendaraanController = async (req, res, next) => {
         if (!getKendaraan) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -493,7 +493,7 @@ module.exports.deleteMasterKendaraanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);
@@ -509,7 +509,7 @@ module.exports.deleteMasterDivisiController = async (req, res, next) => {
         if (!getDivisi) {
             return res.status(404).send({
                 statusCode: 404,
-                message: 'Not Found',
+                message: 'Data tidak ditemukan',
             });
         }
 
@@ -517,7 +517,7 @@ module.exports.deleteMasterDivisiController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Deleted',
+            message: 'Data berhasil di delete',
         });
     } catch (error) {
         next(error);
