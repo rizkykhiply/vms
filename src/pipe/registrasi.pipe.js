@@ -30,6 +30,7 @@ const registrasiBarangPipe = joi.object({
 // Define Registrasi Karyawan Pipe
 const registrasiKaryawanPipe = joi.object({
     idDivisi: joi.number().required(),
+    idContractor: joi.number().optional(),
     nama: joi.string().required(),
     noInduk: joi.string().required(),
     noPolisi: joi.string().required(),

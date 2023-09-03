@@ -14,6 +14,7 @@ const {
     createMasterTypeBarangPipe,
     createMasterKendaraanPipe,
     createMasterDivisiPipe,
+    createMasterContractorPipe,
     registrasiVisitorPipe,
     registrasiBarangPipe,
     registrasiKaryawanPipe,
@@ -25,6 +26,7 @@ const {
     updateMasterTypeBarangPipe,
     updateMasterKendaraanPipe,
     updateMasterDivisiPipe,
+    updateMasterContractorPipe,
 } = require('../pipe');
 
 // Import Auth Controllers
@@ -36,6 +38,7 @@ const {
     masterTypeBarangController,
     masterKendaraanController,
     masterDivisiController,
+    masterContractorController,
     masterAdminBarangController,
     masterAdminTypeBarangController,
     masterAdminKendaraanController,
@@ -56,6 +59,11 @@ const {
     deleteMasterTypeBarangController,
     deleteMasterKendaraanController,
     deleteMasterDivisiController,
+    masterAdminContractorController,
+    masterDetailContractorController,
+    createMasterContractorController,
+    updateMasterContractorController,
+    deleteMasterContractorController,
 } = require('../controllers/master.controller');
 
 // Import Registrasi Controllers
@@ -106,26 +114,32 @@ router.get('/master/barang', masterBarangController);
 router.get('/master/type/barang', authMiddleware, masterTypeBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.get('/master/divisi', authMiddleware, masterDivisiController);
+router.get('/master/contractor', authMiddleware, masterContractorController);
 router.get('/master/admin/barang', authMiddleware, masterAdminBarangController);
 router.get('/master/admin/type/barang', authMiddleware, masterAdminTypeBarangController);
 router.get('/master/admin/kendaraan', authMiddleware, masterAdminKendaraanController);
 router.get('/master/admin/divisi', authMiddleware, masterAdminDivisiController);
+router.get('/master/admin/contractor', authMiddleware, masterAdminContractorController);
 router.get('/master/barang/:id', authMiddleware, masterDetailBarangController);
 router.get('/master/type/barang/:id', authMiddleware, masterDetailTypeBarangController);
 router.get('/master/kendaraan/:id', authMiddleware, masterDetailKendaraanController);
 router.get('/master/divisi/:id', authMiddleware, masterDetailDivisiController);
+router.get('/master/contractor/:id', authMiddleware, masterDetailContractorController);
 router.post('/master/create/barang', authMiddleware, validationMiddleware(createMasterBarangPipe), createMasterBarangController);
 router.post('/master/create/type/barang', authMiddleware, validationMiddleware(createMasterTypeBarangPipe), createMasterTypeBarangController);
 router.post('/master/create/kendaraan', authMiddleware, validationMiddleware(createMasterKendaraanPipe), createMasterKendaraanController);
 router.post('/master/create/divisi', authMiddleware, validationMiddleware(createMasterDivisiPipe), createMasterDivisiController);
+router.post('/master/create/contractor', authMiddleware, validationMiddleware(createMasterContractorPipe), createMasterContractorController);
 router.patch('/master/update/barang/:id', authMiddleware, validationMiddleware(updateMasterBarangPipe), updateMasterBarangController);
 router.patch('/master/update/type/barang/:id', authMiddleware, validationMiddleware(updateMasterTypeBarangPipe), updateMasterTypeBarangController);
 router.patch('/master/update/kendaraan/:id', authMiddleware, validationMiddleware(updateMasterKendaraanPipe), updateMasterKendaraanController);
 router.patch('/master/update/divisi/:id', authMiddleware, validationMiddleware(updateMasterDivisiPipe), updateMasterDivisiController);
+router.patch('/master/update/contractor/:id', authMiddleware, validationMiddleware(updateMasterContractorPipe), updateMasterContractorController);
 router.delete('/master/delete/barang/:id', authMiddleware, deleteMasterBarangController);
 router.delete('/master/delete/type/barang/:id', authMiddleware, deleteMasterTypeBarangController);
 router.delete('/master/delete/kendaraan/:id', authMiddleware, deleteMasterKendaraanController);
 router.delete('/master/delete/divisi/:id', authMiddleware, deleteMasterDivisiController);
+router.delete('/master/delete/contractor/:id', authMiddleware, deleteMasterContractorController);
 
 // Define Route Registrasi Controller
 router.post('/register/visitor', authMiddleware, validationMiddleware(registrasiVisitorPipe), registrasiVisitorController);

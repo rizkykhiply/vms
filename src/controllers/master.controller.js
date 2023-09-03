@@ -79,6 +79,20 @@ module.exports.masterDivisiController = async (req, res, next) => {
     }
 };
 
+// Define Master Contractor Controller
+module.exports.masterContractorController = async (req, res, next) => {
+    try {
+        const getContractor = await models.contractorModels.getAllContractor();
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getContractor,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Master Admin Barang Controller
 module.exports.masterAdminBarangController = async (req, res, next) => {
     try {
@@ -153,6 +167,26 @@ module.exports.masterAdminDivisiController = async (req, res, next) => {
             currentPage: getPagination.currentPage,
             totalPage: getTotalPage,
             data: getDivisi,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Contractor Controller
+module.exports.masterAdminContractorController = async (req, res, next) => {
+    try {
+        const getPagination = validatePagination({ ...req.query });
+        const getCount = await models.contractorModels.getContractor();
+        const getContractor = await models.contractorModels.getAllAdminContractor(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getTotalPage,
+            data: getContractor,
         });
     } catch (error) {
         next(error);
@@ -251,6 +285,29 @@ module.exports.masterDetailDivisiController = async (req, res, next) => {
     }
 };
 
+// Define Master Detail Contractor Controller
+module.exports.masterDetailContractorController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getContractor = await models.contractorModels.getContractor(getId);
+
+        if (!getContractor) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getContractor,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Create Master Barang Controller
 module.exports.createMasterBarangController = async (req, res, next) => {
     try {
@@ -301,6 +358,21 @@ module.exports.createMasterDivisiController = async (req, res, next) => {
     try {
         const getBody = req.body;
         await models.divisiModels.createDivisi({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil dibuat',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Create Master Contractor Controller
+module.exports.createMasterContractorController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.contractorModels.createContractor({ ...getBody });
 
         return res.status(201).send({
             statusCode: 201,
@@ -428,6 +500,35 @@ module.exports.updateMasterDivisiController = async (req, res, next) => {
     }
 };
 
+// Define Update Master Contractor Controller
+module.exports.updateMasterContractorController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getBody = req.body;
+        const getContractor = await models.contractorModels.getContractor(getId);
+
+        if (!getContractor) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        await models.contractorModels.updateContractor({
+            id: getId,
+            nama: getBody.nama,
+            status: getBody.status,
+        });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil di update',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Delete Master Barang Controller
 module.exports.deleteMasterBarangController = async (req, res, next) => {
     try {
@@ -514,6 +615,30 @@ module.exports.deleteMasterDivisiController = async (req, res, next) => {
         }
 
         await models.divisiModels.deleteDivisi(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil di delete',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Delete Master Contractor Controller
+module.exports.deleteMasterContractorController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getContractor = await models.divisiModels.contractorModels(getId);
+
+        if (!getContractor) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        await models.contractorModels.deleteContractor(getId);
 
         return res.status(201).send({
             statusCode: 201,

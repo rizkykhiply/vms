@@ -22,6 +22,11 @@ const createMasterDivisiPipe = joi.object({
     nama: joi.string().required(),
 });
 
+// Define Create Master Contractor Pipe
+const createMasterContractorPipe = joi.object({
+    nama: joi.string().required(),
+});
+
 // Define Update Master Barang Pipe
 const updateMasterBarangPipe = joi.object({
     idTypeBarang: joi.number().required(),
@@ -47,14 +52,22 @@ const updateMasterDivisiPipe = joi.object({
     status: joi.number(),
 });
 
+// Define Update Master Contractor Pipe
+const updateMasterContractorPipe = joi.object({
+    nama: joi.string().required(),
+    status: joi.number(),
+});
+
 // Export All Master Pipe
 module.exports = {
     createMasterBarangPipe,
     createMasterTypeBarangPipe,
     createMasterKendaraanPipe,
     createMasterDivisiPipe,
+    createMasterContractorPipe,
     updateMasterBarangPipe,
     updateMasterTypeBarangPipe,
     updateMasterKendaraanPipe,
     updateMasterDivisiPipe,
+    updateMasterContractorPipe,
 };

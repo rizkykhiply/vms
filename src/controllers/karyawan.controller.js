@@ -57,8 +57,8 @@ module.exports.getDownloadKaryawanController = async (req, res, next) => {
         const getFormatDivisi = Object.values(...getDivisi);
 
         const getData = [
-            ['idDivisi', 'nama', 'noInduk', 'noPolisi', 'noKartu'],
-            ['1', 'Budi Santoso', '123127780', 'B1234ABC', '123123001'],
+            ['idDivisi', 'idContractor', 'nama', 'noInduk', 'noPolisi', 'noKartu'],
+            ['1', '0', 'Budi Santoso', '123127780', 'B1234ABC', '123123001'],
             ['\r'],
             ['\r'],
             ['\r'],

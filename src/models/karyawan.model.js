@@ -85,22 +85,31 @@ const getCountKaryawanPerDay = async () => {
 const createKaryawan = async (params) => {
     const getQuery = `
         INSERT INTO tblKaryawan
-            (idDivisi, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
+            (idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
         VALUES
-            (?,?,?,?,?,?,?)
+            (?,?,?,?,?,?,?,?)
     `;
-    return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.image, params.tglRegistrasi]);
+    return await baseQuery(getQuery, [
+        params.idDivisi,
+        params.idContractor,
+        params.nama,
+        params.noInduk,
+        params.noPolisi,
+        params.noKartu,
+        params.image,
+        params.tglRegistrasi,
+    ]);
 };
 
 // Define Query Create Import Karyawan
 const createImportKaryawan = async (params) => {
     const getQuery = `
         INSERT INTO tblKaryawan
-            (idDivisi, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
+            (idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, tglRegistrasi)
         VALUES
-            (?,?,?,?,?,"",NOW())
+            (?,?,?,?,?,?,"",NOW())
     `;
-    return await baseQuery(getQuery, [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu]);
+    return await baseQuery(getQuery, [params.idDivisi, params.idContractor, params.nama, params.noInduk, params.noPolisi, params.noKartu]);
 };
 
 // Define Query Update Karyawan

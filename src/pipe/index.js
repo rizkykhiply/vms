@@ -3,14 +3,16 @@ const { authLoginPipe } = require('./auth.pipe');
 const { editBarangPipe } = require('./barang.pipe');
 const { editKaryawanPipe } = require('./karyawan.pipe');
 const {
+    createMasterKendaraanPipe,
     createMasterBarangPipe,
     createMasterTypeBarangPipe,
     createMasterDivisiPipe,
-    createMasterKendaraanPipe,
+    createMasterContractorPipe,
     updateMasterKendaraanPipe,
     updateMasterBarangPipe,
     updateMasterTypeBarangPipe,
     updateMasterDivisiPipe,
+    updateMasterContractorPipe,
 } = require('./master.pipe');
 const { registrasiVisitorPipe, registrasiBarangPipe, registrasiKaryawanPipe } = require('./registrasi.pipe');
 const { createUserPipe, editUserPipe } = require('./user.pipe');
@@ -24,6 +26,7 @@ module.exports = {
     createMasterTypeBarangPipe,
     createMasterDivisiPipe,
     createMasterKendaraanPipe,
+    createMasterContractorPipe,
     registrasiVisitorPipe,
     registrasiBarangPipe,
     registrasiKaryawanPipe,
@@ -35,4 +38,5 @@ module.exports = {
     updateMasterTypeBarangPipe,
     updateMasterDivisiPipe,
     updateMasterKendaraanPipe,
+    updateMasterContractorPipe,
 };
