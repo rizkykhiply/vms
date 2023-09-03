@@ -120,6 +120,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
         await models.karyawanModels.updateKaryawan({
             id: getId,
             idDivisi: getBody.idDivisi,
+            idContractor: getBody.idContractor,
             nama: getBody.nama,
             noInduk: getBody.noInduk,
             noPolisi: getBody.noPolisi,
