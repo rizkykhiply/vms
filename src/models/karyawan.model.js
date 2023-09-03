@@ -15,11 +15,13 @@ const getAllKaryawan = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.nama as divisi, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.image, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
+        SELECT a.id, b.nama as divisi, c.nama as contractor, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.image, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
             CASE 
                 WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
-        FROM tblKaryawan as a, tblDivisi as b
+        FROM tblKaryawan as a
+        JOIN tblDivisi as b ON a.idDivisi = b.id
+        LEFT JOIN tblContractor as c ON a.idContractor = c.id 
         WHERE
             a.idDivisi = b.id AND
             (a.nama LIKE "%${search}%" OR a.noKartu LIKE "%${search}%" OR a.noPolisi LIKE "%${search}%" OR a.noInduk LIKE "%${search}%")
@@ -33,7 +35,7 @@ const getAllKaryawan = async (params) => {
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
     const getQuery = `
-        SELECT id, idDivisi, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        SELECT id, idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblKaryawan 
         WHERE 
             id = ?
