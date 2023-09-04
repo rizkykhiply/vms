@@ -98,9 +98,8 @@ module.exports.editKaryawanController = async (req, res, next) => {
         const checkNoKartu = await models.karyawanModels.getNoKartuKaryawan(getNoKartu);
 
         if (checkNoKartu) {
-            const getNoKartuId = getNoKartu.id;
             const getCheckNoKartuId = checkNoKartu.id;
-            if (+getCheckNoKartuId !== +getNoKartuId) {
+            if (+getId !== +getCheckNoKartuId) {
                 return res.status(400).send({
                     statusCode: 400,
                     message: 'No kartu sudah terdaftar',
