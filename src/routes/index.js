@@ -156,7 +156,7 @@ router.delete('/user/:id', authMiddleware, deleteUserController);
 
 // Define Route Karyawan Controller
 router.get('/karyawan', authMiddleware, getKaryawanController);
-router.get('/karyawan/download', authMiddleware, getDownloadKaryawanController);
+router.get('/karyawan/download', getDownloadKaryawanController);
 router.get('/karyawan/:id', authMiddleware, getDetailKaryawanController);
 router.patch('/karyawan/:id', authMiddleware, validationMiddleware(editKaryawanPipe), editKaryawanController);
 router.delete('/karyawan/:id', authMiddleware, deleteKaryawanController);

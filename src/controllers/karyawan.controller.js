@@ -54,7 +54,6 @@ module.exports.getDetailKaryawanController = async (req, res, next) => {
 module.exports.getDownloadKaryawanController = async (req, res, next) => {
     try {
         const getDivisi = await models.divisiModels.getAllDivisi();
-        const getFormatDivisi = Object.values(...getDivisi);
 
         const getData = [
             ['idDivisi', 'idContractor', 'nama', 'noInduk', 'noPolisi', 'noKartu'],
@@ -67,7 +66,7 @@ module.exports.getDownloadKaryawanController = async (req, res, next) => {
             ['============= PLEASE DELETE BEFORE IMPORT ============='],
             ['LIST MASTER DIVISI'],
             ['id', 'divisi'],
-            getFormatDivisi,
+            ...getDivisi,
         ];
 
         res.setHeader('Content-Type', 'text/csv');
