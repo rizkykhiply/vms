@@ -14,7 +14,7 @@ const getUserLogout = async (id) => {
 };
 
 const getUserCheck = async (id) => {
-    const [result] = await baseQuery('SELECT id, nama, username, status FROM tblUsers WHERE id = ? AND status = 1', [id]);
+    const [result] = await baseQuery('SELECT id, nama FROM tblUsers WHERE id = ? AND status = 1', [id]);
     return result;
 };
 
@@ -26,7 +26,7 @@ const getUserByUsername = async (username) => {
 
 // Define Query Get User By Id
 const getUserById = async (id) => {
-    const [result] = await baseQuery('SELECT id, nama, username, status FROM tblUsers WHERE id = ?', [id]);
+    const [result] = await baseQuery('SELECT nama, username, status FROM tblUsers WHERE id = ?', [id]);
     return result;
 };
 
@@ -35,12 +35,12 @@ const getAllUsers = async (params) => {
     const { pagination, sort } = params;
 
     const getQuery = `
-        SELECT id, nama, username,
+        SELECT id, nama, username, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
             CASE 
                 WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
         FROM tblUsers
-        ORDER BY createdAt ${sort}
+        ORDER BY id ${sort}
         ${pagination}
     `;
 
@@ -71,11 +71,11 @@ const updateUser = async (params) => {
     let getPass = params.password;
 
     if (getPass) {
-        getQuery = 'UPDATE tblUsers SET nama = ?, password = ?, status = ? WHERE id = ?';
-        getParams.push(params.nama, params.password, params.status, params.id);
+        getQuery = 'UPDATE tblUsers SET nama = ?, username = ?, password = ?, status = ? WHERE id = ?';
+        getParams.push(params.nama, params.username, params.password, params.status, params.id);
     } else {
-        getQuery = 'UPDATE tblUsers SET nama = ?, status = ? WHERE id = ?';
-        getParams.push(params.nama, params.status, params.id);
+        getQuery = 'UPDATE tblUsers SET nama = ?, username = ?, status = ? WHERE id = ?';
+        getParams.push(params.nama, params.username, params.status, params.id);
     }
 
     return await baseQuery(getQuery, getParams);

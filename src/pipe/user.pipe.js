@@ -12,7 +12,7 @@ const createUserPipe = joi.object({
 const editUserPipe = joi.object({
     nama: joi.string().required(),
     username: joi.string().required(),
-    password: joi.string().optional().allow(null),
+    password: joi.string().optional().allow(''),
     status: joi.number().required(),
 });
 

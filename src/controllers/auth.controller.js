@@ -19,7 +19,7 @@ module.exports.authLoginController = async (req, res, next) => {
         if (!getUser) {
             return res.status(400).send({
                 statusCode: 400,
-                message: 'Username or password invalid',
+                message: 'Username atau password salah',
             });
         }
 
@@ -31,7 +31,7 @@ module.exports.authLoginController = async (req, res, next) => {
         if (!getMatching) {
             return res.status(400).send({
                 statusCode: 400,
-                message: 'Username or password invalid',
+                message: 'Username atau password salah',
             });
         }
 
@@ -50,7 +50,6 @@ module.exports.authLoginController = async (req, res, next) => {
             data: {
                 id: getId,
                 nama: getName,
-                username: getUsername,
                 access_token: getAccessToken,
             },
         });

@@ -114,7 +114,7 @@ module.exports.registrasiBarangController = async (req, res, next) => {
 module.exports.registrasiKaryawanController = async (req, res, next) => {
     try {
         const getBody = req.body;
-        const getImage = getBody.image;
+        const getImage = getBody?.image;
 
         const getNoKartu = await models.karyawanModels.getNoKartuKaryawan(getBody.noKartu);
 
@@ -125,11 +125,15 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
             });
         }
 
-        const image = validateImage({
-            image: getImage,
-        });
+        let saveImage = '';
 
-        await models.karyawanModels.createKaryawan({ ...getBody, idContractor: +getBody.idContractor ? getBody.idContractor : null, image });
+        if (getImage) {
+            saveImage = validateImage({
+                image: getImage,
+            });
+        }
+
+        await models.karyawanModels.createKaryawan({ ...getBody, idContractor: +getBody.idContractor ? getBody.idContractor : null, image: saveImage });
 
         return res.status(201).send({
             statusCode: 201,
@@ -144,24 +148,16 @@ module.exports.registrasiKaryawanController = async (req, res, next) => {
 module.exports.registrasiImportKaryawanController = async (req, res, next) => {
     try {
         const getPath = req?.file?.path;
-        const getRows = [];
-
         fs.createReadStream(getPath)
             .pipe(csv.parse({ headers: true, delimiter: ',', trim: true }))
             .on('error', (error) => {
                 console.log(error);
             })
             .on('data', async (rows) => {
-                getRows.push(rows);
-                if (getRows.length === 1) {
-                    for (let index = 0; index < getRows.length; index++) {
-                        await models.karyawanModels
-                            .createImportKaryawan({ ...getRows[index], idContractor: +getRows[index].idContractor ? getRows[index].idContractor : null })
-                            .then((value) => value)
-                            .catch((error) => console.log(error));
-                    }
-                    getRows.splice(0, getRows.length);
-                }
+                await models.karyawanModels
+                    .createImportKaryawan({ ...rows, idContractor: +getRows[index].idContractor ? getRows[index].idContractor : null })
+                    .then((value) => value)
+                    .catch((error) => console.log(error));
             })
             .on('end', () => {
                 fs.unlinkSync(getPath);
@@ -169,7 +165,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
 
         return res.status(201).send({
             statusCode: 201,
-            message: 'Data berhasil dibuat',
+            message: 'Data berhasil di import',
         });
     } catch (error) {
         next(error);

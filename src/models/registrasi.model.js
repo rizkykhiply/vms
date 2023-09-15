@@ -143,20 +143,20 @@ const getCountRegistrasiBarang = async (params) => {
 const getCountRegistrasiPerDay = async () => {
     const getQuery = `
         SELECT 
-        (
+        IFNULL((
             SELECT COUNT(1) FROM tblRegistrasi
             WHERE
-                isRegis = 1 AND status = 1
-        ) totalVisitor,
-        (
+                isRegis = 1 AND status = 1 AND
+                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() 
+                ), 0) totalVisitor,
+        IFNULL((
             SELECT COUNT(1) FROM tblRegistrasi
             WHERE
-                isRegis = 2 AND status = 1
-        ) totalBarang
+                isRegis = 2 AND status = 1 AND
+                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() 
+                ), 0) totalBarang
         FROM tblRegistrasi
-        WHERE 
-            DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() 
-        GROUP by 1
+        GROUP BY 1 
     `;
     const [result] = await baseQuery(getQuery);
     return result;

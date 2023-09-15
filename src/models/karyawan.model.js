@@ -23,10 +23,9 @@ const getAllKaryawan = async (params) => {
         JOIN tblDivisi as b ON a.idDivisi = b.id
         LEFT JOIN tblContractor as c ON a.idContractor = c.id 
         WHERE
-            a.idDivisi = b.id AND
             (a.nama LIKE "%${search}%" OR a.noKartu LIKE "%${search}%" OR a.noPolisi LIKE "%${search}%" OR a.noInduk LIKE "%${search}%")
             ${getFilter}
-        ORDER BY a.tglRegistrasi ${sort}
+        ORDER BY a.id ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -35,7 +34,7 @@ const getAllKaryawan = async (params) => {
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
     const getQuery = `
-        SELECT id, idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        SELECT idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
         FROM tblKaryawan 
         WHERE 
             id = ?
@@ -64,7 +63,7 @@ const getCountKaryawan = async (params) => {
         SELECT COUNT(1) count FROM tblKaryawan
         WHERE 
             1 = 1 AND
-            nama LIKE "%${search}%" 
+           (nama LIKE "%${search}%" OR noKartu LIKE "%${search}%" OR noPolisi LIKE "%${search}%" OR noInduk LIKE "%${search}%")
             ${getFilter}
     `;
     const [result] = await baseQuery(getQuery, []);
@@ -117,8 +116,19 @@ const createImportKaryawan = async (params) => {
 // Define Query Update Karyawan
 const updateKaryawan = async (params) => {
     return await baseQuery(
-        'UPDATE tblKaryawan SET idDivisi = ?, nama = ?, noInduk = ?, noPolisi = ?, noKartu = ?, image = ?, tglRegistrasi = ?, status = ? WHERE id = ?',
-        [params.idDivisi, params.nama, params.noInduk, params.noPolisi, params.noKartu, params.image, params.tglRegistrasi, params.status, params.id],
+        'UPDATE tblKaryawan SET idDivisi = ?, idContractor = ?, nama = ?, noInduk = ?, noPolisi = ?, noKartu = ?, image = ?, tglRegistrasi = ?, status = ? WHERE id = ?',
+        [
+            params.idDivisi,
+            params.idContractor,
+            params.nama,
+            params.noInduk,
+            params.noPolisi,
+            params.noKartu,
+            params.image,
+            params.tglRegistrasi,
+            params.status,
+            params.id,
+        ],
     );
 };
 

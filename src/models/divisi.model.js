@@ -11,12 +11,12 @@ const getAllAdminDivisi = async (params) => {
     const { pagination, sort } = params;
 
     const getQuery = `
-        SELECT id, nama,
+        SELECT id, nama, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
         CASE 
             WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
         END as status
         FROM tblDivisi
-        ORDER BY createdAt ${sort}
+        ORDER BY id ${sort}
         ${pagination}
     `;
 
@@ -25,7 +25,7 @@ const getAllAdminDivisi = async (params) => {
 
 // Define Query Get Divisi
 const getDivisi = async (id) => {
-    const [result] = await baseQuery('SELECT id, nama, status FROM tblDivisi WHERE id = ?', [id]);
+    const [result] = await baseQuery('SELECT nama, status FROM tblDivisi WHERE id = ?', [id]);
     return result;
 };
 

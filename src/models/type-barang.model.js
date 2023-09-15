@@ -11,12 +11,12 @@ const getAllAdminTypeBarang = async (params) => {
     const { pagination, sort } = params;
 
     const getQuery = `
-        SELECT id, nama,
+        SELECT id, nama, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
         CASE 
             WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
         END as status
         FROM tblTypeBarang
-        ORDER BY createdAt ${sort}
+        ORDER BY id ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -24,7 +24,7 @@ const getAllAdminTypeBarang = async (params) => {
 
 // Define Query Get Type Barang
 const getTypeBarang = async (id) => {
-    const [result] = await baseQuery('SELECT id, nama, status FROM tblTypeBarang WHERE id = ?', [id]);
+    const [result] = await baseQuery('SELECT nama, status FROM tblTypeBarang WHERE id = ?', [id]);
     return result;
 };
 

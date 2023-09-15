@@ -94,11 +94,10 @@ const { getBarangController, getDetailBarangController, editBarangController, de
 
 // Import Report Controller
 const {
-    reportCountDayController,
-    reportCountBarangDayController,
-    reportVisitorController,
+    reportTransaksiDayController,
     reportTransaksiKaryawanController,
     reportTransaksiVisitorController,
+    reportTransaksiCountBarangController,
 } = require('../controllers/report.controller');
 
 // Define Router
@@ -156,7 +155,7 @@ router.delete('/user/:id', authMiddleware, deleteUserController);
 
 // Define Route Karyawan Controller
 router.get('/karyawan', authMiddleware, getKaryawanController);
-router.get('/karyawan/download', getDownloadKaryawanController);
+router.get('/karyawan/download', authMiddleware, getDownloadKaryawanController);
 router.get('/karyawan/:id', authMiddleware, getDetailKaryawanController);
 router.patch('/karyawan/:id', authMiddleware, validationMiddleware(editKaryawanPipe), editKaryawanController);
 router.delete('/karyawan/:id', authMiddleware, deleteKaryawanController);
@@ -174,11 +173,10 @@ router.patch('/barang/:id', authMiddleware, validationMiddleware(editBarangPipe)
 router.delete('/barang/:id', authMiddleware, deleteBarangController);
 
 // Define Route Report Controller
-router.get('/report/count/day', authMiddleware, reportCountDayController);
-router.get('/report/barang/day', authMiddleware, reportCountBarangDayController);
-router.get('/report/visitor/day', authMiddleware, reportVisitorController);
-router.get('/report/trx/karyawan/day', authMiddleware, reportTransaksiKaryawanController);
-router.get('/report/trx/visitor/day', authMiddleware, reportTransaksiVisitorController);
+router.get('/report/trx/day', authMiddleware, reportTransaksiDayController);
+router.get('/report/trx/karyawan', authMiddleware, reportTransaksiKaryawanController);
+router.get('/report/trx/visitor', authMiddleware, reportTransaksiVisitorController);
+router.get('/report/trx/barang', authMiddleware, reportTransaksiCountBarangController);
 
 // Export Router
 module.exports = {

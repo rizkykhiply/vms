@@ -4,9 +4,104 @@ const { validatePaginationFilter } = require('../config/helper.conf');
 // Import Base Query
 const { baseQuery } = require('../config/db.conf');
 
-// Define Query Get Report Visitor
-const getReportVisitor = async (params) => {
-    const { sort, startDate, endDate } = params;
+// Define Query Get Report Trx Karyawan
+const getReportTrxKaryawan = async (params) => {
+    const { pagination, sort, search, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = ` 
+        SELECT a.id, b.nama, a.nota, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut
+        FROM tblTransaksi a
+        JOIN tblKaryawan b ON a.idKaryawan = b.id
+        WHERE
+            (b.nama LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            ${getFilter}
+        ORDER BY a.id ${sort}
+        ${pagination}
+    `;
+    return await baseQuery(getQuery, []);
+};
+
+// Define Query Get Report Trx Visitor
+const getReportTrxVisitor = async (params) => {
+    const { pagination, sort, search, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT a.id, b.namaLengkap as nama, a.nota, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut
+        FROM tblTransaksi a
+        JOIN tblRegistrasi b ON a.idVisitor = b.id
+        WHERE
+            b.status = 1 AND
+            (b.namaLengkap LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            ${getFilter}
+        ORDER BY a.id ${sort}
+        ${pagination}
+    `;
+
+    return await baseQuery(getQuery, []);
+};
+
+// Define Query Get Count Report Trx Karyawan
+const getCountReportTrxKaryawan = async (params) => {
+    const { search, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblTransaksi a
+        JOIN tblKaryawan b ON a.idKaryawan = b.id
+        WHERE
+            (b.nama LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            ${getFilter}
+    `;
+
+    const [result] = await baseQuery(getQuery, []);
+    return +result.count;
+};
+
+// Define Query Get Count Report Trx Visitor
+const getCountReportTrxVisitor = async (params) => {
+    const { search, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblTransaksi a
+        JOIN tblRegistrasi b ON a.idVisitor = b.id
+        WHERE
+            b.status = 1 AND
+            (b.namaLengkap LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            ${getFilter}
+    `;
+
+    const [result] = await baseQuery(getQuery, []);
+    return +result.count;
+};
+
+// Define Query Get Count Report Trx Barang
+const getCountReportTrxBarang = async (params) => {
+    const { startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -14,75 +109,22 @@ const getReportVisitor = async (params) => {
         column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
     });
 
-    const getQuery = ` 
-        SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as barang, e.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
-        a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi,
-            CASE
-                WHEN a.status = 0 THEN "Non Active" ELSE "Active"
-            END as status
-        FROM tblRegistrasi as a, tblUsers as b, tblKendaraan as c, tblBarang as d, tblKios as e
-        WHERE 
-            a.idUser = b.id AND
-            a.idKendaraan = c.id AND
-            a.idBarang = d.id AND
-            a.idKios = 1 AND
-            a.isRegis = 2 AND 
-            a.status = 1  
+    const getQuery = `
+        SELECT a.id, b.nama AS barang, COUNT(1) AS total FROM tblRegistrasi a
+        JOIN tblBarang b ON a.idBarang = b.id
+        WHERE
+            a.isRegis = 2 AND a.status = 1
             ${getFilter}
-        ORDER BY a.tglRegistrasi ${sort}
-`;
-    return await baseQuery(getQuery, []);
-};
+        GROUP BY b.id
+    `;
 
-// Define Query Get Report Trx Karyawan
-const getReportTrxKaryawan = async (params) => {
-    const { sort, startDate, endDate } = params;
-
-    const getFilter = validatePaginationFilter({
-        startDate,
-        endDate,
-        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
-    });
-
-    const getQuery = ` 
-        SELECT a.nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, b.noPolisi as nopol, 
-        a.kodePosIn, a.kodePosOut, a.imgIn, a.imgOut, b.nama
-        FROM tblTransaksi a
-        INNER JOIN tblKaryawan b ON a.idKaryawan = b.id 
-        WHERE 
-            1 = 1
-            ${getFilter}
-        ORDER BY a.dateIn ${sort}
-`;
-    return await baseQuery(getQuery, []);
-};
-
-// Define Query Get Report Trx Visitor
-const getReportTrxVisitor = async (params) => {
-    const { sort, startDate, endDate } = params;
-
-    const getFilter = validatePaginationFilter({
-        startDate,
-        endDate,
-        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
-    });
-
-    const getQuery = ` 
-        SELECT a.nota,  DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as waktuMasuk, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as waktuKeluar, b.noPolisi as nopol, 
-        a.kodePosIn, a.kodePosOut, a.imgIn, a.imgOut, b.namaLengkap as nama
-        FROM tblTransaksi a
-        INNER JOIN tblRegistrasi b ON a.idVisitor = b.id
-        INNER JOIN tblKendaraan c ON b.idKendaraan = c.id 
-        WHERE 
-            1 = 1
-            ${getFilter}
-        ORDER BY a.dateIn ${sort}
-`;
-    return await baseQuery(getQuery, []);
+    return await baseQuery(getQuery);
 };
 
 module.exports.reportModels = {
-    getReportVisitor,
     getReportTrxKaryawan,
     getReportTrxVisitor,
+    getCountReportTrxKaryawan,
+    getCountReportTrxVisitor,
+    getCountReportTrxBarang,
 };

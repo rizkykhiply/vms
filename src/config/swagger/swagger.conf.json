@@ -1813,7 +1813,7 @@
                 }
             }
         },
-        "/report/count/day": {
+        "/report/trx/day": {
             "get": {
                 "tags": ["Report"],
                 "security": [{ "bearerAuth": [] }],
@@ -1840,23 +1840,44 @@
                 }
             }
         },
-        "/report/barang/day": {
+        "/report/trx/karyawan": {
             "get": {
                 "tags": ["Report"],
                 "security": [{ "bearerAuth": [] }],
                 "produces": ["application/json"],
                 "parameters": [
                     {
-                        "name": "startDate",
+                        "name": "currentPage",
                         "in": "query",
                         "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": ""
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-01"
                     },
                     {
                         "name": "endDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-11"
                     }
@@ -1883,23 +1904,44 @@
                 }
             }
         },
-        "/report/visitor/day": {
+        "/report/trx/visitor": {
             "get": {
                 "tags": ["Report"],
                 "security": [{ "bearerAuth": [] }],
                 "produces": ["application/json"],
                 "parameters": [
                     {
-                        "name": "startDate",
+                        "name": "currentPage",
                         "in": "query",
                         "required": true,
+                        "type": "integer",
+                        "example": 1
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": true,
+                        "type": "integer",
+                        "example": 10
+                    },
+                    {
+                        "name": "search",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "example": ""
+                    },
+                    {
+                        "name": "startDate",
+                        "in": "query",
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-01"
                     },
                     {
                         "name": "endDate",
                         "in": "query",
-                        "required": true,
+                        "required": false,
                         "type": "string",
                         "example": "2023-07-11"
                     }
@@ -1926,70 +1968,11 @@
                 }
             }
         },
-        "/report/trx/karyawan/day": {
+        "/report/trx/barang": {
             "get": {
                 "tags": ["Report"],
                 "security": [{ "bearerAuth": [] }],
                 "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "startDate",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "example": "2023-07-01"
-                    },
-                    {
-                        "name": "endDate",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "example": "2023-08-20"
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "$ref": "#/components/responses/Success"
-                    },
-                    "201": {
-                        "$ref": "#/components/responses/Created"
-                    },
-                    "400": {
-                        "$ref": "#/components/responses/BadRequest"
-                    },
-                    "401": {
-                        "$ref": "#/components/responses/Unauthorized"
-                    },
-                    "404": {
-                        "$ref": "#/components/responses/NotFound"
-                    },
-                    "500": {
-                        "$ref": "#/components/responses/InternalServerError"
-                    }
-                }
-            }
-        },
-        "/report/trx/visitor/day": {
-            "get": {
-                "tags": ["Report"],
-                "security": [{ "bearerAuth": [] }],
-                "produces": ["application/json"],
-                "parameters": [
-                    {
-                        "name": "startDate",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "example": "2023-07-01"
-                    },
-                    {
-                        "name": "endDate",
-                        "in": "query",
-                        "required": true,
-                        "type": "string",
-                        "example": "2023-08-20"
-                    }
-                ],
                 "responses": {
                     "200": {
                         "$ref": "#/components/responses/Success"
@@ -2414,16 +2397,8 @@
                 }
             },
             "RegisterBarang": {
-                "required": ["idUser", "idKendaraan", "idBarang", "idKios", "imageCam", "kodeQr", "tglRegistrasi"],
+                "required": ["idBarang", "idKios", "kodeQr", "tglRegistrasi"],
                 "properties": {
-                    "idUser": {
-                        "type": "integer",
-                        "example": 1
-                    },
-                    "idKendaraan": {
-                        "type": "integer",
-                        "example": 1
-                    },
                     "idBarang": {
                         "type": "integer",
                         "example": 1
@@ -2431,9 +2406,6 @@
                     "idKios": {
                         "type": "integer",
                         "example": 1
-                    },
-                    "imageCam": {
-                        "type": "string"
                     },
                     "kodeQr": {
                         "type": "string",
@@ -2446,9 +2418,13 @@
                 }
             },
             "RegisterKaryawan": {
-                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi"],
+                "required": ["idDivisi", "idContractor", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi"],
                 "properties": {
                     "idDivisi": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "idContractor": {
                         "type": "integer",
                         "example": 1
                     },
@@ -2544,7 +2520,7 @@
                 }
             },
             "UpdateUser": {
-                "required": ["nama", "username", "status"],
+                "required": ["nama", "username", "password", "status"],
                 "properties": {
                     "nama": {
                         "type": "string",
@@ -2565,9 +2541,13 @@
                 }
             },
             "UpdateKaryawan": {
-                "required": ["idDivisi", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi", "status"],
+                "required": ["idDivisi", "idContractor", "nama", "noInduk", "noPolisi", "noKartu", "image", "tglRegistrasi", "status"],
                 "properties": {
                     "idDivisi": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "idContractor": {
                         "type": "integer",
                         "example": 1
                     },

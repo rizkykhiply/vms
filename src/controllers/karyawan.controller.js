@@ -53,7 +53,9 @@ module.exports.getDetailKaryawanController = async (req, res, next) => {
 // Define Get Download Karyawan Controller
 module.exports.getDownloadKaryawanController = async (req, res, next) => {
     try {
-        const getDivisi = await models.divisiModels.getAllDivisi();
+        const [getDivisi, getContractor] = await Promise.all([models.divisiModels.getAllDivisi(), models.contractorModels.getAllContractor()]);
+        const listDivisi = getDivisi.map((value) => [value.id, value.nama]);
+        const listContractor = getContractor.map((value) => [value.id, value.nama]);
 
         const getData = [
             ['idDivisi', 'idContractor', 'nama', 'noInduk', 'noPolisi', 'noKartu'],
@@ -63,10 +65,15 @@ module.exports.getDownloadKaryawanController = async (req, res, next) => {
             ['\r'],
             ['\r'],
             ['\r'],
-            ['============= PLEASE DELETE BEFORE IMPORT ============='],
-            ['LIST MASTER DIVISI'],
+            ['============= TOLONG HAPUS SEBELUM IMPORT DATA ============='],
+            ['\r'],
+            ['*****LIST MASTER DIVISI'],
             ['id', 'divisi'],
-            ...getDivisi,
+            ...listDivisi,
+            ['\r'],
+            ['*****LIST MASTER CONTRACTOR'],
+            ['id', 'contractor'],
+            ...listContractor,
         ];
 
         res.setHeader('Content-Type', 'text/csv');
@@ -83,7 +90,6 @@ module.exports.editKaryawanController = async (req, res, next) => {
     try {
         const getId = req.params.id;
         const getBody = req.body;
-        const getNoKartu = getBody.noKartu;
 
         const getKaryawan = await models.karyawanModels.getKaryawan(getId);
 
@@ -94,6 +100,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
             });
         }
 
+        const getNoKartu = getBody.noKartu;
         const checkNoKartu = await models.karyawanModels.getNoKartuKaryawan(getNoKartu);
 
         if (checkNoKartu) {
@@ -109,7 +116,7 @@ module.exports.editKaryawanController = async (req, res, next) => {
         let saveImage = '';
         const getImage = getBody?.image;
         const getImageKaryawan = getKaryawan?.image;
-        const checkImage = getImage && getImage.length > 100 ? getImage : null;
+        const checkImage = getImage ? getImage : null;
 
         if (checkImage)
             saveImage = validateImage({

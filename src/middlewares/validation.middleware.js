@@ -19,8 +19,7 @@ const validationMiddleware = (schema) => {
                 logger.error(details[0]?.message);
                 return res.status(400).send({
                     statusCode: 400,
-                    message: 'Bad Request',
-                    detail: details[0]?.message.replace(/[^a-z0-9\s]/gi, ''),
+                    message: details[0]?.message?.replace(/[^a-z0-9\s]/gi, '') || 'Bad Request',
                 });
             }
             next(error);
