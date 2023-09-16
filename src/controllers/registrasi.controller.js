@@ -155,7 +155,7 @@ module.exports.registrasiImportKaryawanController = async (req, res, next) => {
             })
             .on('data', async (rows) => {
                 await models.karyawanModels
-                    .createImportKaryawan({ ...rows, idContractor: +getRows[index].idContractor ? getRows[index].idContractor : null })
+                    .createImportKaryawan({ ...rows, idContractor: +rows.idContractor ? rows.idContractor : null })
                     .then((value) => value)
                     .catch((error) => console.log(error));
             })

@@ -98,6 +98,9 @@ const {
     reportTransaksiKaryawanController,
     reportTransaksiVisitorController,
     reportTransaksiCountBarangController,
+    reportTransaksiKaryawanExportController,
+    reportTransaksiVisitorExportController,
+    reportTransaksiBarangExportController,
 } = require('../controllers/report.controller');
 
 // Define Router
@@ -177,6 +180,9 @@ router.get('/report/trx/day', authMiddleware, reportTransaksiDayController);
 router.get('/report/trx/karyawan', authMiddleware, reportTransaksiKaryawanController);
 router.get('/report/trx/visitor', authMiddleware, reportTransaksiVisitorController);
 router.get('/report/trx/barang', authMiddleware, reportTransaksiCountBarangController);
+router.get('/report/trx/karyawan/export', authMiddleware, reportTransaksiKaryawanExportController);
+router.get('/report/trx/visitor/export', authMiddleware, reportTransaksiVisitorExportController);
+router.get('/report/trx/barang/export', authMiddleware, reportTransaksiBarangExportController);
 
 // Export Router
 module.exports = {

@@ -121,10 +121,82 @@ const getCountReportTrxBarang = async (params) => {
     return await baseQuery(getQuery);
 };
 
+// Define Query Get Report Export Trx Karyawan
+const getReportExportTrxKaryawan = async (params) => {
+    const { sort, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = ` 
+        SELECT b.nama, a.nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut
+        FROM tblTransaksi a
+        JOIN tblKaryawan b ON a.idKaryawan = b.id
+        WHERE
+            1 = 1
+            ${getFilter}
+        ORDER BY a.id ${sort}
+    `;
+    return await baseQuery(getQuery, []);
+};
+
+// Define Query Get Report Export Trx Visitor
+const getReportExportTrxVisitor = async (params) => {
+    const { sort, startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.dateIn, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT b.namaLengkap as nama, a.nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut
+        FROM tblTransaksi a
+        JOIN tblRegistrasi b ON a.idVisitor = b.id
+        WHERE
+            b.status = 1
+            ${getFilter}
+        ORDER BY a.id ${sort}
+    `;
+
+    return await baseQuery(getQuery, []);
+};
+
+// Define Query Get Report Export Trx Barang
+const getReportExportTrxBarang = async (params) => {
+    const { startDate, endDate } = params;
+
+    const getFilter = validatePaginationFilter({
+        startDate,
+        endDate,
+        column: 'DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d")',
+    });
+
+    const getQuery = `
+        SELECT b.nama AS barang, COUNT(1) AS total FROM tblRegistrasi a
+        JOIN tblBarang b ON a.idBarang = b.id
+        WHERE
+            a.isRegis = 2 AND a.status = 1
+            ${getFilter}
+        GROUP BY b.id
+    `;
+
+    return await baseQuery(getQuery);
+};
+
 module.exports.reportModels = {
     getReportTrxKaryawan,
     getReportTrxVisitor,
     getCountReportTrxKaryawan,
     getCountReportTrxVisitor,
     getCountReportTrxBarang,
+    getReportExportTrxKaryawan,
+    getReportExportTrxVisitor,
+    getReportExportTrxBarang,
 };

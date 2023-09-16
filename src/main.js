@@ -31,7 +31,7 @@ const queues = [createRegistrasiQueue];
 const getQueues = configQueue(queues);
 
 // Middleware API
-app.use(cors());
+app.use(cors({ exposedHeaders: ['Content-Disposition'] }));
 // app.use(helmet());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));

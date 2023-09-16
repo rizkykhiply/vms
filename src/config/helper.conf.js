@@ -29,7 +29,7 @@ module.exports.validateTime = (params) => {
             return dayjs(getRequest).format('YYYYMMDD');
 
         case 'date-time-4':
-            return dayjs(getRequest).format('DD MMMM YYYY');
+            return dayjs(getRequest).format('DD MMMM YYYY HH:mm:ss');
 
         case 'date-start':
             return dayjs(getRequest).startOf('month').format('YYYY-MM-DD');
