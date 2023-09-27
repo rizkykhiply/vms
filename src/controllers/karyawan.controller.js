@@ -77,7 +77,7 @@ module.exports.getDownloadKaryawanController = async (req, res, next) => {
         ];
 
         res.setHeader('Content-Type', 'text/csv');
-        res.setHeader('Content-Disposition', 'attachment;filename=sample-import-karyawan.csv');
+        res.setHeader('Content-Disposition', 'attachment; filename=sample-import-karyawan.csv');
 
         csv.writeToStream(res, getData, { headers: true });
     } catch (error) {

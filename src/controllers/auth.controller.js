@@ -24,6 +24,7 @@ module.exports.authLoginController = async (req, res, next) => {
         }
 
         const getId = getUser.id;
+        const getRole = getUser.role;
         const getName = getUser.nama;
         const getPass = getUser.password;
         const getMatching = await bcrypt.compare(getPassword, getPass);
@@ -49,6 +50,7 @@ module.exports.authLoginController = async (req, res, next) => {
             message: 'Success',
             data: {
                 id: getId,
+                role: getRole,
                 nama: getName,
                 access_token: getAccessToken,
             },

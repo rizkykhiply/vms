@@ -93,6 +93,20 @@ module.exports.masterContractorController = async (req, res, next) => {
     }
 };
 
+// Define Master Access Controller
+module.exports.masterAccessController = async (req, res, next) => {
+    try {
+        const getAccess = await models.accessModels.getAllAccess();
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getAccess,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Master Admin Barang Controller
 module.exports.masterAdminBarangController = async (req, res, next) => {
     try {
@@ -177,7 +191,7 @@ module.exports.masterAdminDivisiController = async (req, res, next) => {
 module.exports.masterAdminContractorController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.contractorModels.getContractor();
+        const getCount = await models.contractorModels.getCountContractor();
         const getContractor = await models.contractorModels.getAllAdminContractor(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -629,7 +643,7 @@ module.exports.deleteMasterDivisiController = async (req, res, next) => {
 module.exports.deleteMasterContractorController = async (req, res, next) => {
     try {
         const getId = req.params.id;
-        const getContractor = await models.divisiModels.contractorModels(getId);
+        const getContractor = await models.contractorModels.deleteContractor(getId);
 
         if (!getContractor) {
             return res.status(404).send({

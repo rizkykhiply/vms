@@ -3,6 +3,7 @@ const joi = require('joi');
 
 // Define Create User Pipe
 const createUserPipe = joi.object({
+    idAccess: joi.number().required(),
     nama: joi.string().required(),
     username: joi.string().required(),
     password: joi.string().required(),
@@ -10,6 +11,7 @@ const createUserPipe = joi.object({
 
 // Define Edit User Pipe
 const editUserPipe = joi.object({
+    idAccess: joi.number().required(),
     nama: joi.string().required(),
     username: joi.string().required(),
     password: joi.string().optional().allow(''),

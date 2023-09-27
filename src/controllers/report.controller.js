@@ -12,7 +12,7 @@ module.exports.reportTransaksiDayController = async (req, res, next) => {
     try {
         const [registrasi, karyawan, transaksi] = await Promise.all([
             models.registrasiModels.getCountRegistrasiPerDay(),
-            models.karyawanModels.getCountKaryawanPerDay(),
+            models.karyawanModels.getCountTrxKaryawanPerDay(),
             models.transaksiModels.getCountTransaksiPerDay(),
         ]);
 
@@ -64,6 +64,47 @@ module.exports.reportTransaksiVisitorController = async (req, res, next) => {
             currentPage: getPagination.currentPage,
             totalPage: getTotalPage,
             data: getTrxVisitor,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Report Transaksi Gate Controller
+module.exports.reportTransaksiGateController = async (req, res, next) => {
+    try {
+        const [trxAIn, trxAOut, transAIn, transAOut, trxBIn, trxBOut, trxBIn2, trxBOut2, trxCIn, trxCOut, transCIn, transCOut] = await Promise.all([
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'PM02' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'PK02' }),
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'PM03' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'PK03' }),
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'PM01' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'PK01' }),
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'TI02' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'TO02' }),
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'PM04' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'PK04' }),
+            models.reportModels.getCountReportTrxInGate({ kodePos: 'TI01' }),
+            models.reportModels.getCountReportTrxOutGate({ kodePos: 'TO01' }),
+        ]);
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: {
+                gateA: {
+                    gateIn: [...trxAIn, ...transAIn],
+                    gateOut: [...trxAOut, ...transAOut],
+                },
+                gateB: {
+                    gateIn: [...trxBIn, ...trxBIn2],
+                    gateOut: [...trxBOut, ...trxBOut2],
+                },
+                gateC: {
+                    gateIn: [...trxCIn, ...transCIn],
+                    gateOut: [...trxCOut, ...transCOut],
+                },
+            },
         });
     } catch (error) {
         next(error);
@@ -155,11 +196,13 @@ module.exports.reportTransaksiVisitorExportController = async (req, res, next) =
             },
             headers: [
                 { label: 'Nama Visitor', width: 100, headerOpacity: 0.3 },
-                { label: 'No Nota', width: 115, headerOpacity: 0.3 },
-                { label: 'Waktu Masuk', width: 100, headerOpacity: 0.3 },
-                { label: 'Waktu Keluar', width: 100, headerOpacity: 0.3 },
-                { label: 'Pos Masuk', width: 70, headerOpacity: 0.3 },
-                { label: 'Pos Keluar', width: 70, headerOpacity: 0.3 },
+                { label: 'No Polisi', width: 70, headerOpacity: 0.3 },
+                { label: 'Nama Instansi', width: 100, headerOpacity: 0.3 },
+                { label: 'Waktu Masuk', width: 70, headerOpacity: 0.3 },
+                { label: 'Waktu Keluar', width: 70, headerOpacity: 0.3 },
+                { label: 'Pos Masuk', width: 50, headerOpacity: 0.3 },
+                { label: 'Pos Keluar', width: 50, headerOpacity: 0.3 },
+                { label: 'Status', width: 45, headerOpacity: 0.3 },
             ],
             rows: getExportData,
         };

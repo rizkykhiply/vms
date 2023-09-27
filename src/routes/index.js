@@ -39,6 +39,7 @@ const {
     masterKendaraanController,
     masterDivisiController,
     masterContractorController,
+    masterAccessController,
     masterAdminBarangController,
     masterAdminTypeBarangController,
     masterAdminKendaraanController,
@@ -101,6 +102,7 @@ const {
     reportTransaksiKaryawanExportController,
     reportTransaksiVisitorExportController,
     reportTransaksiBarangExportController,
+    reportTransaksiGateController,
 } = require('../controllers/report.controller');
 
 // Define Router
@@ -117,6 +119,7 @@ router.get('/master/type/barang', authMiddleware, masterTypeBarangController);
 router.get('/master/kendaraan', authMiddleware, masterKendaraanController);
 router.get('/master/divisi', authMiddleware, masterDivisiController);
 router.get('/master/contractor', authMiddleware, masterContractorController);
+router.get('/master/access', authMiddleware, masterAccessController);
 router.get('/master/admin/barang', authMiddleware, masterAdminBarangController);
 router.get('/master/admin/type/barang', authMiddleware, masterAdminTypeBarangController);
 router.get('/master/admin/kendaraan', authMiddleware, masterAdminKendaraanController);
@@ -180,6 +183,7 @@ router.get('/report/trx/day', authMiddleware, reportTransaksiDayController);
 router.get('/report/trx/karyawan', authMiddleware, reportTransaksiKaryawanController);
 router.get('/report/trx/visitor', authMiddleware, reportTransaksiVisitorController);
 router.get('/report/trx/barang', authMiddleware, reportTransaksiCountBarangController);
+router.get('/report/trx/gate', authMiddleware, reportTransaksiGateController);
 router.get('/report/trx/karyawan/export', authMiddleware, reportTransaksiKaryawanExportController);
 router.get('/report/trx/visitor/export', authMiddleware, reportTransaksiVisitorExportController);
 router.get('/report/trx/barang/export', authMiddleware, reportTransaksiBarangExportController);

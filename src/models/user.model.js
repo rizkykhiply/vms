@@ -3,7 +3,13 @@ const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get User Login
 const getUserLogin = async (username) => {
-    const [result] = await baseQuery('SELECT id, nama, password FROM tblUsers WHERE username = ? AND status = 1', [username]);
+    const getQuery = `
+        SELECT a.id, b.role, a.nama, a.password FROM tblUsers a, tblAccess b
+        WHERE 
+            a.idAccess = b.id AND
+            a.username = ? AND a.status = 1
+    `;
+    const [result] = await baseQuery(getQuery, [username]);
     return result;
 };
 
@@ -14,7 +20,13 @@ const getUserLogout = async (id) => {
 };
 
 const getUserCheck = async (id) => {
-    const [result] = await baseQuery('SELECT id, nama FROM tblUsers WHERE id = ? AND status = 1', [id]);
+    const getQuery = `
+        SELECT a.id, b.role, a.nama FROM tblUsers a, tblAccess b
+        WHERE 
+            a.idAccess = b.id AND
+            a.id = ? AND a.status = 1
+    `;
+    const [result] = await baseQuery(getQuery, [id]);
     return result;
 };
 
@@ -26,7 +38,7 @@ const getUserByUsername = async (username) => {
 
 // Define Query Get User By Id
 const getUserById = async (id) => {
-    const [result] = await baseQuery('SELECT nama, username, status FROM tblUsers WHERE id = ?', [id]);
+    const [result] = await baseQuery('SELECT idAccess, nama, username, status FROM tblUsers WHERE id = ?', [id]);
     return result;
 };
 
@@ -35,11 +47,13 @@ const getAllUsers = async (params) => {
     const { pagination, sort } = params;
 
     const getQuery = `
-        SELECT id, nama, username, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
+        SELECT a.id, a.nama, a.username, b.role, DATE_FORMAT(a.createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
             CASE 
-                WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
+                WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
-        FROM tblUsers
+        FROM tblUsers a, tblAccess b
+        WHERE
+            a.idAccess = b.id
         ORDER BY id ${sort}
         ${pagination}
     `;
@@ -57,11 +71,11 @@ const getCountUser = async () => {
 const createUser = async (params) => {
     const getQuery = `
         INSERT INTO tblUsers
-            (nama, username, password)
+            (idAccess, nama, username, password)
         VALUES
-            (?,?,?)
+            (?,?,?,?)
     `;
-    return await baseQuery(getQuery, [params.nama, params.username, params.password]);
+    return await baseQuery(getQuery, [params.idAccess, params.nama, params.username, params.password]);
 };
 
 // Define Query Update User
@@ -71,11 +85,11 @@ const updateUser = async (params) => {
     let getPass = params.password;
 
     if (getPass) {
-        getQuery = 'UPDATE tblUsers SET nama = ?, username = ?, password = ?, status = ? WHERE id = ?';
-        getParams.push(params.nama, params.username, params.password, params.status, params.id);
+        getQuery = 'UPDATE tblUsers SET idAccess = ?, nama = ?, username = ?, password = ?, status = ? WHERE id = ?';
+        getParams.push(params.idAccess, params.nama, params.username, params.password, params.status, params.id);
     } else {
-        getQuery = 'UPDATE tblUsers SET nama = ?, username = ?, status = ? WHERE id = ?';
-        getParams.push(params.nama, params.username, params.status, params.id);
+        getQuery = 'UPDATE tblUsers SET idAccess = ?, nama = ?, username = ?, status = ? WHERE id = ?';
+        getParams.push(params.idAccess, params.nama, params.username, params.status, params.id);
     }
 
     return await baseQuery(getQuery, getParams);

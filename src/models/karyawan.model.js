@@ -15,7 +15,7 @@ const getAllKaryawan = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.nama as divisi, c.nama as contractor, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.image, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
+        SELECT a.id, b.nama as divisi, c.nama as contractor, a.nama, a.noInduk, a.noPolisi, a.noKartu, a.image, DATE_FORMAT(a.tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, 
             CASE 
                 WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
@@ -70,13 +70,13 @@ const getCountKaryawan = async (params) => {
     return +result.count;
 };
 
-// Define Query Get Count Karyawan Per Day
-const getCountKaryawanPerDay = async () => {
+// Define Query Get Count Trx Karyawan Per Day
+const getCountTrxKaryawanPerDay = async () => {
     const getQuery = `
-        SELECT COUNT(1) totalKaryawan FROM tblKaryawan
+        SELECT COUNT(1) totalKaryawan FROM tblTransaksi a, tblKaryawan b
         WHERE
-            DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() AND
-            status = 1
+            a.idKaryawan = b.id AND
+            DATE_FORMAT(a.dateIn, '%Y-%m-%d') = CURDATE()
     `;
     const [result] = await baseQuery(getQuery, []);
     return result;
@@ -143,7 +143,7 @@ module.exports.karyawanModels = {
     getKaryawan,
     getNoKartuKaryawan,
     getCountKaryawan,
-    getCountKaryawanPerDay,
+    getCountTrxKaryawanPerDay,
     createKaryawan,
     createImportKaryawan,
     updateKaryawan,

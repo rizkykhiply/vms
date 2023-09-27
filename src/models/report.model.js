@@ -20,7 +20,7 @@ const getReportTrxKaryawan = async (params) => {
         FROM tblTransaksi a
         JOIN tblKaryawan b ON a.idKaryawan = b.id
         WHERE
-            (b.nama LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            (b.nama LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR a.nota LIKE "%${search}%")
             ${getFilter}
         ORDER BY a.id ${sort}
         ${pagination}
@@ -39,13 +39,15 @@ const getReportTrxVisitor = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.namaLengkap as nama, a.nota, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
-        a.kodePosIn, a.kodePosOut
+        SELECT a.id, b.namaLengkap as nama, b.noPolisi, b.namaInstansi, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut,
+        CASE 
+            WHEN b.status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
         FROM tblTransaksi a
         JOIN tblRegistrasi b ON a.idVisitor = b.id
         WHERE
-            b.status = 1 AND
-            (b.namaLengkap LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            (b.namaLengkap LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR b.namaInstansi LIKE "%${search}%")
             ${getFilter}
         ORDER BY a.id ${sort}
         ${pagination}
@@ -68,7 +70,7 @@ const getCountReportTrxKaryawan = async (params) => {
         SELECT COUNT(1) count FROM tblTransaksi a
         JOIN tblKaryawan b ON a.idKaryawan = b.id
         WHERE
-            (b.nama LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            (b.nama LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR a.nota LIKE "%${search}%")
             ${getFilter}
     `;
 
@@ -90,8 +92,7 @@ const getCountReportTrxVisitor = async (params) => {
         SELECT COUNT(1) count FROM tblTransaksi a
         JOIN tblRegistrasi b ON a.idVisitor = b.id
         WHERE
-            b.status = 1 AND
-            (b.namaLengkap LIKE "%${search}%" OR a.nota LIKE "%${search}%")
+            (b.namaLengkap LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR b.namaInstansi LIKE "%${search}%")
             ${getFilter}
     `;
 
@@ -119,6 +120,28 @@ const getCountReportTrxBarang = async (params) => {
     `;
 
     return await baseQuery(getQuery);
+};
+
+// Define Query Get Count Report Trx In Gate
+const getCountReportTrxInGate = async (params) => {
+    const getQuery = `
+        SELECT IFNULL(a.kodePosIn, "${params.kodePos}") as kodePos, IFNULL(COUNT(a.kodePosIn),0) as total FROM tblTransaksi a
+        WHERE 
+            DATE_FORMAT(a.dateIn, '%Y-%m-%d') = CURDATE() AND
+            a.isIn = 1 AND a.kodePosIn = ?
+    `;
+    return await baseQuery(getQuery, [params.kodePos]);
+};
+
+// Define Query Get Count Report Trx Out Gate
+const getCountReportTrxOutGate = async (params) => {
+    const getQuery = `
+        SELECT IFNULL(a.kodePosOut, "${params.kodePos}") as kodePos, IFNULL(COUNT(a.kodePosOut),0) as total FROM tblTransaksi a
+        WHERE 
+            DATE_FORMAT(a.dateOut, '%Y-%m-%d') = CURDATE() AND
+            a.isOut = 1 AND a.kodePosOut = ?
+    `;
+    return await baseQuery(getQuery, [params.kodePos]);
 };
 
 // Define Query Get Report Export Trx Karyawan
@@ -155,12 +178,15 @@ const getReportExportTrxVisitor = async (params) => {
     });
 
     const getQuery = `
-        SELECT b.namaLengkap as nama, a.nota, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
-        a.kodePosIn, a.kodePosOut
+        SELECT b.namaLengkap as nama, b.noPolisi, b.namaInstansi, DATE_FORMAT(a.dateIn, "%Y-%m-%d %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%Y-%m-%d %H:%i:%s") as dateOut, 
+        a.kodePosIn, a.kodePosOut,
+        CASE 
+            WHEN b.status = 0 THEN 'Non Active' ELSE 'Active' 
+        END as status
         FROM tblTransaksi a
         JOIN tblRegistrasi b ON a.idVisitor = b.id
         WHERE
-            b.status = 1
+            1 = 1
             ${getFilter}
         ORDER BY a.id ${sort}
     `;
@@ -196,6 +222,8 @@ module.exports.reportModels = {
     getCountReportTrxKaryawan,
     getCountReportTrxVisitor,
     getCountReportTrxBarang,
+    getCountReportTrxInGate,
+    getCountReportTrxOutGate,
     getReportExportTrxKaryawan,
     getReportExportTrxVisitor,
     getReportExportTrxBarang,

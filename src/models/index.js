@@ -1,4 +1,5 @@
 // Import All Models
+const { accessModels } = require('./access.model');
 const { barangModels } = require('./barang.model');
 const { contractorModels } = require('./contractor.model');
 const { divisiModels } = require('./divisi.model');
@@ -12,6 +13,7 @@ const { reportModels } = require('./report.model');
 
 // Export All Models
 module.exports.models = {
+    accessModels,
     barangModels,
     contractorModels,
     divisiModels,

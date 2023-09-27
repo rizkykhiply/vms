@@ -51,6 +51,7 @@ module.exports.getUserController = async (req, res, next) => {
 module.exports.createUserController = async (req, res, next) => {
     try {
         const getBody = req.body;
+        const getAccessId = getBody.idAccess;
         const getNama = getBody.nama;
         const getUsername = getBody.username;
         const getPassword = getBody.password;
@@ -67,6 +68,7 @@ module.exports.createUserController = async (req, res, next) => {
         const getHashPass = await validateHashPassword(getPassword);
 
         await models.userModels.createUser({
+            idAccess: getAccessId,
             nama: getNama,
             username: getUsername,
             password: getHashPass,
@@ -113,6 +115,7 @@ module.exports.editUserController = async (req, res, next) => {
             const getHashPass = getPassword ? await validateHashPassword(getPassword) : getPassword;
             await models.userModels.updateUser({
                 id: getId,
+                idAccess: getBody.idAccess,
                 nama: getBody.nama,
                 username: getUsername,
                 password: getHashPass,
