@@ -16,16 +16,18 @@ const getAllBarang = async () => {
 
 // Define Query Get All Admin Barang
 const getAllAdminBarang = async (params) => {
-    const { pagination, sort } = params;
+    const { pagination, orderBy, sort, search } = params;
 
     const getQuery = `
-        SELECT a.id, b.nama as typeBarang, a.nama as barang, DATE_FORMAT(a.createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
+        SELECT a.id, b.nama as typeBarang, a.nama as barang, DATE_FORMAT(a.createdAt, "%d-%m-%Y %H:%i:%s") as createdAt,
         CASE 
             WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
         END as status
         FROM tblBarang as a 
         JOIN tblTypeBarang as b ON a.idTypeBarang = b.id
-        ORDER BY a.id ${sort}
+        WHERE
+            (a.nama LIKE "%${search}%" OR b.nama LIKE "%${search}%")
+        ORDER BY ${orderBy} ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -44,8 +46,18 @@ const getBarang = async (id) => {
 };
 
 // Define Query Get Count Barang
-const getCountBarang = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblBarang');
+const getCountBarang = async (params) => {
+    const { search } = params;
+
+    const getQuery = `
+        SELECT COUNT(1) count 
+        FROM tblBarang as a 
+        JOIN tblTypeBarang as b ON a.idTypeBarang = b.id
+        WHERE 
+            (a.nama LIKE "%${search}%" OR b.nama LIKE "%${search}%")
+    `;
+
+    const [result] = await baseQuery(getQuery);
     return +result.count;
 };
 

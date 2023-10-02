@@ -8,7 +8,7 @@ const { models } = require('../models');
 module.exports.getUsersController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.userModels.getCountUser();
+        const getCount = await models.userModels.getCountUser(getPagination);
         const getUsers = await models.userModels.getAllUsers(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 

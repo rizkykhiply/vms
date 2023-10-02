@@ -5,8 +5,8 @@ const { contractorModels } = require('./contractor.model');
 const { divisiModels } = require('./divisi.model');
 const { karyawanModels } = require('./karyawan.model');
 const { kendaraanModels } = require('./kendaraan.model');
+const { posModels } = require('./pos.model');
 const { registrasiModels } = require('./registrasi.model');
-const { transaksiModels } = require('./transaksi.model');
 const { typeBarangModels } = require('./type-barang.model');
 const { userModels } = require('./user.model');
 const { reportModels } = require('./report.model');
@@ -19,8 +19,8 @@ module.exports.models = {
     divisiModels,
     karyawanModels,
     kendaraanModels,
+    posModels,
     registrasiModels,
-    transaksiModels,
     typeBarangModels,
     userModels,
     reportModels,

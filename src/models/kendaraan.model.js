@@ -8,15 +8,17 @@ const getAllKendaraan = async () => {
 
 // Define Query Get All Admin Kendaraan
 const getAllAdminKendaraan = async (params) => {
-    const { pagination, sort } = params;
+    const { pagination, orderBy, sort, search } = params;
 
     const getQuery = `
-        SELECT id, nama, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
+        SELECT id, nama, DATE_FORMAT(createdAt, "%d-%m-%Y %H:%i:%s") as createdAt,
         CASE 
             WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
         END as status
         FROM tblKendaraan 
-        ORDER BY id ${sort}
+        WHERE
+            nama LIKE "%${search}%"
+        ORDER BY ${orderBy} ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -29,8 +31,10 @@ const getKendaraan = async (id) => {
 };
 
 // Define Query Get Count Kendaraan
-const getCountKendaraan = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblKendaraan');
+const getCountKendaraan = async (params) => {
+    const { search } = params;
+
+    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblKendaraan WHERE nama LIKE "%${search}%"`);
     return +result.count;
 };
 

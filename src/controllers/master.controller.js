@@ -93,6 +93,20 @@ module.exports.masterContractorController = async (req, res, next) => {
     }
 };
 
+// Define Master Pos Controller
+module.exports.masterPosController = async (req, res, next) => {
+    try {
+        const getPos = await models.posModels.getAllPos();
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getPos,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Master Access Controller
 module.exports.masterAccessController = async (req, res, next) => {
     try {
@@ -111,7 +125,7 @@ module.exports.masterAccessController = async (req, res, next) => {
 module.exports.masterAdminBarangController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.barangModels.getCountBarang();
+        const getCount = await models.barangModels.getCountBarang(getPagination);
         const getBarang = await models.barangModels.getAllAdminBarang(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -131,7 +145,7 @@ module.exports.masterAdminBarangController = async (req, res, next) => {
 module.exports.masterAdminTypeBarangController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.typeBarangModels.getCountTypeBarang();
+        const getCount = await models.typeBarangModels.getCountTypeBarang(getPagination);
         const getTypeBarang = await models.typeBarangModels.getAllAdminTypeBarang(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -151,7 +165,7 @@ module.exports.masterAdminTypeBarangController = async (req, res, next) => {
 module.exports.masterAdminKendaraanController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.kendaraanModels.getCountKendaraan();
+        const getCount = await models.kendaraanModels.getCountKendaraan(getPagination);
         const getKendaraan = await models.kendaraanModels.getAllAdminKendaraan(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -171,7 +185,7 @@ module.exports.masterAdminKendaraanController = async (req, res, next) => {
 module.exports.masterAdminDivisiController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.divisiModels.getCountDivisi();
+        const getCount = await models.divisiModels.getCountDivisi(getPagination);
         const getDivisi = await models.divisiModels.getAllAdminDivisi(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -191,7 +205,7 @@ module.exports.masterAdminDivisiController = async (req, res, next) => {
 module.exports.masterAdminContractorController = async (req, res, next) => {
     try {
         const getPagination = validatePagination({ ...req.query });
-        const getCount = await models.contractorModels.getCountContractor();
+        const getCount = await models.contractorModels.getCountContractor(getPagination);
         const getContractor = await models.contractorModels.getAllAdminContractor(getPagination);
         const getTotalPage = Math.ceil(getCount / getPagination.limit);
 
@@ -201,6 +215,26 @@ module.exports.masterAdminContractorController = async (req, res, next) => {
             currentPage: getPagination.currentPage,
             totalPage: getTotalPage,
             data: getContractor,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Master Admin Pos Controller
+module.exports.masterAdminPosController = async (req, res, next) => {
+    try {
+        const getPagination = validatePagination({ ...req.query });
+        const getCount = await models.posModels.getCountPos(getPagination);
+        const getPos = await models.posModels.getAllAdminPos(getPagination);
+        const getTotalPage = Math.ceil(getCount / getPagination.limit);
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            currentPage: getPagination.currentPage,
+            totalPage: getTotalPage,
+            data: getPos,
         });
     } catch (error) {
         next(error);
@@ -322,6 +356,29 @@ module.exports.masterDetailContractorController = async (req, res, next) => {
     }
 };
 
+// Define Master Detail Pos Controller
+module.exports.masterDetailPosController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getPos = await models.posModels.getPos(getId);
+
+        if (!getPos) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        return res.status(200).send({
+            statusCode: 200,
+            message: 'Success',
+            data: getPos,
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Create Master Barang Controller
 module.exports.createMasterBarangController = async (req, res, next) => {
     try {
@@ -387,6 +444,21 @@ module.exports.createMasterContractorController = async (req, res, next) => {
     try {
         const getBody = req.body;
         await models.contractorModels.createContractor({ ...getBody });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil dibuat',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Create Master Pos Controller
+module.exports.createMasterPosController = async (req, res, next) => {
+    try {
+        const getBody = req.body;
+        await models.posModels.createPos({ ...getBody });
 
         return res.status(201).send({
             statusCode: 201,
@@ -543,6 +615,38 @@ module.exports.updateMasterContractorController = async (req, res, next) => {
     }
 };
 
+// Define Update Master Pos Controller
+module.exports.updateMasterPosController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getBody = req.body;
+        const getPos = await models.posModels.getPos(getId);
+
+        if (!getPos) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        await models.posModels.updatePos({
+            id: getId,
+            nama: getBody.nama,
+            gate: getBody.gate,
+            type: getBody.type,
+            liveCam: getBody.liveCam,
+            status: getBody.status,
+        });
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil di update',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
 // Define Delete Master Barang Controller
 module.exports.deleteMasterBarangController = async (req, res, next) => {
     try {
@@ -643,7 +747,7 @@ module.exports.deleteMasterDivisiController = async (req, res, next) => {
 module.exports.deleteMasterContractorController = async (req, res, next) => {
     try {
         const getId = req.params.id;
-        const getContractor = await models.contractorModels.deleteContractor(getId);
+        const getContractor = await models.contractorModels.getContractor(getId);
 
         if (!getContractor) {
             return res.status(404).send({
@@ -653,6 +757,30 @@ module.exports.deleteMasterContractorController = async (req, res, next) => {
         }
 
         await models.contractorModels.deleteContractor(getId);
+
+        return res.status(201).send({
+            statusCode: 201,
+            message: 'Data berhasil di delete',
+        });
+    } catch (error) {
+        next(error);
+    }
+};
+
+// Define Delete Master Pos Controller
+module.exports.deleteMasterPosController = async (req, res, next) => {
+    try {
+        const getId = req.params.id;
+        const getPos = await models.posModels.getPos(getId);
+
+        if (!getPos) {
+            return res.status(404).send({
+                statusCode: 404,
+                message: 'Data tidak ditemukan',
+            });
+        }
+
+        await models.posModels.deletePos(getId);
 
         return res.status(201).send({
             statusCode: 201,

@@ -108,7 +108,8 @@ module.exports.validatePagination = (params) => {
     const getCurrentPage = +params.currentPage || 1;
     const getLimit = +params.limit || 10;
     const getSkip = (getCurrentPage - 1) * getLimit;
-    const getSort = params?.sort?.toLowerCase() || 'DESC';
+    const getOrderBy = params?.orderBy || 'id';
+    const getSort = params?.sort?.toUpperCase() || 'DESC';
     const getSearch = params?.search?.toLowerCase() || '';
     const getStartDate = this.validateTime({ request: params?.startDate || '', type: 'date' });
     const getEndDate = this.validateTime({ request: params?.endDate || '', type: 'date' });
@@ -118,6 +119,7 @@ module.exports.validatePagination = (params) => {
         currentPage: getCurrentPage,
         limit: getLimit,
         sort: getSort,
+        orderBy: getOrderBy,
         search: getSearch,
         startDate: getStartDate,
         endDate: getEndDate,

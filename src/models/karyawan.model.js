@@ -6,7 +6,7 @@ const { baseQuery } = require('../config/db.conf');
 
 // Define Query Get All Karyawan
 const getAllKaryawan = async (params) => {
-    const { pagination, sort, search, startDate, endDate } = params;
+    const { pagination, orderBy, sort, search, startDate, endDate } = params;
 
     const getFilter = validatePaginationFilter({
         startDate,
@@ -25,7 +25,7 @@ const getAllKaryawan = async (params) => {
         WHERE
             (a.nama LIKE "%${search}%" OR a.noKartu LIKE "%${search}%" OR a.noPolisi LIKE "%${search}%" OR a.noInduk LIKE "%${search}%")
             ${getFilter}
-        ORDER BY a.id ${sort}
+        ORDER BY ${orderBy} ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -34,7 +34,7 @@ const getAllKaryawan = async (params) => {
 // Define Query Get Karyawan
 const getKaryawan = async (id) => {
     const getQuery = `
-        SELECT idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        SELECT idDivisi, idContractor, nama, noInduk, noPolisi, noKartu, image, DATE_FORMAT(tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, status 
         FROM tblKaryawan 
         WHERE 
             id = ?
@@ -76,7 +76,7 @@ const getCountTrxKaryawanPerDay = async () => {
         SELECT COUNT(1) totalKaryawan FROM tblTransaksi a, tblKaryawan b
         WHERE
             a.idKaryawan = b.id AND
-            DATE_FORMAT(a.dateIn, '%Y-%m-%d') = CURDATE()
+            DATE_FORMAT(a.dateIn, '%Y-%m-%d') <= CURDATE()
     `;
     const [result] = await baseQuery(getQuery, []);
     return result;

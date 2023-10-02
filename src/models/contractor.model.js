@@ -8,15 +8,17 @@ const getAllContractor = async () => {
 
 // Define Query Get All Admin Contractor
 const getAllAdminContractor = async (params) => {
-    const { pagination, sort } = params;
+    const { pagination, orderBy, sort, search } = params;
 
     const getQuery = `
-        SELECT id, nama, DATE_FORMAT(createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
+        SELECT id, nama, DATE_FORMAT(createdAt, "%d-%m-%Y %H:%i:%s") as createdAt,
         CASE 
             WHEN status = 0 THEN 'Non Active' ELSE 'Active' 
         END as status
-        FROM tblContractor 
-        ORDER BY createdAt ${sort}
+        FROM tblContractor
+        WHERE
+            nama LIKE "%${search}%"
+        ORDER BY ${orderBy} ${sort}
         ${pagination}
     `;
     return await baseQuery(getQuery, []);
@@ -29,8 +31,10 @@ const getContractor = async (id) => {
 };
 
 // Define Query Get Count Contractor
-const getCountContractor = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblContractor');
+const getCountContractor = async (params) => {
+    const { search } = params;
+
+    const [result] = await baseQuery(`SELECT COUNT(1) count FROM tblContractor WHERE nama LIKE "%${search}%"`);
     return +result.count;
 };
 

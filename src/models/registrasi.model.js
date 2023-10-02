@@ -16,7 +16,7 @@ const getAllRegistrasiVisitor = async (params) => {
 
     const getQuery = `
         SELECT a.id, b.nama as petugas, c.nama as kendaraan, d.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.tujuan, a.notes, a.imageScan, a.imageCam, a.kodeQr,
-        DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, 
+        DATE_FORMAT(a.tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, 
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
@@ -47,7 +47,7 @@ const getAllRegistrasiBarang = async (params) => {
 
     const getQuery = `
         SELECT a.id, b.nama as barang, c.nama as kios, a.namaLengkap, a.nik, a.namaInstansi, a.noPolisi, a.imageScan,
-        a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi,
+        a.imageCam, a.kodeQr, a.noAntrian, DATE_FORMAT(a.tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi,
             CASE
                 WHEN a.status = 0 THEN "Non Active" ELSE "Active"
             END as status
@@ -69,7 +69,7 @@ const getAllRegistrasiBarang = async (params) => {
 const getRegistrasiVisitor = async (id) => {
     const getQuery = `
         SELECT id, idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, notes, imageScan, imageCam, kodeQr, 
-        DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        DATE_FORMAT(tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
             id = ? AND
@@ -83,7 +83,7 @@ const getRegistrasiVisitor = async (id) => {
 const getRegistrasiBarang = async (id) => {
     const getQuery = `
         SELECT id, idUser, idKendaraan, idKios, idBarang, namaLengkap, nik, namaInstansi, noPolisi, notes, imageScan, imageCam, kodeQr,
-        DATE_FORMAT(tglRegistrasi, "%Y-%m-%d %H:%i:%s") as tglRegistrasi, status 
+        DATE_FORMAT(tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
             id = ? AND
@@ -147,13 +147,13 @@ const getCountRegistrasiPerDay = async () => {
             SELECT COUNT(1) FROM tblRegistrasi
             WHERE
                 isRegis = 1 AND status = 1 AND
-                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() 
+                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') <= CURDATE() 
                 ), 0) totalVisitor,
         IFNULL((
             SELECT COUNT(1) FROM tblRegistrasi
             WHERE
                 isRegis = 2 AND status = 1 AND
-                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') = CURDATE() 
+                DATE_FORMAT(tglRegistrasi, '%Y-%m-%d') <= CURDATE() 
                 ), 0) totalBarang
         FROM tblRegistrasi
         GROUP BY 1 

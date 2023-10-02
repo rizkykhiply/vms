@@ -24,10 +24,8 @@ module.exports.authLoginController = async (req, res, next) => {
         }
 
         const getId = getUser.id;
-        const getRole = getUser.role;
         const getName = getUser.nama;
-        const getPass = getUser.password;
-        const getMatching = await bcrypt.compare(getPassword, getPass);
+        const getMatching = await bcrypt.compare(getPassword, getUser.password);
 
         if (!getMatching) {
             return res.status(400).send({
@@ -50,8 +48,13 @@ module.exports.authLoginController = async (req, res, next) => {
             message: 'Success',
             data: {
                 id: getId,
-                role: getRole,
                 nama: getName,
+                role: getUser.role,
+                access: {
+                    view: getUser.view,
+                    update: getUser.update,
+                    delete: getUser.delete,
+                },
                 access_token: getAccessToken,
             },
         });
@@ -98,7 +101,16 @@ module.exports.authCheckController = async (req, res, next) => {
         return res.status(200).send({
             statusCode: 200,
             message: 'Success',
-            data: getUser,
+            data: {
+                id: getId,
+                nama: getUser.nama,
+                role: getUser.role,
+                access: {
+                    view: getUser.view,
+                    update: getUser.update,
+                    delete: getUser.delete,
+                },
+            },
         });
     } catch (error) {
         next(error);

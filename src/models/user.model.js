@@ -4,7 +4,7 @@ const { baseQuery } = require('../config/db.conf');
 // Define Query Get User Login
 const getUserLogin = async (username) => {
     const getQuery = `
-        SELECT a.id, b.role, a.nama, a.password FROM tblUsers a, tblAccess b
+        SELECT a.id, a.nama, a.password, b.role, b.view, b.update, b.delete FROM tblUsers a, tblAccess b
         WHERE 
             a.idAccess = b.id AND
             a.username = ? AND a.status = 1
@@ -21,7 +21,7 @@ const getUserLogout = async (id) => {
 
 const getUserCheck = async (id) => {
     const getQuery = `
-        SELECT a.id, b.role, a.nama FROM tblUsers a, tblAccess b
+        SELECT a.id, a.nama, b.role, b.view, b.update, b.delete FROM tblUsers a, tblAccess b
         WHERE 
             a.idAccess = b.id AND
             a.id = ? AND a.status = 1
@@ -44,16 +44,17 @@ const getUserById = async (id) => {
 
 // Define Query Get All User
 const getAllUsers = async (params) => {
-    const { pagination, sort } = params;
+    const { pagination, sort, search } = params;
 
     const getQuery = `
-        SELECT a.id, a.nama, a.username, b.role, DATE_FORMAT(a.createdAt, "%Y-%m-%d %H:%i:%s") as createdAt,
+        SELECT a.id, a.nama, a.username, b.role, DATE_FORMAT(a.createdAt, "%d-%m-%Y %H:%i:%s") as createdAt,
             CASE 
                 WHEN a.status = 0 THEN 'Non Active' ELSE 'Active' 
             END as status
         FROM tblUsers a, tblAccess b
         WHERE
-            a.idAccess = b.id
+            a.idAccess = b.id AND
+            (a.nama LIKE "%${search}%" OR a.username LIKE "%${search}%" OR b.role LIKE "%${search}%")
         ORDER BY id ${sort}
         ${pagination}
     `;
@@ -62,8 +63,17 @@ const getAllUsers = async (params) => {
 };
 
 // Define Query Get Count User
-const getCountUser = async () => {
-    const [result] = await baseQuery('SELECT COUNT(1) count FROM tblUsers');
+const getCountUser = async (params) => {
+    const { search } = params;
+
+    const getQuery = `
+        SELECT COUNT(1) count FROM tblUsers a, tblAccess b
+        WHERE
+            a.idAccess = b.id AND
+            (a.nama LIKE "%${search}%" OR a.username LIKE "%${search}%" OR b.role LIKE "%${search}%")
+    `;
+
+    const [result] = await baseQuery(getQuery);
     return +result.count;
 };
 
