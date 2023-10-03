@@ -132,7 +132,6 @@ module.exports.editKaryawanController = async (req, res, next) => {
             noPolisi: getBody.noPolisi,
             noKartu: getBody.noKartu,
             image: saveImage ? saveImage : getImageKaryawan,
-            tglRegistrasi: getBody.tglRegistrasi,
             status: getBody.status,
         });
 
