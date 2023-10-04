@@ -22,7 +22,7 @@ const getReportTrxKaryawan = async (params) => {
         WHERE
             (
                 b.nama LIKE "%${search}%" OR b.noInduk LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR b.noKartu LIKE "%${search}%" OR 
-                a.nota LIKE "%${search}%" OR a.kodePosIn LIKE "%${search}%" OR a.kodePosOut LIKE "%${search}%"
+                a.nota LIKE "%${search}%" OR a.lprNopol LIKE "%${search}%" OR a.kodePosIn LIKE "%${search}%" OR a.kodePosOut LIKE "%${search}%"
             )
             ${getFilter}
         ORDER BY ${orderBy} ${sort}
@@ -35,7 +35,7 @@ const getReportTrxKaryawan = async (params) => {
 // Define Query Get Report Trx Detail Karyawan
 const getReportTrxDetKaryawan = async (id) => {
     const getQuery = ` 
-        SELECT b.nama, b.noInduk, b.noPolisi, b.noKartu, a.nota, a.imgIn, a.imgOut
+        SELECT b.nama, b.noInduk, b.noPolisi, b.noKartu, a.nota, a.imgIn, a.imgOut, a.lprNopol
         FROM tblTransaksi a
         JOIN tblKaryawan b ON a.idKaryawan = b.id
         WHERE a.id = ?
@@ -56,7 +56,7 @@ const getReportTrxVisitor = async (params) => {
     });
 
     const getQuery = `
-        SELECT a.id, b.namaLengkap as nama, b.noPolisi, b.namaInstansi, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%d-%m-%Y %H:%i:%s") as dateIn, 
+        SELECT a.id, b.namaLengkap as nama, b.noPolisi, b.namaInstansi, a.lprNopol, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%d-%m-%Y %H:%i:%s") as dateIn, 
         DATE_FORMAT(a.dateOut, "%d-%m-%Y %H:%i:%s") as dateOut, 
         a.kodePosIn, a.kodePosOut,
         CASE 
@@ -67,7 +67,7 @@ const getReportTrxVisitor = async (params) => {
         WHERE
             (
                 b.namaLengkap LIKE "%${search}%" OR b.nik LIKE "%${search}%" OR b.namaInstansi LIKE "%${search}%" OR b.noPolisi LIKE "%${search}%" OR 
-                a.nota LIKE "%${search}%" OR a.kodePosIn LIKE "%${search}%" OR a.kodePosOut LIKE "%${search}%"
+                a.nota LIKE "%${search}%" OR a.lprNopol LIKE "%${search}%" OR a.kodePosIn LIKE "%${search}%" OR a.kodePosOut LIKE "%${search}%"
             )
             ${getFilter}
         ORDER BY ${orderBy} ${sort}
