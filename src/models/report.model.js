@@ -15,7 +15,7 @@ const getReportTrxKaryawan = async (params) => {
     });
 
     const getQuery = ` 
-        SELECT a.id, b.nama, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%d-%m-%Y %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%d-%m-%Y %H:%i:%s") as dateOut, 
+        SELECT a.id, b.nama, a.lprNopol, a.imgIn, a.imgOut, DATE_FORMAT(a.dateIn, "%d-%m-%Y %H:%i:%s") as dateIn, DATE_FORMAT(a.dateOut, "%d-%m-%Y %H:%i:%s") as dateOut, 
         a.kodePosIn, a.kodePosOut
         FROM tblTransaksi a
         JOIN tblKaryawan b ON a.idKaryawan = b.id
