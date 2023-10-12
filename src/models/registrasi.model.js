@@ -68,7 +68,7 @@ const getAllRegistrasiBarang = async (params) => {
 // Define Query Get Registrasi Visitor
 const getRegistrasiVisitor = async (id) => {
     const getQuery = `
-        SELECT id, idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, notes, imageScan, imageCam, kodeQr, 
+        SELECT idUser, idKendaraan, idKios, namaLengkap, nik, namaInstansi, noPolisi, tujuan, notes, imageScan, imageCam, kodeQr, 
         DATE_FORMAT(tglRegistrasi, "%d-%m-%Y %H:%i:%s") as tglRegistrasi, status 
         FROM tblRegistrasi 
         WHERE 
